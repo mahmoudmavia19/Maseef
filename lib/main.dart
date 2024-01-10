@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:maseef_app/core/utils/app_strings.dart';
 
 import 'core/app_export.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: ColorConstant.primaryMaterialColor,
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.standard,
         appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(fontWeight: FontWeight.bold,
+              color: Colors.black,fontSize: 24),
             scrolledUnderElevation: 0.0,
             elevation: 0.0,
           color: ColorConstant.appBarColor
@@ -53,9 +57,9 @@ class MyApp extends StatelessWidget {
       locale: Get.deviceLocale,
       //for setting localization strings
       fallbackLocale: const Locale('en', 'US'),
-      title: 'maseef_app',
+      title: AppStrings.appName,
       initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.postManagementScreen,
+      initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.pages,
     );
   }

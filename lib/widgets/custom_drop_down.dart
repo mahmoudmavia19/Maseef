@@ -105,11 +105,10 @@ class CustomDropDown extends StatelessWidget {
     switch (fontStyle) {
       default:
         return TextStyle(
-          color: ColorConstant.blueGray200,
+          color: ColorConstant.black900,
           fontSize: getFontSize(
             16,
           ),
-          fontFamily: 'Gilroy',
           fontWeight: FontWeight.w500,
         );
     }

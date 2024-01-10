@@ -7,6 +7,7 @@ class Post extends Equatable {
   final DateTime postDate;
   final String postContent;
   final LatLng postLocation;
+  final String addressLocation;
   final String postImage;
   final String postTitle;
 
@@ -18,6 +19,7 @@ class Post extends Equatable {
     required this.postLocation,
     required this.postImage,
     required this.postTitle,
+    required this.addressLocation,
   });
 
   @override
@@ -29,5 +31,6 @@ class Post extends Equatable {
         postLocation,
         postImage,
         postTitle,
+        addressLocation
       ];
 }

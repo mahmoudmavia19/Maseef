@@ -29,77 +29,93 @@ class ShowPostScreen extends GetWidget<PostManageController> {
             child: Column(
               children: [
                 SizedBox(height: 10.0,),
-              _button('Delete post', Colors.red, Icon(Icons.delete,color: Colors.white,),(){
+              _button('Delete post',ColorConstant.deleteColor,CustomImageView(imagePath: ImageConstant.delete),(){
                 controller.deletePost(controller.index);
               }),
                 SizedBox(height: 10.0,),
-                _button('Edit post', Colors.green, Icon(Icons.edit,color: Colors.white,),(){
+                _button('Edit post', ColorConstant.editColor,CustomImageView(imagePath: ImageConstant.edit),(){
                   Get.toNamed(AppRoutes.EditPostManagementScreen,arguments:controller.index);
                 }),
                 SizedBox(height: 10.0,),
-                _button('Block user', Colors.orange, Icon(Icons.person,color: Colors.white,),(){
+                _button('Block user',ColorConstant.userColor,CustomImageView(imagePath: ImageConstant.person),(){
 
                 }),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                      padding: EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        color: ColorConstant.backgroundColor.withOpacity(0.5),
-                      ),
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  controller.postController.posts[controller.index].postTitle,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 22.0),
+                  child: Card(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    color: Colors.transparent,
+                    child: Container(
+                        padding: EdgeInsets.all(5.0),
+                        decoration: BoxDecoration(
+                          color: ColorConstant.backgroundColor.withOpacity(0.5),
+                        ),
+                        child: Column(mainAxisSize: MainAxisSize.min, children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    controller.postController.posts[controller.index].postTitle,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0),
+                                  ),
                                 ),
-                              ),
-                              Icon(Icons.location_on),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Icon(Icons.heart_broken_rounded),
-                              Text(
-                                '12',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Icon(Icons.comment_bank),
-                              Text('12',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                            ],
+                               Row(
+                                 children: [
+                                   Image.asset(ImageConstant.location,
+                                     fit: BoxFit.fill,
+                                     height: 40.0,
+                                     width: 40.0,),
+                                    Image.asset(ImageConstant.love,
+                                      fit: BoxFit.fill,
+                                      height: 40.0,
+                                      width: 40.0,),
+                                    Text(
+                                      '12',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Image.asset(ImageConstant.comments,
+                                      fit: BoxFit.fill,
+                                      height: 40.0,
+                                      width: 40.0,),
+                                    Text('12',
+                                        style:
+                                            TextStyle(fontWeight: FontWeight.bold)),
+                                 ],
+                               ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Container(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15.0),
+                          SizedBox(
+                            height: 5.0,
                           ),
-                          child: Image.file(
-                            File( controller.postController.posts[controller.index].postImage),
-                            height: 150.0,
-                            fit: BoxFit.cover,
-                            alignment: Alignment.topCenter,
-                            width: double.infinity,
+                          Container(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Image.file(
+                              File( controller.postController.posts[controller.index].postImage),
+                              height: 150.0,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topCenter,
+                              width: double.infinity,
+                            ),
                           ),
-                        ),
-                      ])),
+                        ])),
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
+                Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  margin:const EdgeInsets.all(20.0),
+                  color: Colors.transparent,
                   child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(5.0),
@@ -161,7 +177,7 @@ _button(String text,Color color,Widget icon,void Function() action) =>  Containe
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(text,style: TextStyle(color: Colors.white),),
+          Text(text,style: TextStyle(color: Colors.white,fontSize: 16.0,fontWeight: FontWeight.bold),),
           SizedBox(width: 10.0,),
           icon
         ],
@@ -179,11 +195,35 @@ _button(String text,Color color,Widget icon,void Function() action) =>  Containe
         content: _commentContent(),
         title: _commentContent(),
       );
-}
 
-_commentContent() => Container(
+  _commentContent() => InkWell(
+    onLongPress: () {
+      Get.dialog(
+          Dialog(
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize:MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _button('Delete ِcomment',ColorConstant.deleteColor,CustomImageView(imagePath: ImageConstant.delete),(){
+                     }),
+                    SizedBox(height: 10.0,),
+                    _button('Block user',ColorConstant.userColor,CustomImageView(imagePath: ImageConstant.person),(){
+
+                    }),
+                  ],
+                ),
+              ),
+            ),
+          )
+      );
+    },
+    child: Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
             radius: 25.0,
@@ -193,7 +233,7 @@ _commentContent() => Container(
           ),
           Expanded(
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 'Sahar',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -202,21 +242,36 @@ _commentContent() => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Text(
                   'Awonderful place that I recommend visiting',
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ]),
           ),
-          Icon(Icons.heart_broken_rounded),
-          Text(
-            '12',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Row(
+            children: [
+              Image.asset(ImageConstant.love,
+                fit: BoxFit.fill,
+                height: 40.0,
+                width: 40.0,),
+              Text(
+                '12',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                width: 5.0,
+              ),
+              Image.asset(ImageConstant.comments,
+                fit: BoxFit.fill,
+                height: 40.0,
+                width: 40.0,),
+              Text('12',
+                  style:
+                  TextStyle(fontWeight: FontWeight.bold)),
+            ],
           ),
-          SizedBox(
-            width: 5.0,
-          ),
-          Icon(Icons.comment_bank),
-          Text('12', style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
-    );
+    ),
+  );
+}
+
+

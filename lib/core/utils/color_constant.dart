@@ -80,14 +80,18 @@ class ColorConstant {
   static   Color backgroundColor = fromHex('#FFECD3');
   static   Color primary = fromHex('#3A4D39');
   static   Color secoundry = fromHex('#6A4018');
-  static   Color backgroundColorWithOpacity = secoundry.withOpacity(0.9);
+  static   Color backgroundColorWithOpacity =  fromHex('#FFECD3');
   static   Color appBarColor = fromHex('#FFECD3');
-  static   Color textFieldBackground =fromHex('#C4BCA5');
+  static   Color textFieldBackground =fromHex('#3A4D39');
   static   Color textFieldHint =fromHex('#737373');
   static  Color buttonColor = fromHex('#3A4D39');
     static const Color loginButtonTextColor = Colors.white;
   static const Color forgotPasswordTextColor = Colors.black;
   static   Color floatActionButColor = fromHex('#6B745F');
+  static   Color discountColor = fromHex('#BC1823');
+  static   Color deleteColor = fromHex('#BC1823');
+  static   Color editColor = fromHex('#00BF63');
+  static   Color userColor = fromHex('#FF914D');
   static MaterialColor primaryMaterialColor = MaterialColor(0xFF3A4D39, {
     50: Color(0xFF3A4D39),
     100: Color(0xFF3A4D39),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
@@ -13,6 +14,7 @@ import '../../../../core/app_export.dart';
 class EditPostController extends GetxController {
   final postTitleController = TextEditingController();
   final postContentController = TextEditingController();
+  final postAddressController = TextEditingController();
   final Rx<File?> selectedImage = Rx<File?>(null);
  final Rx<LocationData> currentLocation_ = Rx(LocationData.fromMap({}));
   late GoogleMapController mapController ;
@@ -25,21 +27,46 @@ class EditPostController extends GetxController {
   }
   @override
   void onInit() {
-    postContentController.text = post.postContent ?? '';
-    postTitleController.text = post.postTitle ?? '';
-    selectedImage.value = File(post.postImage ?? '');
+    _getCurrentLocation();
+
+    postContentController.text = post.postContent;
+    postTitleController.text = post.postTitle;
+    postAddressController.text = post.addressLocation;
+    selectedImage.value = File(post.postImage);
+
+
+    super.onInit();
     currentLocation_.value =LocationData.fromMap({
       'latitude': post.postLocation.latitude,
       'longitude': post.postLocation.longitude
-    })?? LocationData.fromMap({});
-    _getCurrentLocation();
-    super.onInit();
+    });
   }
+
+  Future<void> getAddressFromCoordinates(LatLng latlng) async {
+    try {
+      List<geocoding.Placemark> placemarks =
+      await geocoding.placemarkFromCoordinates(latlng.latitude,latlng.longitude);
+
+      if (placemarks.isNotEmpty) {
+        geocoding.Placemark placemark = placemarks[0];
+        print(
+            "${placemark.street}, ${placemark.locality}, ${placemark.country}");
+        postAddressController.text = "${placemark.street}, ${placemark.locality}, ${placemark.country}";
+      } else {
+        print('No address found');
+      }
+    } catch (e) {
+      print("Error: $e");
+      print('Error getting address');
+    }
+  }
+
   chooseLocation(LatLng target ) {
     currentLocation_.value = LocationData.fromMap({
       'latitude': target.latitude,
       'longitude': target.longitude
     });
+    getAddressFromCoordinates(LatLng(currentLocation_.value.latitude!, currentLocation_.value.longitude!));
   }
   Future<void> _getCurrentLocation() async {
     Location location = Location();
@@ -61,8 +88,11 @@ class EditPostController extends GetxController {
         adminId: '2232',
         postDate: DateTime.now(),
         postContent: postContentController.text,
-        postLocation:LatLng(currentLocation_.value.latitude!, currentLocation_.value.longitude!),
+        postLocation:LatLng(
+            currentLocation_.value.latitude!,
+            currentLocation_.value.longitude!),
         postImage: selectedImage.value!.path,
+        addressLocation: postAddressController.text,
         postTitle: postTitleController.text);
   Get.back();
   }

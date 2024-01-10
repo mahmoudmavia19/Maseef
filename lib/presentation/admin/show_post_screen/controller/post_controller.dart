@@ -8,10 +8,8 @@ class PostManageController extends GetxController {
   int index = Get.arguments[0];
 
   deletePost(int index){
+    postController.deletePost(index);
     Get.back();
-    postController.posts.removeAt(index);
   }
-
-
 
 }

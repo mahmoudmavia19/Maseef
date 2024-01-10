@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:get/get.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/widgets/custom_text_form_field.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
-
 import 'controller/edit_post_controller.dart';
 
 class EditPostScreen extends StatelessWidget {
@@ -16,6 +14,14 @@ class EditPostScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.editPost),
+        leading: IconButton(onPressed: (){
+          Get.back();
+        }, icon: Icon(Icons.arrow_back_ios)),
+        actions: [
+          CustomImageView(
+            imagePath: ImageConstant.logo,
+          )
+        ],
       ),
       body: ScaffoldBackground(
         child: SingleChildScrollView(
@@ -41,10 +47,30 @@ class EditPostScreen extends StatelessWidget {
                 return (addPostController.selectedImage.value != null)
                     ? Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.file(addPostController.selectedImage.value!,height: 100,width: 100,fit: BoxFit.fill,),
+                  child: Image.file(addPostController.selectedImage.value!,
+                    alignment: Alignment.center,
+                    height:200,
+                    width: 100,fit: BoxFit.fitHeight,),
                 )
-                    : Container();
+                    : Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: ColorConstant.primary,
+                          width: 2.0
+                      ),
+                      image: DecorationImage(
+                          image: AssetImage(
+                            ImageConstant.imageNotFound,
+                          )
+                      )
+                  ),
+                );
               }),
+              SizedBox(height: 16.0),
+              TextFieldWidget(labelText: AppStrings.address,
+                  controller:  addPostController.postAddressController),
               SizedBox(height: 16.0),
               Obx(() {
                   return Container(
@@ -54,13 +80,13 @@ class EditPostScreen extends StatelessWidget {
                       myLocationEnabled:true ,
                       initialCameraPosition: CameraPosition(
                         target: LatLng(
-                          addPostController.currentLocation_.value.latitude ?? 28.1253921,
-                          addPostController.currentLocation_.value.longitude ??30.7480829,
+                          addPostController.currentLocation_.value.latitude ?? startMapLocation.latitude,
+                          addPostController.currentLocation_.value.longitude ?? startMapLocation.longitude,
                         ),
                         zoom: 16,
                       ),
                       onMapCreated: (controller) {
-                        addPostController.mapController = controller ;                    // Do other initialization as needed
+                        addPostController.mapController = controller ;
                       },
                     onTap: (argument) {
                       print(argument);
@@ -70,8 +96,8 @@ class EditPostScreen extends StatelessWidget {
                         Marker(
                           markerId: MarkerId('currentLocation'),
                           position: LatLng(
-                            addPostController.currentLocation_.value.latitude ?? 28.1253921,
-                            addPostController.currentLocation_.value.longitude ?? 30.7480829,
+                            addPostController.currentLocation_.value.latitude ??  startMapLocation.latitude,
+                            addPostController.currentLocation_.value.longitude ?? startMapLocation.longitude,
                           ),
                           infoWindow: InfoWindow(title: 'Current Location'),
                         ),
