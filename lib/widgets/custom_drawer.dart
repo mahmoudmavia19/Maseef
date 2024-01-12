@@ -54,6 +54,12 @@ class MainDrawer extends StatelessWidget {
               Get.offAllNamed(AppRoutes.driverManagementScreen);
             },
           ),
+          _buildDrawerItem(
+            title: AppStrings.complaintsManagementTitle,
+            onTap: () {
+              Get.offAllNamed(AppRoutes.complaintScreen);
+            },
+          ),
           // Add more items for other screens
         ],
       ),
