@@ -34,7 +34,7 @@ class ShowPostScreen extends GetWidget<PostManageController> {
               }),
                 SizedBox(height: 10.0,),
                 _button('Edit post', ColorConstant.editColor,CustomImageView(imagePath: ImageConstant.edit),(){
-                  Get.toNamed(AppRoutes.EditPostManagementScreen,arguments:controller.index);
+                  Get.toNamed(AppRoutes.adminEditPostManagementScreen,arguments:controller.index);
                 }),
                 SizedBox(height: 10.0,),
                 _button('Block user',ColorConstant.userColor,CustomImageView(imagePath: ImageConstant.person),(){

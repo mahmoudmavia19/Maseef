@@ -20,7 +20,7 @@ class LoginController extends GetxController {
   void login() {
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
     Future.delayed(Duration(seconds: 5), () {
-      Get.offAllNamed(AppRoutes.postManagementScreen);
+      Get.offAllNamed(AppRoutes.adminPostManagementScreen);
     });
   }
 }

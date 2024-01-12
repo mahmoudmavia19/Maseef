@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:maseef_app/presentation/splach_screen/splach_screen.dart';
+import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
+import 'package:maseef_app/presentation/user/auth/login.dart';
+import 'package:maseef_app/presentation/user/auth/register.dart';
 import '../presentation/admin/add_post_management_screen/binding/add_post_binding.dart';
 import '../presentation/admin/add_post_management_screen/add_post_screen.dart';
 import '../presentation/admin/bus_management_screen/add_edit_bus_screen.dart';
@@ -22,51 +25,62 @@ import '../presentation/admin/show_post_screen/binding/post_manage_binding.dart'
 import '../presentation/admin/show_post_screen/show_post_screen.dart';
 import '../presentation/admin/store_management_screen/binding/store_binding.dart';
 import '../presentation/admin/store_management_screen/store_management_screen.dart';
+import '../presentation/user/auth/forget_password.dart';
+import '../presentation/user/auth/forget_password_code_screen.dart';
+import '../presentation/user/auth/new_password_screen.dart';
+import '../presentation/user/auth/user_login_register_screen.dart';
 
 class AppRoutes {
-  static const String loginScreen = '/login_screen';
-  static const String categoryManagementScreen = '/CategoryManagementScreen';
-  static const String postManagementScreen = '/PostManagementScreen';
-  static const String showPostScreen = '/ShowPostScreen';
-  static const String AddPostManagementScreen = '/AddPostManagementScreen';
-  static const String EditPostManagementScreen = '/EditPostManagementScreen';
-  static const String addBusScreen = '/addBusScreen';
-  static const String editBusScreen = '/editBusScreen';
-  static const String busDetailsScreen = '/BusDetailsScreen';
-  static const String busManagementScreen = '/BusManagementScreen';
-  static const String complaintScreen = '/complaintScreen';
-  static const String driverManagementScreen = '/driverManagementScreen';
-  static const String storeManagement = '/storeManagement';
+  static const String adminLoginScreen = '/Admin/login_screen';
+  static const String adminCategoryManagementScreen = '/Admin/CategoryManagementScreen';
+  static const String adminPostManagementScreen = '/Admin/PostManagementScreen';
+  static const String adminShowPostScreen = '/Admin/ShowPostScreen';
+  static const String adminAddPostManagementScreen = '/Admin/AddPostManagementScreen';
+  static const String adminEditPostManagementScreen = '/Admin/EditPostManagementScreen';
+  static const String adminAddBusScreen = '/Admin/addBusScreen';
+  static const String adminEditBusScreen = '/Admin/editBusScreen';
+  static const String adminBusDetailsScreen = '/Admin/BusDetailsScreen';
+  static const String adminBusManagementScreen = '/Admin/BusManagementScreen';
+  static const String adminComplaintScreen = '/Admin/complaintScreen';
+  static const String adminDriverManagementScreen = '/Admin/driverManagementScreen';
+  static const String adminStoreManagement = '/Admin/storeManagement';
+  // User Routes
+  static const String userLoginScreen = '/user/login_screen';
+  static const String userRegisterScreen = '/user/register_screen';
+  static const String userForgetPasswordScreen = '/user/forget_password_screen';
+  static const String userForgetPasswordCodeScreen = '/user/forget_password_code_screen';
+  static const String userNewPasswordCodeScreen = '/user/new_password_code_screen';
+  static const String userLoginOrRegisterScreen = '/user/login_or_register_screen';
   static const String initialRoute = '/initialRoute';
 
   static List<GetPage> pages = [
     GetPage(
-      name: loginScreen,
+      name: adminLoginScreen,
       page: () => LoginPage(),
       binding: LoginBinding(),
     ),
     GetPage(
-      name: AddPostManagementScreen,
+      name: adminAddPostManagementScreen,
       page: () => AddPostScreen(),
       binding: AddPostBinding(),
     ),
     GetPage(
-      name: EditPostManagementScreen,
+      name: adminEditPostManagementScreen,
       page: () => EditPostScreen(),
       binding: EditPostBinding(),
     ),
     GetPage(
-      name: categoryManagementScreen,
+      name: adminCategoryManagementScreen,
       page: () => CategoryManagementScreen(),
       binding: CategoryBinding(),
     ),
     GetPage(
-      name: postManagementScreen,
+      name: adminPostManagementScreen,
       page: () => PostManagementScreen(),
       binding: PostBinding(),
     ),
     GetPage(
-      name: showPostScreen,
+      name: adminShowPostScreen,
       page: () => ShowPostScreen(),
       arguments: [],
       binding: PostManageBinding(),
@@ -76,36 +90,64 @@ class AppRoutes {
       page: () => SplashScreen(),
     ),
     GetPage(
-      name: busManagementScreen,
+      name: adminBusManagementScreen,
       page: () => BusManagementScreen(),
       binding: BusBinding(),
     ),
     GetPage(
-      name: addBusScreen,
+      name: adminAddBusScreen,
       page: () => AddEditBusScreen(),
     ),
     GetPage(
-      name: editBusScreen,
+      name: adminEditBusScreen,
       page: () => AddEditBusScreen(isEdit: true,),
     ),
     GetPage(
-      name: busDetailsScreen,
+      name: adminBusDetailsScreen,
       page: () => BusDetailsScreen(),
     ),
     GetPage(
-      name: complaintScreen,
+      name: adminComplaintScreen,
       page: () => ComplaintsManagementScreen(),
       binding: ComplaintBinding(),
     ),
     GetPage(
-      name: driverManagementScreen,
+      name: adminDriverManagementScreen,
       page: () => DriversManagementScreen(),
       binding: DriverBinding(),
     ),
     GetPage(
-      name: storeManagement,
+      name: adminStoreManagement,
       page: () => StoreManagementScreen(),
       binding: StoreBinding(),
     ),
+    // User Routes
+    GetPage (
+      name: userLoginScreen,
+      page: () => UserLoginPage(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: userLoginOrRegisterScreen,
+      page: () => UserLoginOrRegister(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: userRegisterScreen,
+      page: () => UserRegisterPage(),
+      binding: AuthBinding(),
+    ),
+    GetPage (
+      name: userForgetPasswordScreen,
+      page: () => UserForgetPasswordPage(),
+    ),
+    GetPage(
+      name: userForgetPasswordCodeScreen,
+      page: () => UserForgetPasswordCodePage(),
+    ),
+    GetPage(
+      name: userNewPasswordCodeScreen,
+      page: () => UserNewPasswordCodePage(),
+    )
   ];
 }

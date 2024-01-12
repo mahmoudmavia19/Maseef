@@ -27,31 +27,31 @@ class MainDrawer extends StatelessWidget {
           _buildDrawerItem(
             title: AppStrings.postManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.postManagementScreen);
+              Get.offAllNamed(AppRoutes.adminPostManagementScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.categoryManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.categoryManagementScreen);
+              Get.offAllNamed(AppRoutes.adminCategoryManagementScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.storeManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.storeManagement);
+              Get.offAllNamed(AppRoutes.adminStoreManagement);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.busManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.busManagementScreen);
+              Get.offAllNamed(AppRoutes.adminBusManagementScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.driversManagementTitle,
             onTap: () {
-              Get.offAllNamed(AppRoutes.driverManagementScreen);
+              Get.offAllNamed(AppRoutes.adminDriverManagementScreen);
             },
           ),
           // Add more items for other screens

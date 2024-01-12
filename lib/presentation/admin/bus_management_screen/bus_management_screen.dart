@@ -28,7 +28,7 @@ class BusManagementScreen extends GetWidget<BusController> {
             )
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(AppRoutes.addBusScreen),
+        onPressed: () => Get.toNamed(AppRoutes.adminAddBusScreen),
         child: Icon(Icons.add),
       ),
     );
@@ -58,7 +58,7 @@ class BusManagementScreen extends GetWidget<BusController> {
             children: [
               IconButton(
                 icon: Icon(Icons.edit,color:ColorConstant.primaryMaterialColor,), onPressed: () {
-                Get.toNamed(AppRoutes.editBusScreen, arguments: index);
+                Get.toNamed(AppRoutes.adminEditBusScreen, arguments: index);
               },
               ),
               IconButton(

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:maseef_app/presentation/user/auth/controller/auth_controller.dart';
 import 'package:maseef_app/widgets/custom_text_form_field.dart';
 
 import '../../../core/utils/app_strings.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/logo_widget.dart';
-import 'controller/login_controller.dart';
 
-class LoginPage extends GetWidget<LoginController> {
+class UserLoginPage extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class LoginPage extends GetWidget<LoginController> {
 }
 
 class LoginScreenUI extends StatelessWidget {
-  final LoginController loginController;
+  final AuthController loginController;
 
   const LoginScreenUI({Key? key, required this.loginController}) : super(key: key);
 
@@ -53,7 +53,7 @@ class LoginScreenUI extends StatelessWidget {
           SizedBox(height: 20),
           ButtonWidget(onPressed: loginController.login, text:AppStrings.login,),
           SizedBox(height: 20),
-        /*  ForgotPasswordButtonWidget(),*/
+            ForgotPasswordButtonWidget(),
         ],
       ),
     );
@@ -73,10 +73,14 @@ class ForgotPasswordButtonWidget extends StatelessWidget {
               AppStrings.forgotPassword,
               style: TextStyle(color: ColorConstant.forgotPasswordTextColor, fontSize: 14),
             ),
-            SizedBox(width: 2.0,),
-            Text(
-              AppStrings.forgotPassword2,
-              style: TextStyle(color: ColorConstant.forgotPasswordTextColor, fontSize: 14, fontWeight: FontWeight.bold),
+            TextButton(
+              onPressed: () {
+                Get.toNamed(AppRoutes.userForgetPasswordScreen);
+              },
+              child: Text(
+                AppStrings.forgotPassword2,
+                style: TextStyle(color: ColorConstant.forgotPasswordTextColor, fontSize: 14, fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),

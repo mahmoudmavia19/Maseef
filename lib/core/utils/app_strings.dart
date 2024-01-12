@@ -3,8 +3,15 @@ import 'package:maseef_app/core/app_export.dart';
 class AppStrings {
     static String appName = 'Maseef'.tr;
     static String usernameOrEmail = 'Username or Email'.tr;
+    static String username = 'Username'.tr;
+    static String email = 'Email'.tr;
+    static String cPassword = 'Confirm Password'.tr;
     static String password = 'Password'.tr;
+    static String alreadyRegistered = 'Already Registered?'.tr;
+    static String loginHere = 'Login Here'.tr;
     static String login = 'Login'.tr;
+    static String signUp = 'SignUp'.tr;
+    static String next = 'Next'.tr;
     static String forgotPassword = 'Forgot your'.tr;
     static String forgotPassword2 = 'password?'.tr;
     static String categoryManagement = 'Category Management'.tr;
@@ -42,6 +49,9 @@ class AppStrings {
     static const String genderLabel = "Gender";
     static const String phoneLabel = "Phone";
     static const String emailLabel = "Email";
+    static const String code = "Code";
+    static const String newPassword = "New Password";
+
     static const String storeManagementTitle = "Store Management";
     static const String addStore = "Add Store";
     static const String editStore = "Edit Store";
