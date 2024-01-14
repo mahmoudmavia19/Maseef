@@ -16,7 +16,7 @@ class ComplaintController extends GetxController {
     super.onInit();
   }
 
-  resolveComplaint(int index) {
+  resolveComplaint(int index, String resolution) {
 
   }
 }

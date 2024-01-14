@@ -20,15 +20,15 @@ class MainDrawer extends StatelessWidget {
               ) ,
               color: ColorConstant.backgroundColor,
             ),
-            child: CustomImageView(
-              imagePath: ImageConstant.logo,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                CustomImageView(
+                  imagePath: ImageConstant.logo,
+                ),
+                Text('Hallo Admin',style: TextStyle(color: ColorConstant.primary,fontWeight: FontWeight.bold),)
+              ],
             )
-          ),
-          _buildDrawerItem(
-            title: AppStrings.postManagement,
-            onTap: () {
-              Get.offAllNamed(AppRoutes.postManagementScreen);
-            },
           ),
           _buildDrawerItem(
             title: AppStrings.categoryManagement,
@@ -37,15 +37,9 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           _buildDrawerItem(
-            title: AppStrings.storeManagement,
+            title: AppStrings.postManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.storeManagement);
-            },
-          ),
-          _buildDrawerItem(
-            title: AppStrings.busManagement,
-            onTap: () {
-              Get.offAllNamed(AppRoutes.busManagementScreen);
+              Get.offAllNamed(AppRoutes.postManagementScreen);
             },
           ),
           _buildDrawerItem(
@@ -55,9 +49,27 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           _buildDrawerItem(
+            title: AppStrings.busManagement,
+            onTap: () {
+              Get.offAllNamed(AppRoutes.busManagementScreen);
+            },
+          ),
+          _buildDrawerItem(
+            title: AppStrings.storeManagement,
+            onTap: () {
+              Get.offAllNamed(AppRoutes.storeManagement);
+            },
+          ),
+          _buildDrawerItem(
             title: AppStrings.complaintsManagementTitle,
             onTap: () {
               Get.offAllNamed(AppRoutes.complaintScreen);
+            },
+          ),
+          _buildDrawerItem(
+            title: AppStrings.logout,
+            onTap: () {
+              Get.offAllNamed(AppRoutes.loginScreen);
             },
           ),
           // Add more items for other screens

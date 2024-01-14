@@ -83,7 +83,7 @@ class ColorConstant {
   static   Color backgroundColorWithOpacity =  fromHex('#FFECD3');
   static   Color appBarColor = fromHex('#FFECD3');
   static   Color textFieldBackground =fromHex('#3A4D39');
-  static   Color textFieldHint =fromHex('#737373');
+  static   Color textFieldHint =Colors.white70;
   static  Color buttonColor = fromHex('#3A4D39');
     static const Color loginButtonTextColor = Colors.white;
   static const Color forgotPasswordTextColor = Colors.black;

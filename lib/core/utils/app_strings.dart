@@ -5,6 +5,7 @@ class AppStrings {
     static String usernameOrEmail = 'Username or Email'.tr;
     static String password = 'Password'.tr;
     static String login = 'Login'.tr;
+    static String logout = 'Logout'.tr;
     static String forgotPassword = 'Forgot your'.tr;
     static String forgotPassword2 = 'password?'.tr;
     static String categoryManagement = 'Category Management'.tr;
@@ -17,6 +18,7 @@ class AppStrings {
      static const String addBus = "Add Bus";
     static const String editBus = "Edit Bus";
     static const String saveChanges = "Save Changes";
+    static const String requests = "Requests";
     static const String addBusButton = "Add Bus";
     static const String busNumber = "Bus Number";
     static const String driverIdentification = "Driver Identification";
@@ -47,6 +49,7 @@ class AppStrings {
     static const String editStore = "Edit Store";
     static const String storeNameLabel = "Store Name";
     static const String storeLinkLabel = "Store Link";
+    static const String stores = "Stores";
     static const String discountCodeLabel = "Discount Code";
     static const String storePhotoUrlLabel = "Store Photo URL";
     static const String acceptedLabel = "Accepted";

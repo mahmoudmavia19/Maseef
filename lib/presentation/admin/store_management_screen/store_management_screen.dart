@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/widgets/custom_drawer.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import 'package:maseef_app/widgets/store_card.dart';
+import 'package:maseef_app/widgets/store_request_card.dart';
 
 import '../../../core/utils/image_constant.dart';
 import '../../../widgets/custom_image_view.dart';
@@ -33,12 +35,7 @@ class StoreManagementScreen extends StatelessWidget {
         ],
       ),
       body: ScaffoldBackground(
-        child: Obx(
-              () => storeController.state.value.getScreenWidget(
-                _widget(context),
-                () {},
-              )
-        ),
+        child: _widget(context)
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddStoreDialog(context),
@@ -165,17 +162,70 @@ class StoreManagementScreen extends StatelessWidget {
     photoUrlController.clear();
   }
 
-  _widget(BuildContext context) =>
-      ListView.builder(
-    itemCount: storeController.stores.length,
+  _widget(BuildContext context) =>DefaultTabController(
+      length: 2,
+      child:Column(
+        children: [
+          TabBar(
+            labelColor: ColorConstant.primary,
+              indicatorColor: ColorConstant.primary,8
+              tabs: [
+                Tab(
+                    child: Text(
+                      AppStrings.requests,
+                    )
+                ),
+                Tab(
+                    child: Text(
+                      AppStrings.stores,
+                    )
+                ),
+              ]
+          ),
+          Expanded(
+            child: TabBarView(
+                children: [
+                  tab1(),
+                  tab2(),
+                ]
+            ),
+          ),
+        ],
+      )
+  );
+  tab1() => ListView.builder(
+    itemCount: storeController.storesRequests.length,
     itemBuilder: (context, index) {
       return InkWell(
         onTap: () => _showEditStoreDialog(context, index),
-        child: StoreCard(
-          store: storeController.stores[index],
+        child: StoreRequestCard(
+          store: storeController.storesRequests[index],
+          onAccept: () {
 
+          },
+          onReject: () {
+
+          },
         ),
       );
     },
+  ) ;
+  tab2() =>Obx(
+        () => storeController.state.value.getScreenWidget(
+          ListView.builder(
+            itemCount: storeController.stores.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () => _showEditStoreDialog(context, index),
+                child: StoreCard(
+                  store: storeController.stores[index],
+
+                ),
+              );
+            },
+          ) ,
+      () {},
+  )
   );
+
 }
