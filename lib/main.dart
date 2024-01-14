@@ -25,12 +25,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: ColorConstant.primaryMaterialColor,
                 foregroundColor: Colors.white,
           )
+        ),
+        bottomNavigationBarTheme:BottomNavigationBarThemeData(
+          backgroundColor: ColorConstant.backgroundColor,
         ),
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: Colors.transparent,
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en', 'US'),
       title: AppStrings.appName,
       initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.initialRoute,
+      initialRoute: AppRoutes.userMainScreen,
       getPages: AppRoutes.pages,
     );
   }

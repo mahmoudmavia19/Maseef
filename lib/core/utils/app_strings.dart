@@ -51,7 +51,6 @@ class AppStrings {
     static const String emailLabel = "Email";
     static const String code = "Code";
     static const String newPassword = "New Password";
-
     static const String storeManagementTitle = "Store Management";
     static const String addStore = "Add Store";
     static const String editStore = "Edit Store";
@@ -67,6 +66,27 @@ class AppStrings {
     static const String storeManagement = 'Store Management';
     static const String loading = 'Loading...';
     static const String retryAgain = 'Retry Again';
+    static const String profile = 'Profile';
+    static const String language = 'Language';
+    static const String privacyPolicy = 'Privacy Policy';
+    static const String termsAndConditions = 'Terms & Conditions';
+    static const String support = 'Support';
+    static const String All = 'All';
+    static const String parks = 'Parks';
+    static const String  historical_places = 'Historical Places';
+    static const String  Malls = 'Malls';
+    static const String  Hotels = 'Hotels';
+    static const String  Cafes = 'Cafes';
+    static const String  Restaurants = 'Restaurants';
+    static const String  Projects = 'Projects';
+
+
+
+
+
+
+
+
 
 
 }

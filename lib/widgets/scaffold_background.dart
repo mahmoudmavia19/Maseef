@@ -5,8 +5,9 @@ import '../core/utils/image_constant.dart';
 
 class ScaffoldBackground extends StatelessWidget {
   Widget child;
+  double opacity;
 
-  ScaffoldBackground({required this.child});
+  ScaffoldBackground({required this.child , this.opacity = 0.6});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ScaffoldBackground extends StatelessWidget {
           image: DecorationImage(
               image: AssetImage(ImageConstant.background),
               fit: BoxFit.cover,
-              opacity: 0.6)),
+              opacity: opacity)),
     );
   }
 }

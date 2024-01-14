@@ -29,6 +29,8 @@ import '../presentation/user/auth/forget_password.dart';
 import '../presentation/user/auth/forget_password_code_screen.dart';
 import '../presentation/user/auth/new_password_screen.dart';
 import '../presentation/user/auth/user_login_register_screen.dart';
+import '../presentation/user/main_screen/binding/main_binding.dart';
+import '../presentation/user/main_screen/main_screen.dart';
 
 class AppRoutes {
   static const String adminLoginScreen = '/Admin/login_screen';
@@ -51,6 +53,8 @@ class AppRoutes {
   static const String userForgetPasswordCodeScreen = '/user/forget_password_code_screen';
   static const String userNewPasswordCodeScreen = '/user/new_password_code_screen';
   static const String userLoginOrRegisterScreen = '/user/login_or_register_screen';
+  static const String userMainScreen = '/user/main_screen';
+
   static const String initialRoute = '/initialRoute';
 
   static List<GetPage> pages = [
@@ -148,6 +152,11 @@ class AppRoutes {
     GetPage(
       name: userNewPasswordCodeScreen,
       page: () => UserNewPasswordCodePage(),
+    ),
+    GetPage(
+      name: userMainScreen,
+      page: () =>  MainScreen(),
+      binding: MainBinding(),
     )
   ];
 }

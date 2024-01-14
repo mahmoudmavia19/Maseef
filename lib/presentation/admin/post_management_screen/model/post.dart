@@ -10,6 +10,7 @@ class Post extends Equatable {
   final String addressLocation;
   final String postImage;
   final String postTitle;
+  bool love ;
 
   Post({
     required this.postId,
@@ -20,6 +21,7 @@ class Post extends Equatable {
     required this.postImage,
     required this.postTitle,
     required this.addressLocation,
+   this.love = false
   });
 
   @override
@@ -31,6 +33,7 @@ class Post extends Equatable {
         postLocation,
         postImage,
         postTitle,
-        addressLocation
+        addressLocation,
+        love
       ];
 }

@@ -57,7 +57,7 @@ class MainDrawer extends StatelessWidget {
           _buildDrawerItem(
             title: AppStrings.complaintsManagementTitle,
             onTap: () {
-              Get.offAllNamed(AppRoutes.complaintScreen);
+              Get.offAllNamed(AppRoutes.adminComplaintScreen);
             },
           ),
           // Add more items for other screens
