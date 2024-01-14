@@ -1,6 +1,7 @@
 // complaints_management_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maseef_app/widgets/custom_drawer.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/image_constant.dart';
@@ -14,6 +15,7 @@ class ComplaintsManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MainDrawer(),
       appBar: AppBar(
         title: Text(AppStrings.complaintsManagementTitle),
         actions: [
