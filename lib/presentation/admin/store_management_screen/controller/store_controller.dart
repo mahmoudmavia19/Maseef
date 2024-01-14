@@ -7,8 +7,10 @@ import '../model/store.dart';
 
 class StoreController extends GetxController {
   var stores = <Store>[].obs;
+  var storesRequests = <Store>[].obs;
 
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+  Rx<FlowState> stateRequests = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
   FlowState get getState => state.value;
   _checkStores() {
     if(stores.isEmpty) {
@@ -21,7 +23,12 @@ class StoreController extends GetxController {
   @override
   void onInit() {
     _checkStores();
+    storesRequests.add(Store(name: 'Store 1', link: 'assets/images/img.png', discountCode: '20%', photoUrl: 'assets/images/img.png', id: '0'));
     super.onInit();
+  }
+  @override
+  void onReady() {
+    super.onReady();
   }
   void addStore(Store store) {
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
