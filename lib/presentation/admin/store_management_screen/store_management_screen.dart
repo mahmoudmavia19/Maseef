@@ -168,7 +168,7 @@ class StoreManagementScreen extends StatelessWidget {
         children: [
           TabBar(
             labelColor: ColorConstant.primary,
-              indicatorColor: ColorConstant.primary,8
+              indicatorColor: ColorConstant.primary,
               tabs: [
                 Tab(
                     child: Text(
