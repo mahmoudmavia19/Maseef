@@ -20,8 +20,14 @@ class MainDrawer extends StatelessWidget {
               ) ,
               color: ColorConstant.backgroundColor,
             ),
-            child: CustomImageView(
-              imagePath: ImageConstant.logo,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                CustomImageView(
+                  imagePath: ImageConstant.logo,
+                ),
+                Text('Hallo Admin',style: TextStyle(color: ColorConstant.primary,fontWeight: FontWeight.bold),)
+              ],
             )
           ),
           _buildDrawerItem(
@@ -37,15 +43,9 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           _buildDrawerItem(
-            title: AppStrings.storeManagement,
+            title: AppStrings.postManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.adminStoreManagement);
-            },
-          ),
-          _buildDrawerItem(
-            title: AppStrings.busManagement,
-            onTap: () {
-              Get.offAllNamed(AppRoutes.adminBusManagementScreen);
+              Get.offAllNamed(AppRoutes.adminPostManagementScreen);
             },
           ),
           _buildDrawerItem(
@@ -55,9 +55,27 @@ class MainDrawer extends StatelessWidget {
             },
           ),
           _buildDrawerItem(
+            title: AppStrings.busManagement,
+            onTap: () {
+              Get.offAllNamed(AppRoutes.adminBusManagementScreen);
+            },
+          ),
+          _buildDrawerItem(
+            title: AppStrings.storeManagement,
+            onTap: () {
+              Get.offAllNamed(AppRoutes.adminStoreManagement);
+            },
+          ),
+          _buildDrawerItem(
             title: AppStrings.complaintsManagementTitle,
             onTap: () {
               Get.offAllNamed(AppRoutes.adminComplaintScreen);
+            },
+          ),
+          _buildDrawerItem(
+            title: AppStrings.logout,
+            onTap: () {
+              Get.offAllNamed(AppRoutes.adminLoginScreen);
             },
           ),
           // Add more items for other screens

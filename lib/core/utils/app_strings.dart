@@ -12,6 +12,8 @@ class AppStrings {
     static String login = 'Login'.tr;
     static String signUp = 'SignUp'.tr;
     static String next = 'Next'.tr;
+    static String stores = 'Stores'.tr;
+    static String logout = 'Logout'.tr;
     static String forgotPassword = 'Forgot your'.tr;
     static String forgotPassword2 = 'password?'.tr;
     static String categoryManagement = 'Category Management'.tr;
@@ -24,6 +26,7 @@ class AppStrings {
      static const String addBus = "Add Bus";
     static const String editBus = "Edit Bus";
     static const String saveChanges = "Save Changes";
+    static const String requests = "Requests";
     static const String addBusButton = "Add Bus";
     static const String busNumber = "Bus Number";
     static const String driverIdentification = "Driver Identification";
