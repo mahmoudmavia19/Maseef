@@ -22,7 +22,7 @@ class PostManagementScreen extends GetWidget<PostController>{
       ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>Get.toNamed(AppRoutes.AddPostManagementScreen),
+        onPressed: () =>Get.toNamed(AppRoutes.adminAddPostManagementScreen),
         tooltip: 'Add Post',
         child: Icon(Icons.add),
       ),
@@ -34,7 +34,7 @@ _widget()=> ListView.builder(
     Post post = controller.posts[index];
     return InkWell(
       onTap: () {
-        Get.toNamed(AppRoutes.showPostScreen,arguments: [index,post]);
+        Get.toNamed(AppRoutes.adminShowPostScreen,arguments: [index,post]);
       },
       child: Padding(
         padding: const EdgeInsets.all(20.0),

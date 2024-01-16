@@ -7,7 +7,7 @@ class SplashScreen extends StatelessWidget {
     // Simulate an async operation (e.g., loading resources, initializing)
     Future.delayed(Duration(seconds: 3), () {
       // Navigate to the main screen after 3 seconds
-      Get.offAllNamed(AppRoutes.loginScreen);
+      Get.offAllNamed(AppRoutes.adminLoginScreen);
     });
 
     return Scaffold(

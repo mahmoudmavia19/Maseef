@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:maseef_app/core/app_export.dart';
+ import 'package:maseef_app/core/app_export.dart';
 import '../core/utils/app_strings.dart';
-import '../routes/app_routes.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -33,43 +31,43 @@ class MainDrawer extends StatelessWidget {
           _buildDrawerItem(
             title: AppStrings.categoryManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.categoryManagementScreen);
+              Get.offAllNamed(AppRoutes.adminCategoryManagementScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.postManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.postManagementScreen);
+              Get.offAllNamed(AppRoutes.adminPostManagementScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.driversManagementTitle,
             onTap: () {
-              Get.offAllNamed(AppRoutes.driverManagementScreen);
+              Get.offAllNamed(AppRoutes.adminDriverManagementScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.busManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.busManagementScreen);
+              Get.offAllNamed(AppRoutes.adminBusManagementScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.storeManagement,
             onTap: () {
-              Get.offAllNamed(AppRoutes.storeManagement);
+              Get.offAllNamed(AppRoutes.adminStoreManagement);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.complaintsManagementTitle,
             onTap: () {
-              Get.offAllNamed(AppRoutes.complaintScreen);
+              Get.offAllNamed(AppRoutes.adminComplaintScreen);
             },
           ),
           _buildDrawerItem(
             title: AppStrings.logout,
             onTap: () {
-              Get.offAllNamed(AppRoutes.loginScreen);
+              Get.offAllNamed(AppRoutes.adminLoginScreen);
             },
           ),
           // Add more items for other screens
