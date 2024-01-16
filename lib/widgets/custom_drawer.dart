@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:maseef_app/core/app_export.dart';
+ import 'package:maseef_app/core/app_export.dart';
 import '../core/utils/app_strings.dart';
-import '../routes/app_routes.dart';
 
 class MainDrawer extends StatelessWidget {
   @override

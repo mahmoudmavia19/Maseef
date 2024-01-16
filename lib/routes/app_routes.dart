@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/presentation/splach_screen/splach_screen.dart';
 import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
 import 'package:maseef_app/presentation/user/auth/login.dart';
