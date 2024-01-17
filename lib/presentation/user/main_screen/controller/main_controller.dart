@@ -13,6 +13,8 @@ class MainController extends GetxController {
 
   PageController pageController = PageController();
 
+  bool get  postsScreen => currentIndex.value == 0
+  ||  currentIndex.value == 1 ;
 
   void changeIndex(int index){
     currentIndex.value = index;

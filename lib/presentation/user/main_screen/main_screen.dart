@@ -8,12 +8,13 @@ class MainScreen extends GetWidget<MainController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: _drawer() ,
-      endDrawer: _endDrawer() ,
-      appBar: _appBar(),
-      bottomNavigationBar: _bottomNavigationBar(),
-      body: _pageView(),
+    return Obx(()=> Scaffold(
+        drawer: controller.postsScreen? _drawer() : null,
+        endDrawer: _endDrawer() ,
+        appBar: _appBar(),
+        bottomNavigationBar: _bottomNavigationBar(),
+        body: _pageView(),
+      ),
     );
   }
 
