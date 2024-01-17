@@ -14,6 +14,14 @@ class AppStrings {
     static String next = 'Next'.tr;
     static String stores = 'Stores'.tr;
     static String logout = 'Logout'.tr;
+    static String editPicture = 'Edit Picture'.tr;
+    static String changePassword = 'Change Password'.tr;
+    static String changePassword2 = 'Change Password?'.tr;
+    static String oldPassword = 'Old Password'.tr;
+    static String newPassword = 'New Password'.tr;
+    static String confirmPassword = 'Confirm Password'.tr;
+    static String change = 'Change'.tr;
+
     static String forgotPassword = 'Forgot your'.tr;
     static String forgotPassword2 = 'password?'.tr;
     static String categoryManagement = 'Category Management'.tr;
@@ -53,8 +61,7 @@ class AppStrings {
     static const String phoneLabel = "Phone";
     static const String emailLabel = "Email";
     static const String code = "Code";
-    static const String newPassword = "New Password";
-    static const String storeManagementTitle = "Store Management";
+     static const String storeManagementTitle = "Store Management";
     static const String addStore = "Add Store";
     static const String editStore = "Edit Store";
     static const String storeNameLabel = "Store Name";
@@ -67,6 +74,7 @@ class AppStrings {
     static const String drawerHeader = 'Drawer Header';
     static const String showPost = 'Show Post';
     static const String storeManagement = 'Store Management';
+    static const String supportScreen = 'Support Screen';
     static const String loading = 'Loading...';
     static const String retryAgain = 'Retry Again';
     static const String profile = 'Profile';
@@ -83,7 +91,17 @@ class AppStrings {
     static const String  Restaurants = 'Restaurants';
     static const String  Projects = 'Projects';
 
+    static const String profileTitle = 'Profile';
+    static const String nameLabel = 'Name';
+    static const String usernameLabel = 'Username';
+     static const String saveButtonLabel = 'Save';
 
+    static const String nameValidationMessage = 'Please enter your name';
+    static const String usernameValidationMessage = 'Please enter your username';
+    static const String ageValidationMessage = 'Please enter your age';
+    static const String emailValidationMessage = 'Please enter your email';
+    static const String genderValidationMessage = 'Please enter your gender';
+    static const String phoneValidationMessage = 'Please enter your phone number';
 
 
 

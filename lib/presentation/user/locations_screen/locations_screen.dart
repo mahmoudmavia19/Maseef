@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
+import 'package:maseef_app/widgets/search_form.dart';
 
 class LocationsScreen extends StatelessWidget {
 
@@ -8,7 +12,24 @@ class LocationsScreen extends StatelessWidget {
     return  Scaffold(
       body: ScaffoldBackground(
         opacity: 0.9,
-          child: Center(child: Text('Locations Screen'))),
+          child: Stack(
+            children: [
+              GoogleMap(
+                  gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+                    new Factory<OneSequenceGestureRecognizer>(() => new EagerGestureRecognizer(),),
+                  ].toSet(),
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(24.774265, 46.738586),
+                    zoom: 14.4746,
+                  )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SearchForm(),
+              )
+            ],
+          )
+      ),
     );
   }
 }

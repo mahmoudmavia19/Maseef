@@ -16,6 +16,8 @@ class ImageConstant {
   static String  love_icon = 'assets/images/love_icon.svg';
   static String  notification_icon = 'assets/images/notification_icon.svg';
   static String  search_icon = 'assets/images/search_icon.svg';
+  static String  discount_icon = 'assets/images/discount_icon.svg';
+
 
 
 

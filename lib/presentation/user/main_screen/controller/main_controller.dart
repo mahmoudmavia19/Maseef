@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:maseef_app/presentation/user/discount_screen/discount_screen.dart';
 import 'package:maseef_app/presentation/user/locations_screen/locations_screen.dart';
 import 'package:maseef_app/presentation/user/love_posts_screen/love_posts_screen.dart';
 import 'package:maseef_app/presentation/user/notification_screen/notification_screen.dart';
@@ -21,8 +22,9 @@ class MainController extends GetxController {
   List<Widget> pages = [
     HomeScreen(),
     LovePostsScreen(),
+    LocationsScreen(),
     NotificationScreen(),
-    LocationsScreen()
+    DiscountScreen(),
    ];
 
 

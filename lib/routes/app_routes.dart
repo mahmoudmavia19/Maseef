@@ -4,6 +4,10 @@ import 'package:maseef_app/presentation/splach_screen/splach_screen.dart';
 import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
 import 'package:maseef_app/presentation/user/auth/login.dart';
 import 'package:maseef_app/presentation/user/auth/register.dart';
+import 'package:maseef_app/presentation/user/profile_screen/binding/profile_binding.dart';
+import 'package:maseef_app/presentation/user/profile_screen/profile_screen.dart';
+import 'package:maseef_app/presentation/user/support_screen/binding/support_binding.dart';
+import 'package:maseef_app/presentation/user/support_screen/support_screen.dart';
 import '../presentation/admin/add_post_management_screen/binding/add_post_binding.dart';
 import '../presentation/admin/add_post_management_screen/add_post_screen.dart';
 import '../presentation/admin/bus_management_screen/add_edit_bus_screen.dart';
@@ -32,6 +36,8 @@ import '../presentation/user/auth/new_password_screen.dart';
 import '../presentation/user/auth/user_login_register_screen.dart';
 import '../presentation/user/main_screen/binding/main_binding.dart';
 import '../presentation/user/main_screen/main_screen.dart';
+import '../presentation/user/show_post_screen/binding/user_post_manage_binding.dart';
+import '../presentation/user/show_post_screen/user_show_post_screen.dart';
 
 class AppRoutes {
   static const String adminLoginScreen = '/Admin/login_screen';
@@ -55,6 +61,10 @@ class AppRoutes {
   static const String userNewPasswordCodeScreen = '/user/new_password_code_screen';
   static const String userLoginOrRegisterScreen = '/user/login_or_register_screen';
   static const String userMainScreen = '/user/main_screen';
+  static const String userProfileScreen = '/user/profile_screen';
+  static const String userShowPostScreen = '/user/show_post_screen';
+  static const String userComplaintScreen = '/user/complaint_screen';
+
 
   static const String initialRoute = '/initialRoute';
 
@@ -158,6 +168,22 @@ class AppRoutes {
       name: userMainScreen,
       page: () =>  MainScreen(),
       binding: MainBinding(),
-    )
+    ),
+    GetPage(
+      name: userProfileScreen,
+      page: () =>  UserProfileScreen(),
+      binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: userShowPostScreen,
+      page: () =>  UserShowPostScreen(),
+      binding: UserPostManageBinding(),
+    ),
+    GetPage(
+      name: userComplaintScreen,
+      page: () =>  SupportScreen(),
+      binding: SupportBinding(),
+    ),
+
   ];
 }

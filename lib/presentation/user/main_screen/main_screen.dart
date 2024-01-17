@@ -51,16 +51,21 @@ class MainScreen extends GetWidget<MainController> {
       child:ListView(
         children: [
           DrawerHeader(child:
-          Column(
-            children: [
-              CustomImageView(
-                svgPath: ImageConstant.user_placeholder,
-                width: 80,
-              ),
-              SizedBox(height: 5.0,),
-              Text("Ahmed Zaki",style: TextStyle(fontWeight: FontWeight.bold,),),
-              Text("@ahmedZaki12",style: TextStyle(fontSize: 10.0,),),
-            ],
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoutes.userProfileScreen) ;
+            },
+            child: Column(
+              children: [
+                CustomImageView(
+                  svgPath: ImageConstant.user_placeholder,
+                  width: 80,
+                ),
+                SizedBox(height: 5.0,),
+                Text("Ahmed Zaki",style: TextStyle(fontWeight: FontWeight.bold,),),
+                Text("@ahmedZaki12",style: TextStyle(fontSize: 10.0,),),
+              ],
+            ),
           ),
 
           ),
@@ -68,7 +73,12 @@ class MainScreen extends GetWidget<MainController> {
           _tab(AppStrings.language,(){}),
           _tab(AppStrings.privacyPolicy,(){}),
           _tab(AppStrings.termsAndConditions,(){}),
-          _tab(AppStrings.support,(){}),
+          _tab(AppStrings.support,(){
+            Get.toNamed(AppRoutes.userComplaintScreen) ;
+          }),
+          _tab(AppStrings.logout,(){
+            Get.toNamed(AppRoutes.userLoginOrRegisterScreen) ;
+          }),
         ],
       ),
     );
@@ -118,12 +128,16 @@ class MainScreen extends GetWidget<MainController> {
       BottomNavigationBarItem(
           activeIcon: CustomImageView(svgPath: ImageConstant.love_icon,width: 40,color: Colors.grey),
           icon:  CustomImageView(svgPath: ImageConstant.love_icon,width: 40),label: AppStrings.support),
+    BottomNavigationBarItem(
+        activeIcon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30,color: Colors.grey),
+        icon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30),label: AppStrings.ageLabel),
       BottomNavigationBarItem(
           activeIcon: CustomImageView(svgPath: ImageConstant.notification_icon,width: 30,color: Colors.grey),
           icon: CustomImageView(svgPath: ImageConstant.notification_icon,width: 30),label: AppStrings.storeManagement),
-      BottomNavigationBarItem(
-          activeIcon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30,color: Colors.grey),
-          icon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30),label: AppStrings.ageLabel),
+    BottomNavigationBarItem(
+        activeIcon: CustomImageView(svgPath: ImageConstant.discount_icon,width: 30,color: Colors.grey),
+        icon: CustomImageView(svgPath: ImageConstant.discount_icon,width: 30),label: AppStrings.Cafes),
+
     ],showSelectedLabels: false,showUnselectedLabels:false ,
       selectedIconTheme: IconThemeData(
         size: 40,

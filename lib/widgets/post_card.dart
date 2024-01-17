@@ -3,18 +3,22 @@ import 'package:maseef_app/presentation/admin/post_management_screen/model/post.
 import '../core/app_export.dart';
 
 class PostCard extends StatelessWidget {
-  final PostController _postController = PostController();
+  final Post post;
+  final RxBool love = false.obs;
+  final int index;
 
-  PostCard(Post post, int index) {
-    _postController.setPost(post, index);
-    _postController.loveToggle(isLove: post.love);
+  PostCard(this.post, this.index){
+    loveToggle(isLove: post.love);
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Get.toNamed(AppRoutes.adminShowPostScreen, arguments: [_postController.index, _postController.post]);
+        Get.toNamed(
+          AppRoutes.userShowPostScreen,
+          arguments: [index, post],
+        );
       },
       child: _buildPostContainer(),
     );
@@ -42,7 +46,7 @@ class PostCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Image.asset(
-        _postController.post!.postImage,
+        post?.postImage ?? '',
         height: 170.0,
         fit: BoxFit.fitHeight,
         alignment: Alignment.topCenter,
@@ -59,7 +63,7 @@ class PostCard extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              _postController.post!.postTitle,
+              post?.postTitle ?? '',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22.0,
@@ -78,11 +82,11 @@ class PostCard extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              _postController.loveToggle();
+              loveToggle();
             },
             child: Image.asset(
               ImageConstant.love,
-              color: _postController.love.value ? Colors.red : Colors.black,
+              color: love.value ? Colors.red : Colors.black,
               fit: BoxFit.fill,
               height: 40.0,
               width: 40.0,
@@ -107,23 +111,6 @@ class PostCard extends StatelessWidget {
       text,
       style: TextStyle(fontWeight: FontWeight.bold),
     );
-  }
-}
-
-class PostController extends GetxController {
-  Post? post;
-  RxBool love = false.obs;
-  int? index;
-
-  void setPost(Post post, int index) {
-    this.post = post;
-    this.index = index;
-  }
-
-  @override
-  void onInit() {
-    print(post?.love);
-    super.onInit();
   }
 
   void loveToggle({bool? isLove}) {
