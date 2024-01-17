@@ -38,6 +38,8 @@ import '../presentation/user/main_screen/binding/main_binding.dart';
 import '../presentation/user/main_screen/main_screen.dart';
 import '../presentation/user/show_post_screen/binding/user_post_manage_binding.dart';
 import '../presentation/user/show_post_screen/user_show_post_screen.dart';
+import '../presentation/visitor/visitor_main_screen/binding/main_binding.dart';
+import '../presentation/visitor/visitor_main_screen/main_screen.dart';
 
 class AppRoutes {
   static const String adminLoginScreen = '/Admin/login_screen';
@@ -64,6 +66,9 @@ class AppRoutes {
   static const String userProfileScreen = '/user/profile_screen';
   static const String userShowPostScreen = '/user/show_post_screen';
   static const String userComplaintScreen = '/user/complaint_screen';
+  // Visitor Routes
+  static const String guestMainScreen = '/guest/main_screen';
+
 
 
   static const String initialRoute = '/initialRoute';
@@ -183,6 +188,12 @@ class AppRoutes {
       name: userComplaintScreen,
       page: () =>  SupportScreen(),
       binding: SupportBinding(),
+    ),
+    // Visitor Routes
+    GetPage(
+      name: guestMainScreen,
+      page: () =>  GuestMainScreen(),
+      binding: GuestMainBinding(),
     ),
 
   ];
