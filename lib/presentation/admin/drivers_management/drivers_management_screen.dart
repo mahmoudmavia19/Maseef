@@ -5,6 +5,7 @@ import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/widgets/custom_drawer.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 
+import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/utils/image_constant.dart';
 import '../../../widgets/custom_image_view.dart';
@@ -62,7 +63,9 @@ class DriversManagementScreen extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.delete,color: Colors.red,),
-            onPressed: () => driverController.deleteDriver(index),
+            onPressed: () =>  showConfirmationDialog((){
+              driverController.deleteDriver(index)    ;
+              },AppStrings.sureDelete, 'Alert'),
           ),
         ),
       );

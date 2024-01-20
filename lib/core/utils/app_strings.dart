@@ -60,6 +60,9 @@ class AppStrings {
     static const String storeManagement = 'Store Management';
     static const String loading = 'Loading...';
     static const String retryAgain = 'Retry Again';
+    static const String sureDelete = 'Are you sure you want to delete this item?';
+    static const String sureblock = 'Are you sure you want to block this user?';
+    static const String surelogout = 'Are you sure you want to logout?';
 
 
 }

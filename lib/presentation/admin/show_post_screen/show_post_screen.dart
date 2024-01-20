@@ -5,6 +5,8 @@ import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/presentation/admin/show_post_screen/controller/post_controller.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 
+import '../../../core/utils/app_strings.dart';
+
 // ignore: must_be_immutable
 class ShowPostScreen extends GetWidget<PostManageController> {
   @override
@@ -30,7 +32,9 @@ class ShowPostScreen extends GetWidget<PostManageController> {
               children: [
                 SizedBox(height: 10.0,),
               _button('Delete post',ColorConstant.deleteColor,CustomImageView(imagePath: ImageConstant.delete),(){
-                controller.deletePost(controller.index);
+                showConfirmationDialog((){
+                  controller.deletePost(controller.index);
+                },AppStrings.sureDelete, 'Alert');
               }),
                 SizedBox(height: 10.0,),
                 _button('Edit post', ColorConstant.editColor,CustomImageView(imagePath: ImageConstant.edit),(){
@@ -38,7 +42,8 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                 }),
                 SizedBox(height: 10.0,),
                 _button('Block user',ColorConstant.userColor,CustomImageView(imagePath: ImageConstant.person),(){
-
+                  showConfirmationDialog((){
+                  },AppStrings.sureblock, 'Alert') ;
                 }),
                 Padding(
                   padding: const EdgeInsets.all(20.0),

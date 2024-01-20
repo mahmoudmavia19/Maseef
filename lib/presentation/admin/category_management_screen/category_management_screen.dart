@@ -54,7 +54,9 @@ class CategoryManagementScreen extends GetWidget<CategoryController> {
             ),
             IconButton(
               icon: Icon(Icons.delete,color: Colors.red,),
-              onPressed: () => controller.deleteCategory(controller.categories[index]),
+              onPressed: () => showConfirmationDialog((){
+                controller.deleteCategory(controller.categories[index]);
+              },AppStrings.sureDelete, 'Alert'),
             ),
           ],
         ),

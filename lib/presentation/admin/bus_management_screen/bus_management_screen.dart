@@ -63,7 +63,9 @@ class BusManagementScreen extends GetWidget<BusController> {
               ),
               IconButton(
                 icon: Icon(Icons.delete,color:Colors.red,), onPressed: () {
-                controller.deleteBus(index);
+                showConfirmationDialog((){
+                  controller.deleteBus(index);
+                  },AppStrings.sureDelete, 'Alert') ;
               },
               ),
             ],

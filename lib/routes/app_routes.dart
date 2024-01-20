@@ -104,7 +104,7 @@ class AppRoutes {
       binding: DriverBinding(),
     ),
     GetPage(
-      name: AppStrings.storeManagement,
+      name: adminStoreManagement,
       page: () => StoreManagementScreen(),
       binding: StoreBinding(),
     ),
