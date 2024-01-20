@@ -3,6 +3,8 @@ import 'package:maseef_app/core/app_export.dart';
 class AppStrings {
     static String appName = 'Maseef'.tr;
     static String usernameOrEmail = 'Username or Email'.tr;
+    static String admin = 'Admin'.tr;
+    static String user = 'User'.tr;
     static String username = 'Username'.tr;
     static String email = 'Email'.tr;
     static String cPassword = 'Confirm Password'.tr;
@@ -66,7 +68,7 @@ class AppStrings {
     static const String editStore = "Edit Store";
     static const String storeNameLabel = "Store Name";
     static const String storeLinkLabel = "Store Link";
-    static const String discountCodeLabel = "Discount Code";
+     static const String discountCodeLabel = "Discount Code";
     static const String storePhotoUrlLabel = "Store Photo URL";
     static const String acceptedLabel = "Accepted";
     static const String yes = "Yes";
@@ -108,6 +110,9 @@ class AppStrings {
 
 
 
+    static const String sureDelete = 'Are you sure you want to delete this item?';
+    static const String sureblock = 'Are you sure you want to block this user?';
+    static const String surelogout = 'Are you sure you want to logout?';
 
 
 }

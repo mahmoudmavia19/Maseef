@@ -83,7 +83,9 @@ class MainScreen extends GetWidget<MainController> {
             Get.toNamed(AppRoutes.userComplaintScreen) ;
           }),
           _tab(AppStrings.logout,(){
-            Get.toNamed(AppRoutes.userLoginOrRegisterScreen) ;
+            showConfirmationDialog((){
+              Get.toNamed(AppRoutes.userLoginOrRegisterScreen) ;
+            },AppStrings.surelogout, 'Alert');
           }),
           Expanded(
             child: Container(

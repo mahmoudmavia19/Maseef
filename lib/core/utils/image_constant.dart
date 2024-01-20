@@ -26,4 +26,5 @@ class AppLotteAssets {
   static const String loading = 'assets/json/travel_loading.json';
   static const String error = 'assets/json/travel_error.json';
   static const String success = 'assets/json/success.png';
+  static const String load = 'assets/json/load.json';
 }

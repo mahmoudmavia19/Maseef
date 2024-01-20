@@ -108,7 +108,9 @@ class EditPostScreen extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: addPostController.editPost,
+                onPressed:()=>showConfirmationDialog((){
+                  addPostController.editPost();
+                }, 'are you sure', 'Alert'),
                 child: Text(AppStrings.editPost),
               ),
             ],

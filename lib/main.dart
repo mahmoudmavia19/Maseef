@@ -42,10 +42,7 @@ class MyApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius:BorderRadius.circular(25.0) ,
-            borderSide: BorderSide(
-              width: 2.0,
-              color: ColorConstant.primaryMaterialColor,
-            )
+              borderSide: BorderSide.none
           )
         ),
         bottomNavigationBarTheme:BottomNavigationBarThemeData(

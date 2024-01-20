@@ -201,10 +201,14 @@ class StoreManagementScreen extends StatelessWidget {
         child: StoreRequestCard(
           store: storeController.storesRequests[index],
           onAccept: () {
+            showConfirmationDialog((){
 
+            },'Are you want accept this store?', 'Alert');
           },
           onReject: () {
+            showConfirmationDialog((){
 
+            },'Are you want reject this store ?', 'Alert');
           },
         ),
       );
@@ -219,13 +223,10 @@ class StoreManagementScreen extends StatelessWidget {
                 onTap: () => _showEditStoreDialog(context, index),
                 child: StoreCard(
                   store: storeController.stores[index],
-
                 ),
               );
             },
           ) ,
-      () {},
-  )
-  );
+      () {},));
 
 }

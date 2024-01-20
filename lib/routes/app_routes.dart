@@ -1,6 +1,13 @@
 import 'package:get/get.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/presentation/splach_screen/splach_screen.dart';
+import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
+import 'package:maseef_app/presentation/user/auth/login.dart';
+import 'package:maseef_app/presentation/user/auth/register.dart';
+import 'package:maseef_app/presentation/user/profile_screen/binding/profile_binding.dart';
+import 'package:maseef_app/presentation/user/profile_screen/profile_screen.dart';
+import 'package:maseef_app/presentation/user/support_screen/binding/support_binding.dart';
+import 'package:maseef_app/presentation/user/support_screen/support_screen.dart';
 import 'package:maseef_app/presentation/user/another_screens/privacy_policy.dart';
 import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
 import 'package:maseef_app/presentation/user/auth/login.dart';
@@ -32,6 +39,7 @@ import '../presentation/admin/show_post_screen/binding/post_manage_binding.dart'
 import '../presentation/admin/show_post_screen/show_post_screen.dart';
 import '../presentation/admin/store_management_screen/binding/store_binding.dart';
 import '../presentation/admin/store_management_screen/store_management_screen.dart';
+import '../presentation/navigation/choose_user_screen.dart';
 import '../presentation/user/another_screens/terms_conditions.dart';
 import '../presentation/user/auth/forget_password.dart';
 import '../presentation/user/auth/forget_password_code_screen.dart';
@@ -43,6 +51,7 @@ import '../presentation/user/show_post_screen/binding/user_post_manage_binding.d
 import '../presentation/user/show_post_screen/user_show_post_screen.dart';
 import '../presentation/visitor/visitor_main_screen/binding/main_binding.dart';
 import '../presentation/visitor/visitor_main_screen/main_screen.dart';
+
 
 class AppRoutes {
   static const String adminLoginScreen = '/Admin/login_screen';
@@ -77,6 +86,7 @@ class AppRoutes {
 
 
   static const String initialRoute = '/initialRoute';
+  static const String chooseUser  = '/chooseUser';
 
   static List<GetPage> pages = [
     GetPage(
@@ -113,6 +123,10 @@ class AppRoutes {
     GetPage(
       name: initialRoute,
       page: () => SplashScreen(),
+    ),
+    GetPage(
+      name: chooseUser,
+      page: () => ChooseUserScreen(),
     ),
     GetPage(
       name: adminBusManagementScreen,
@@ -210,6 +224,11 @@ class AppRoutes {
     GetPage(
       name: userTermsAndConditionsScreen,
       page: () =>  TermsAndConditions()
-    )
+    ),
+    // User Routes
+
+
+
+
   ];
 }

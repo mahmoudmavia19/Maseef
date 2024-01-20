@@ -1,6 +1,7 @@
 // drivers_management_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maseef_app/core/constants/constants.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/widgets/custom_drawer.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
@@ -62,7 +63,9 @@ class DriversManagementScreen extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.delete,color: Colors.red,),
-            onPressed: () => driverController.deleteDriver(index),
+            onPressed: () => showConfirmationDialog((){
+              driverController.deleteDriver(index);
+            }, AppStrings.sureDelete, 'Alert'),
           ),
         ),
       );
