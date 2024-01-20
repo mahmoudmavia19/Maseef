@@ -19,6 +19,7 @@ class UserProfileScreen extends GetView<UserProfileController> {
             icon: Icon(Icons.arrow_back_ios)),
       ),
       body: ScaffoldBackground(
+        opacity: 0.9,
         child: Form(
           key: controller.formKey,
           child: ListView(
@@ -46,7 +47,7 @@ class UserProfileScreen extends GetView<UserProfileController> {
                   AppStrings.ageValidationMessage),
               const SizedBox(height: 16),
               _buildTextFormField(controller.emailController,
-                  AppStrings.emailLabel, AppStrings.emailValidationMessage),
+                  AppStrings.emailLabel, AppStrings.emailValidationMessage , readOnly: true),
               const SizedBox(height: 16),
               _buildTextFormField(controller.genderController,
                   AppStrings.genderLabel, AppStrings.genderValidationMessage),
@@ -54,14 +55,15 @@ class UserProfileScreen extends GetView<UserProfileController> {
               _buildTextFormField(controller.phoneController,
                   AppStrings.phoneLabel, AppStrings.phoneValidationMessage),
               const SizedBox(height: 32),
-              Visibility(
-                visible: !controller.editMode.value,
-                child: ElevatedButton(
-                  onPressed: () {
-                    controller.saveProfileInformation();
-                  },
-                  child: const Text(AppStrings.saveButtonLabel),
-                  style: ElevatedButton.styleFrom(primary: ColorConstant.primary),
+              Obx(()=> Visibility(
+                  visible: !controller.editMode.value,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      controller.saveProfileInformation();
+                    },
+                    child: const Text(AppStrings.saveButtonLabel),
+                    style: ElevatedButton.styleFrom(primary: ColorConstant.primary),
+                  ),
                 ),
               ),
             ],
@@ -97,9 +99,26 @@ class UserProfileScreen extends GetView<UserProfileController> {
         borderRadius: BorderRadius.circular(25),
         color: Colors.grey.withOpacity(0.5),
       ),
-      child: Obx(
+      child: readOnly ==true ? TextFormField(
+        readOnly: readOnly!,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        controller: controller,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return validationMessage;
+          }
+          return null;
+        },
+      )  :  Obx(
         () => TextFormField(
-          readOnly: readOnly ?? this.controller.editMode.value,
+          readOnly:  this.controller.editMode.value,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           controller: controller,
           textInputAction: TextInputAction.next,

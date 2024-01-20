@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
       // for admin
       //Get.offAllNamed(AppRoutes.adminLoginScreen);
       // for user
-       Get.offAllNamed(AppRoutes.userLoginOrRegisterScreen);
+       Get.offAllNamed(AppRoutes.guestMainScreen);
     });
 
     return Scaffold(

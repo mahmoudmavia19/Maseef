@@ -98,7 +98,7 @@ class NotificationItem extends StatelessWidget {
               width: 70,
               child: SvgPicture.asset(
                 ImageConstant.location_icon,
-                width: 40,
+                width: 45,
               ),
             ),
             SizedBox(width: 16),

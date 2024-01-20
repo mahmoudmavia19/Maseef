@@ -9,12 +9,11 @@ class GuestMainScreen extends GetWidget<GuestMainController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=> Scaffold(
-        drawer: controller.postsScreen? _drawer() : null,
+    return Scaffold(
+       /* drawer: controller.postsScreen? _drawer() : null,*/
          appBar: _appBar(),
         bottomNavigationBar: _bottomNavigationBar(),
         body: _pageView(),
-      ),
     );
   }
 
@@ -87,8 +86,8 @@ class GuestMainScreen extends GetWidget<GuestMainController> {
           icon: CustomImageView(svgPath: ImageConstant.home_icon,width: 40),
           label: AppStrings.add),
     BottomNavigationBarItem(
-        activeIcon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30,color: Colors.grey),
-        icon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30),label: AppStrings.ageLabel),
+        activeIcon: CustomImageView(svgPath: ImageConstant.location_icon,width: 40,color: Colors.grey),
+        icon: CustomImageView(svgPath: ImageConstant.location_icon,width: 40),label: AppStrings.ageLabel),
     BottomNavigationBarItem(
         activeIcon: CustomImageView(svgPath: ImageConstant.discount_icon,width: 30,color: Colors.grey),
         icon: CustomImageView(svgPath: ImageConstant.discount_icon,width: 30),label: AppStrings.Cafes),

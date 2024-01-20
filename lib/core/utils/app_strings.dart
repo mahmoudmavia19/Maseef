@@ -74,7 +74,7 @@ class AppStrings {
     static const String drawerHeader = 'Drawer Header';
     static const String showPost = 'Show Post';
     static const String storeManagement = 'Store Management';
-    static const String supportScreen = 'Support Screen';
+    static const String supportScreen = 'Support';
     static const String loading = 'Loading...';
     static const String retryAgain = 'Retry Again';
     static const String profile = 'Profile';

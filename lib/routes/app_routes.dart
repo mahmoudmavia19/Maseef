@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/presentation/splach_screen/splach_screen.dart';
+import 'package:maseef_app/presentation/user/another_screens/privacy_policy.dart';
 import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
 import 'package:maseef_app/presentation/user/auth/login.dart';
 import 'package:maseef_app/presentation/user/auth/register.dart';
+import 'package:maseef_app/presentation/user/locations_screen/binding/location_binding.dart';
 import 'package:maseef_app/presentation/user/profile_screen/binding/profile_binding.dart';
 import 'package:maseef_app/presentation/user/profile_screen/profile_screen.dart';
 import 'package:maseef_app/presentation/user/support_screen/binding/support_binding.dart';
@@ -30,6 +32,7 @@ import '../presentation/admin/show_post_screen/binding/post_manage_binding.dart'
 import '../presentation/admin/show_post_screen/show_post_screen.dart';
 import '../presentation/admin/store_management_screen/binding/store_binding.dart';
 import '../presentation/admin/store_management_screen/store_management_screen.dart';
+import '../presentation/user/another_screens/terms_conditions.dart';
 import '../presentation/user/auth/forget_password.dart';
 import '../presentation/user/auth/forget_password_code_screen.dart';
 import '../presentation/user/auth/new_password_screen.dart';
@@ -66,6 +69,8 @@ class AppRoutes {
   static const String userProfileScreen = '/user/profile_screen';
   static const String userShowPostScreen = '/user/show_post_screen';
   static const String userComplaintScreen = '/user/complaint_screen';
+  static const String userPrivacyPolicyScreen = '/user/privacy_policy_screen';
+  static const String userTermsAndConditionsScreen = '/user/terms_and_conditions_screen';
   // Visitor Routes
   static const String guestMainScreen = '/guest/main_screen';
 
@@ -172,7 +177,10 @@ class AppRoutes {
     GetPage(
       name: userMainScreen,
       page: () =>  MainScreen(),
-      binding: MainBinding(),
+      bindings: [
+        MainBinding() ,
+        LocationBinding()
+      ],
     ),
     GetPage(
       name: userProfileScreen,
@@ -195,6 +203,13 @@ class AppRoutes {
       page: () =>  GuestMainScreen(),
       binding: GuestMainBinding(),
     ),
-
+    GetPage(
+      name: userPrivacyPolicyScreen,
+      page: () =>  PrivacyPolicy()
+    ),
+    GetPage(
+      name: userTermsAndConditionsScreen,
+      page: () =>  TermsAndConditions()
+    )
   ];
 }

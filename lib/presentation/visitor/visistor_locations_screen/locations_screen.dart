@@ -21,7 +21,11 @@ class GuestLocationsScreen extends StatelessWidget {
                   initialCameraPosition: CameraPosition(
                     target: LatLng(24.774265, 46.738586),
                     zoom: 14.4746,
-                  )
+                  ),
+                 myLocationButtonEnabled: true,
+                myLocationEnabled: true,
+                mapType: MapType.terrain,
+                padding: EdgeInsets.only(top: 70),
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),

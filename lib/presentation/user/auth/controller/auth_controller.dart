@@ -25,13 +25,13 @@ class AuthController extends GetxController {
   void login() {
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
     Future.delayed(Duration(seconds: 5), () {
-      Get.toNamed(AppRoutes.userMainScreen);
+      Get.offAllNamed(AppRoutes.userMainScreen);
     });
   }
   void register() {
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
     Future.delayed(Duration(seconds: 5), () {
-      Get.toNamed(AppRoutes.userMainScreen);
+      Get.offAllNamed(AppRoutes.userMainScreen);
     });
   }
 }

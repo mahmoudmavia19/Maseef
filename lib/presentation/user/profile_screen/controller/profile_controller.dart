@@ -1,6 +1,5 @@
 // userProfile_controller.dart
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:maseef_app/core/app_export.dart';
 
 import '../model/user_model.dart';
@@ -26,10 +25,10 @@ class UserProfileController extends GetxController {
     super.onInit();
     user = UserModel(
       id: '1', // Replace with the actual user ID
-      name: 'John Doe', // Replace with the actual user name
-      username: 'john_doe', // Replace with the actual username
+      name: 'test', // Replace with the actual user name
+      username: 'test12', // Replace with the actual username
       age: 25, // Replace with the actual age
-      email: 'john.doe@example.com', // Replace with the actual email
+      email: 'test12@example.com', // Replace with the actual email
       gender: 'Male', // Replace with the actual gender
       phoneNumber: '1234567890', // Replace with the actual phone number
       imagePath: ImageConstant.user_placeholder

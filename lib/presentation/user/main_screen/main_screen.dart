@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/presentation/user/main_screen/controller/main_controller.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class MainScreen extends GetWidget<MainController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=> Scaffold(
-        drawer: controller.postsScreen? _drawer() : null,
+    return Scaffold(
+        /*drawer: controller.postsScreen? _drawer() : null,*/
         endDrawer: _endDrawer() ,
         appBar: _appBar(),
         bottomNavigationBar: _bottomNavigationBar(),
         body: _pageView(),
-      ),
     );
   }
 
@@ -49,7 +49,7 @@ class MainScreen extends GetWidget<MainController> {
     return Drawer(
       backgroundColor: ColorConstant.backgroundColor,
       width: 200.0,
-      child:ListView(
+      child:Column(
         children: [
           DrawerHeader(child:
           InkWell(
@@ -63,23 +63,50 @@ class MainScreen extends GetWidget<MainController> {
                   width: 80,
                 ),
                 SizedBox(height: 5.0,),
-                Text("Ahmed Zaki",style: TextStyle(fontWeight: FontWeight.bold,),),
-                Text("@ahmedZaki12",style: TextStyle(fontSize: 10.0,),),
+                Text("test",style: TextStyle(fontWeight: FontWeight.bold,),),
+                Text("@test12",style: TextStyle(fontSize: 10.0,),),
               ],
             ),
           ),
 
           ),
-          _tab(AppStrings.profile,(){}),
-          _tab(AppStrings.language,(){}),
-          _tab(AppStrings.privacyPolicy,(){}),
-          _tab(AppStrings.termsAndConditions,(){}),
+          _tab(AppStrings.profile,(){
+            Get.toNamed(AppRoutes.userProfileScreen) ;
+          }),
+          _tab(AppStrings.privacyPolicy,(){
+            Get.toNamed(AppRoutes.userPrivacyPolicyScreen) ;
+          }),
+          _tab(AppStrings.termsAndConditions,(){
+            Get.toNamed(AppRoutes.userTermsAndConditionsScreen) ;
+          }),
           _tab(AppStrings.support,(){
             Get.toNamed(AppRoutes.userComplaintScreen) ;
           }),
           _tab(AppStrings.logout,(){
             Get.toNamed(AppRoutes.userLoginOrRegisterScreen) ;
           }),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: 145,
+                  child: ToggleSwitch(
+                     initialLabelIndex: 0,
+                    totalSwitches: 2,
+                    centerText: true,
+                    animate: true,
+                    activeBgColor:[ ColorConstant.primary],
+                    labels: ['EN', 'AR'],
+                    onToggle: (index) {
+                      print('switched to: $index');
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -130,8 +157,8 @@ class MainScreen extends GetWidget<MainController> {
           activeIcon: CustomImageView(svgPath: ImageConstant.love_icon,width: 40,color: Colors.grey),
           icon:  CustomImageView(svgPath: ImageConstant.love_icon,width: 40),label: AppStrings.support),
     BottomNavigationBarItem(
-        activeIcon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30,color: Colors.grey),
-        icon: CustomImageView(svgPath: ImageConstant.location_icon,width: 30),label: AppStrings.ageLabel),
+        activeIcon: CustomImageView(svgPath: ImageConstant.location_icon,width: 40,color: Colors.grey),
+        icon: CustomImageView(svgPath: ImageConstant.location_icon,width: 40),label: AppStrings.ageLabel),
       BottomNavigationBarItem(
           activeIcon: CustomImageView(svgPath: ImageConstant.notification_icon,width: 30,color: Colors.grey),
           icon: CustomImageView(svgPath: ImageConstant.notification_icon,width: 30),label: AppStrings.storeManagement),
@@ -160,5 +187,7 @@ class MainScreen extends GetWidget<MainController> {
     itemBuilder: (context, index) => controller.pages[index],
     itemCount: controller.pages.length,
   );
+
+
 
 }

@@ -12,7 +12,7 @@ class ImageConstant {
   static String bus_location = 'assets/images/bus_location.png';
   static String user_placeholder = 'assets/images/user_placeholder.svg';
   static String  home_icon = 'assets/images/home_icon.svg';
-  static String  location_icon = 'assets/images/location_icon.svg';
+  static String  location_icon = 'assets/images/bus_location.svg';
   static String  love_icon = 'assets/images/love_icon.svg';
   static String  notification_icon = 'assets/images/notification_icon.svg';
   static String  search_icon = 'assets/images/search_icon.svg';

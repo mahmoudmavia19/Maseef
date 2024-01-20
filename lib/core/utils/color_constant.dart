@@ -93,16 +93,16 @@ class ColorConstant {
   static   Color editColor = fromHex('#00BF63');
   static   Color userColor = fromHex('#FF914D');
   static MaterialColor primaryMaterialColor = MaterialColor(0xFF3A4D39, {
-    50: Color(0xFF3A4D39),
-    100: Color(0xFF3A4D39),
-    200: Color(0xFF3A4D39),
-    300: Color(0xFF3A4D39),
-    400: Color(0xFF3A4D39),
+    50:  Color(0xFFfbedeb),
+    100: Color(0xFFebedeb),
+    200: Color(0xFF9ca69c),
+    300: Color(0xFF889488),
+    400: Color(0xFF617060),
     500: Color(0xFF3A4D39),
-    600: Color(0xFF3A4D39),
-    700: Color(0xFF3A4D39),
-    800: Color(0xFF3A4D39),
-    900: Color(0xFF3A4D39),
+    600: Color(0xFF344533),
+    700: Color(0xFF2e3d2d),
+    800: Color(0xFF283527),
+    900: Color(0xFF222e22),
   });
 
 }

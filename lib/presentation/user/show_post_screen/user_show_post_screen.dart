@@ -144,10 +144,13 @@ class UserShowPostScreen extends GetWidget<UserPostManageController> {
           padding: EdgeInsets.only(left: 10.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25.0),
-              color: Colors.grey.withOpacity(0.5)),
+              color: Colors.grey),
           child: TextFormField(
+            cursorColor: ColorConstant.primary,
               decoration: InputDecoration(
                   hintText: 'Add a comment',
+                  focusedBorder: InputBorder.none,
+                  hintStyle: TextStyle(color: Colors.white70),
                   border: InputBorder.none,
                   suffixIcon: IconButton(
                     onPressed: () {},
@@ -190,7 +193,7 @@ class UserShowPostScreen extends GetWidget<UserPostManageController> {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                'Sahar',
+                'test name',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Padding(
@@ -255,6 +258,8 @@ class UserShowPostScreen extends GetWidget<UserPostManageController> {
             width: double.infinity,
             child: TextFormField(
                 decoration: InputDecoration(
+                  border:InputBorder.none,
+              focusedBorder: InputBorder.none,
               hintText: 'Add a comment',
             )))
       ]),

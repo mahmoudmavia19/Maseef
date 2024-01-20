@@ -31,6 +31,23 @@ class MyApp extends StatelessWidget {
                 foregroundColor: Colors.white,
           )
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: ColorConstant.primary,
+            fontWeight: FontWeight.bold
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide.none
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius:BorderRadius.circular(25.0) ,
+            borderSide: BorderSide(
+              width: 2.0,
+              color: ColorConstant.primaryMaterialColor,
+            )
+          )
+        ),
         bottomNavigationBarTheme:BottomNavigationBarThemeData(
           backgroundColor: ColorConstant.backgroundColor,
         ),
@@ -53,7 +70,12 @@ class MyApp extends StatelessWidget {
           backgroundColor: ColorConstant.floatActionButColor,
           foregroundColor: Colors.white,
         ),
-        primarySwatch: ColorConstant.primaryMaterialColor
+        primarySwatch: ColorConstant.primaryMaterialColor ,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: ColorConstant.primaryMaterialColor ,
+              backgroundColor: ColorConstant.primaryMaterialColor[50] ,
+              brightness: Brightness.light
+        )
       ),
       translations: AppLocalization(),
       locale: Get.deviceLocale,
@@ -61,7 +83,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en', 'US'),
       title: AppStrings.appName,
       initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.guestMainScreen,
+      initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.pages,
     );
   }
