@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
+import 'package:maseef_app/presentation/driver/driver_tracking/binding/driver_tracking_binding.dart';
+import 'package:maseef_app/presentation/driver/driver_tracking/driver_tracking_screen.dart';
+import 'package:maseef_app/presentation/driver/login/binding/driver_login_binding.dart';
+import 'package:maseef_app/presentation/driver/login/controller/driver_controller.dart';
 import 'package:maseef_app/presentation/splach_screen/splach_screen.dart';
 import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
 import 'package:maseef_app/presentation/user/auth/login.dart';
@@ -39,6 +43,7 @@ import '../presentation/admin/show_post_screen/binding/post_manage_binding.dart'
 import '../presentation/admin/show_post_screen/show_post_screen.dart';
 import '../presentation/admin/store_management_screen/binding/store_binding.dart';
 import '../presentation/admin/store_management_screen/store_management_screen.dart';
+import '../presentation/driver/login/driver_login_screen.dart';
 import '../presentation/navigation/choose_user_screen.dart';
 import '../presentation/user/another_screens/terms_conditions.dart';
 import '../presentation/user/auth/forget_password.dart';
@@ -80,6 +85,10 @@ class AppRoutes {
   static const String userComplaintScreen = '/user/complaint_screen';
   static const String userPrivacyPolicyScreen = '/user/privacy_policy_screen';
   static const String userTermsAndConditionsScreen = '/user/terms_and_conditions_screen';
+  static const String driverLoginScreen = '/driver/login_screen';
+  static const String driverTrackingScreen = '/driver/tracking_screen';
+
+
   // Visitor Routes
   static const String guestMainScreen = '/guest/main_screen';
 
@@ -225,10 +234,17 @@ class AppRoutes {
       name: userTermsAndConditionsScreen,
       page: () =>  TermsAndConditions()
     ),
-    // User Routes
-
-
-
+    // Driver Routes
+    GetPage (
+      name: driverLoginScreen,
+      page: () =>  DriverLoginPage(),
+      binding: DriverLoginBinding(),
+    ),
+    GetPage(
+      name: driverTrackingScreen,
+      page: () =>  DriverTracking(),
+      binding: DriverTrackingBinding(),
+    ),
 
   ];
 }

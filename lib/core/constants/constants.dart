@@ -24,6 +24,9 @@ LatLng startMapLocation =  LatLng(24.774265, 46.738586);
           Get.back(); // Close the dialog
          Get.snackbar('Canceled', 'Action canceled');
        },
+       style: ButtonStyle(
+         backgroundColor: MaterialStateProperty.all(Colors.grey),
+       ),
        child: Text('Cancel'),
      ),
    );

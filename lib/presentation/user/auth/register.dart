@@ -45,6 +45,7 @@ class RegisterScreenUI extends StatelessWidget {
               Text(AppStrings.alreadyRegistered,style: TextStyle(fontSize: 16.0),),
               TextButton(
                 onPressed: () {
+                  Get.toNamed(AppRoutes.userLoginScreen) ;
                 },
                   child: Text(AppStrings.loginHere,style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold,color: Colors.black))),
             ],

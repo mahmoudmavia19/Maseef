@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 
-import '../../../core/utils/color_constant.dart';
-import '../../../widgets/custom_button.dart';
+ import '../../../widgets/custom_button.dart';
 import '../../../widgets/logo_widget.dart';
 
 class UserLoginOrRegister extends StatelessWidget {
