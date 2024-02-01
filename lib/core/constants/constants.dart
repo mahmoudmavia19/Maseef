@@ -32,4 +32,41 @@ LatLng startMapLocation =  LatLng(24.774265, 46.738586);
    );
  }
 
+ void nullVoid (){}
+
+
+
+ bool isPasswordSecure(String password) {
+   // Check the length of the password
+   if (password.length < 8) {
+     return false;
+   }
+
+   // Check if password contains uppercase letters
+   if (!password.contains(RegExp(r'[A-Z]'))) {
+     return false;
+   }
+
+   // Check if password contains lowercase letters
+   if (!password.contains(RegExp(r'[a-z]'))) {
+     return false;
+   }
+
+   // Check if password contains numbers
+   if (!password.contains(RegExp(r'[0-9]'))) {
+     return false;
+   }
+
+   // Check if password contains special characters
+   if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+     return false;
+   }
+
+   // If all criteria pass, the password is considered secure
+   return true;
+ }
+
+ bool isEmailValid (String email) {
+   return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+ }
 

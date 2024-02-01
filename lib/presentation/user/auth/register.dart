@@ -58,7 +58,7 @@ class RegisterScreenUI extends StatelessWidget {
           SizedBox(height: 20),
           TextFieldWidget(
             labelText: AppStrings.emailLabel,
-            controller: registerController.usernameController,
+            controller: registerController.emailController,
           ),
           SizedBox(height: 20),
 
@@ -71,7 +71,7 @@ class RegisterScreenUI extends StatelessWidget {
           TextFieldWidget(
             labelText: AppStrings.cPassword,
             obscureText: registerController.obscurePassword.value,
-            controller: registerController.passwordController,
+            controller: registerController.cPasswordController,
           ),
           SizedBox(height: 20),
           ButtonWidget(onPressed:registerController.register, text:AppStrings.signUp,),

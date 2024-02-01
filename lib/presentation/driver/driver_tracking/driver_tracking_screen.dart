@@ -3,7 +3,6 @@ import 'package:lottie/lottie.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/presentation/driver/driver_tracking/controller/driver_tracking_controller.dart';
-import 'package:maseef_app/widgets/custom_app_bar.dart';
 
 class DriverTracking extends GetWidget<DriverTrackingController>{
 

@@ -25,7 +25,7 @@ class UserForgetPasswordPage extends GetWidget<AuthController> {
           return controller.getState.getScreenWidget(
             ForgetPasswordScreenUI(loginController: controller),
                 () {
-              //controller.login();
+               controller.forgetPassword();
             },
           );
         }),
@@ -54,7 +54,7 @@ class ForgetPasswordScreenUI extends StatelessWidget {
 
           SizedBox(height: 20),
           ButtonWidget(onPressed: (){
-            Get.toNamed(AppRoutes.userForgetPasswordCodeScreen);
+            loginController.forgetPassword();
           }, text:AppStrings.next,),
          ],
       ),

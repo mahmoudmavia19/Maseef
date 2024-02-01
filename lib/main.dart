@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 
 import 'core/app_export.dart';
+import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +13,10 @@ void main() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]),
-    PrefUtils().init()
+    PrefUtils().init() ,
+    Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+  )
   ]).then((value) {
     Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
     runApp(MyApp());

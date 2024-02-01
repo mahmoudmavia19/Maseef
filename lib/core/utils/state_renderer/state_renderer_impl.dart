@@ -166,9 +166,12 @@ extension FlowStateExtension on FlowState {
 
   showPopup(StateRendererType stateRendererType,
       String message) {
-    Get.dialog(StateRenderer(
-        stateRendererType: stateRendererType,
-        message: message,
-        retryActionFunction: () {}));
+     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+       Get.dialog(StateRenderer(
+           stateRendererType: stateRendererType,
+           message: message,
+           retryActionFunction: () {}));
+     });
+
   }
 }

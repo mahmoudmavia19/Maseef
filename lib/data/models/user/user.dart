@@ -1,11 +1,11 @@
 // user_model.dart
 class User {
-  final String id;
-  final String name;
-  final int age;
-  final String gender;
-  final String phone;
-  final String email;
+   String id;
+   String name;
+   int age;
+   String gender;
+   String phone;
+   String email;
 
   User({
     required this.id,

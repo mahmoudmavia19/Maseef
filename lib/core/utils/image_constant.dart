@@ -22,7 +22,7 @@ class ImageConstant {
 class AppLotteAssets {
   static const String loading = 'assets/json/travel_loading.json';
   static const String error = 'assets/json/travel_error.json';
-  static const String success = 'assets/json/success.png';
+  static const String success = 'assets/json/success.json';
   static const String load = 'assets/json/load.json';
   static const String tracking = 'assets/json/tracking.json';
   static const String start = 'assets/json/start.json';

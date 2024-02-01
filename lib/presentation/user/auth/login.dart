@@ -42,7 +42,7 @@ class LoginScreenUI extends StatelessWidget {
           LogoWidget(),
           TextFieldWidget(
             labelText: AppStrings.usernameOrEmail,
-            controller: loginController.usernameController,
+            controller: loginController.emailController,
           ),
           SizedBox(height: 20),
           TextFieldWidget(
