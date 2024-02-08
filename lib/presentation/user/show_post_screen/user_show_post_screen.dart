@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:intl/intl.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 
@@ -104,6 +105,17 @@ class UserShowPostScreen extends GetWidget<UserPostManageController> {
                             width: double.infinity,
                           ),
                         ),
+                        SizedBox(
+                          height: 5.0,
+                        ) ,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            DateFormat. yMMMd().format(
+                                controller.post.postDate
+                            ),
+                          ),
+                        )
                       ])),
                 ),
               ),
