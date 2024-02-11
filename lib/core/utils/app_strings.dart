@@ -97,6 +97,10 @@ class AppStrings {
     static const String nameLabel = 'Name';
     static const String usernameLabel = 'Username';
      static const String saveButtonLabel = 'Save';
+     static const String edit = 'Edit';
+     static const String delete = 'Delete';
+
+
 
     static const String nameValidationMessage = 'Please enter your name';
     static const String usernameValidationMessage = 'Please enter your username';

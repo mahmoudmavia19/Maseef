@@ -43,7 +43,40 @@ class BusManagementScreen extends GetWidget<BusController> {
         child: ListTile(
           titleTextStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black),
           subtitleTextStyle:TextStyle(fontSize: 16.0,color: Colors.black),
-          title:  _subtitleItem('${AppStrings.busNumber}:', bus.busNumber),
+          title:Row(
+            children: [
+              _subtitleItem('${AppStrings.busNumber}:', bus.busNumber),
+              Spacer(),
+              PopupMenuButton(itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.adminEditBusScreen, arguments: index);
+                    },
+                    child:  Row(
+                      children: [
+                        Icon(Icons.edit,color:ColorConstant.primaryMaterialColor,),
+                        SizedBox(width: 5.0,),
+                        Text(AppStrings.edit),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
+                      controller.deleteBus(index);
+                    },
+                    child:Row(
+                      children: [
+                        Icon(Icons.delete,color:Colors.red,),
+                        SizedBox(width: 5.0,),
+                        Text(AppStrings.delete),
+                      ],
+                    ),
+                  )
+                ] ;
+              })
+            ],
+          ) ,
           subtitle:Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,24 +86,7 @@ class BusManagementScreen extends GetWidget<BusController> {
               _subtitleItem('${AppStrings.driver}:', bus.driver),
             ],
           ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.edit,color:ColorConstant.primaryMaterialColor,), onPressed: () {
-                Get.toNamed(AppRoutes.adminEditBusScreen, arguments: index);
-              },
-              ),
-              IconButton(
-                icon: Icon(Icons.delete,color:Colors.red,), onPressed: () {
-             showConfirmationDialog((){
-               controller.deleteBus(index);
-             }, AppStrings.sureDelete, 'Alert');
-              },
-              ),
-            ],
-          ),
-          // onTap: () => Get.toNamed(AppRoutes.busDetailsScreen, arguments: bus),
+           // onTap: () => Get.toNamed(AppRoutes.busDetailsScreen, arguments: bus),
         ),
       );
     },

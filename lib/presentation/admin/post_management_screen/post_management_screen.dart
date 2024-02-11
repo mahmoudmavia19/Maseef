@@ -28,79 +28,86 @@ class PostManagementScreen extends GetWidget<PostController>{
       ),
     );
   }
-_widget()=> ListView.builder(
-  itemCount: controller.posts.length,
-  itemBuilder: (context, index) {
-    Post post = controller.posts[index];
-    return InkWell(
-      onTap: () {
-        Get.toNamed(AppRoutes.adminShowPostScreen,arguments: [index,post]);
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Container(
-            padding: EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-                color: Colors.grey[200]!.withOpacity(0.7)
-            ),
-            child: Column(
-                children: [
-                  Container(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Image.file(File(post.postImage),
-                      height: 200.0,
-                      fit: BoxFit.fitHeight,
-                      alignment: Alignment.topCenter,
-                      width: double.infinity,),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            post.postTitle,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22.0),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(ImageConstant.love,
-                              color: Colors.red,
-                              fit: BoxFit.fill,
-                              height: 40.0,
-                              width: 40.0,),
-                            Text(
-                              '12',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Image.asset(ImageConstant.comments,
-                              fit: BoxFit.fill,
-                              height: 40.0,
-                              width: 40.0,),
-                            Text('12',
-                                style:
-                                TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ]
-            )
-        ),
-      ),
-    );
+_widget()=> RefreshIndicator(
+  onRefresh: () {
+    controller.getPosts();
+    return Future.value(true);
   },
+  child: ListView.builder(
+    itemCount: controller.posts.length,
+    itemBuilder: (context, index) {
+      Post post = controller.posts[index];
+      return InkWell(
+        onTap: () {
+          Get.toNamed(AppRoutes.adminShowPostScreen,arguments: [index,post]);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+              padding: EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200]!.withOpacity(0.7)
+              ),
+              child: Column(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Image.network(post.postImage,
+                        height: 200.0,
+                        fit: BoxFit.fitHeight,
+                        alignment: Alignment.topCenter,
+                        errorBuilder:(context, error, stackTrace) => Image.asset(ImageConstant.imageNotFound,height: 200,),
+                        width: double.infinity,),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              post.postTitle,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Image.asset(ImageConstant.love,
+                                color: Colors.red,
+                                fit: BoxFit.fill,
+                                height: 40.0,
+                                width: 40.0,),
+                              Text(
+                                '12',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Image.asset(ImageConstant.comments,
+                                fit: BoxFit.fill,
+                                height: 40.0,
+                                width: 40.0,),
+                              Text('12',
+                                  style:
+                                  TextStyle(fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]
+              )
+          ),
+        ),
+      );
+    },
+  ),
 );
 }

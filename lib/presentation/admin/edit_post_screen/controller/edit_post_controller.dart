@@ -18,6 +18,7 @@ class EditPostController extends GetxController {
   final Rx<File?> selectedImage = Rx<File?>(null);
  final Rx<LocationData> currentLocation_ = Rx(LocationData.fromMap({}));
   late GoogleMapController mapController ;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int index = Get.arguments;
   Post post =   Get.find<PostController>().posts[Get.arguments];
   @override
@@ -32,7 +33,6 @@ class EditPostController extends GetxController {
     postContentController.text = post.postContent;
     postTitleController.text = post.postTitle;
     postAddressController.text = post.addressLocation;
-    selectedImage.value = File(post.postImage);
 
 
     super.onInit();
@@ -83,17 +83,19 @@ class EditPostController extends GetxController {
   }
 
   Future<void> editPost() async {
-    Get.find<PostController>().posts[index] = Post(
-        postId: DateTime.now().toString(),
-        adminId: '2232',
+  var newPost = Post(
+        postId:post.postId,
+        adminId:post.adminId,
         postDate: DateTime.now(),
+        love: post.love,
         postContent: postContentController.text,
-        postLocation:LatLng(
+        postLocation:currentLocation_.value.latitude!=null?LatLng(
             currentLocation_.value.latitude!,
-            currentLocation_.value.longitude!),
-        postImage: selectedImage.value!.path,
+            currentLocation_.value.longitude!):post.postLocation,
+        postImage: post.postImage,
         addressLocation: postAddressController.text,
         postTitle: postTitleController.text);
-  Get.back();
+  Get.find<PostController>().editPost(newPost,selectedImage.value);
+
   }
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:maseef_app/core/utils/image_constant.dart';
+import 'package:maseef_app/data/remote_data_source/admin_remote_data_source.dart';
 
 import '../../../../core/utils/state_renderer/state_renderer.dart';
 import '../../../../core/utils/state_renderer/state_renderer_impl.dart';
@@ -18,8 +19,9 @@ class BusController extends GetxController {
   final TextEditingController arrivalTimeController = TextEditingController();
   final TextEditingController addressLocationController = TextEditingController();
   final TextEditingController driverController = TextEditingController();
-
+ GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final Rx<LocationData> currentLocation_ = Rx(LocationData.fromMap({}));
+  AdminRemoteDataSource remoteDataSource = Get.find<AdminRemoteDataSourceImpl>();
   late GoogleMapController mapController ;
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
   FlowState get getState => state.value;
@@ -48,8 +50,24 @@ class BusController extends GetxController {
     _geButIconLocation() ;
     _getCurrentLocation();
     super.onInit();
-    _checkBuses();
+    getBuses();
   }
+
+  getBuses() async {
+    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+    (await remoteDataSource.getBuses()).fold(
+      (failure) {
+        state.value = ErrorState(StateRendererType.fullScreenErrorState, failure.message);
+      },
+      (buses) {
+        this.buses.value = buses;
+        state.value = ContentState();
+      }
+    );
+  }
+
+
+
   chooseLocation(LatLng target ) {
     currentLocation_.value = LocationData.fromMap({
       'latitude': target.latitude,
@@ -82,20 +100,40 @@ class BusController extends GetxController {
     }
   }
 
-  void addBus(Bus bus) {
-    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-    buses.add(bus);
-    state.value = ContentState();
+  void addBus(Bus bus)async {
+    if(formKey.currentState!.validate()){
+      state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+      (await remoteDataSource.addBus(bus)).fold((l){
+        state.value = ErrorState(StateRendererType.fullScreenErrorState, l.message);
+      }, (r){
+        buses.add(bus);
+        state.value = ContentState();
 
+        Get.back();
+      });
+    }
   }
 
-  void editBus(int index, Bus updatedBus) {
-    buses[index] = updatedBus;
+  void editBus(int index, Bus updatedBus) async {
+    if(formKey.currentState!.validate()){
+      state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+      (await remoteDataSource.editBus(updatedBus)).fold((l){
+        state.value = ErrorState(StateRendererType.fullScreenErrorState, l.message);
+      }, (r) {
+        buses[index] = updatedBus;
+        state.value = ContentState();
+        Get.back();
+      });
+     }
   }
 
-  void deleteBus(int index) {
-    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-    buses.removeAt(index);
-    _checkBuses();
+  void deleteBus(int index) async{
+    state.value = LoadingState(stateRendererType: StateRendererType.popupLoadingState);
+    (await remoteDataSource.deleteBus(buses[index])).fold((l){
+      state.value = ErrorState(StateRendererType.fullScreenErrorState, l.message);
+    }, (r){
+      buses.removeAt(index);
+      state.value = SuccessState(StateRendererType.popupSuccessState, 'Bus deleted successfully');
+    }) ;
   }
 }

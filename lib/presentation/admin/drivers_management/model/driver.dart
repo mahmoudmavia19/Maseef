@@ -7,7 +7,7 @@ import '../../../../data/models/user/user.dart';
 class Driver extends User {
   final LatLng? currentLocation;
   Driver({
-    required String id,
+      String? id,
     required String name,
     required int age,
     required String gender,

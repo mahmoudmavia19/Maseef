@@ -7,12 +7,14 @@ class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final bool obscureText;
   final Widget? suffixIcon;
+  final TextInputAction? textInputAction ;
 
   const TextFieldWidget({
     required this.labelText,
     required this.controller,
     this.obscureText = false,
     this.suffixIcon,
+    this.textInputAction
   });
 
   @override
@@ -27,14 +29,22 @@ class TextFieldWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: TextFormField(
+        textInputAction:textInputAction,
         controller: controller,
         obscureText: obscureText,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter some text';
+          }
+          return null;
+        },
         decoration: InputDecoration(
           hintStyle: TextStyle(
               color: ColorConstant.textFieldHint
           ),
           hintText: labelText,
           border: InputBorder.none,
+          enabledBorder: InputBorder.none,
           contentPadding: EdgeInsets.only(top: 14),
           suffixIcon: suffixIcon,
         ),

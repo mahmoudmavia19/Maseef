@@ -37,20 +37,10 @@ class MyApp extends StatelessWidget {
           )
         ),
         inputDecorationTheme: InputDecorationTheme(
-          labelStyle: TextStyle(
-            color: ColorConstant.primary,
-            fontWeight: FontWeight.bold
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide.none
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius:BorderRadius.circular(25.0) ,
-              borderSide: BorderSide.none
-          )
+          border: UnderlineInputBorder(borderSide: BorderSide(color: ColorConstant.primary)),
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorConstant.primary)),
         ),
-        bottomNavigationBarTheme:BottomNavigationBarThemeData(
+         bottomNavigationBarTheme:BottomNavigationBarThemeData(
           backgroundColor: ColorConstant.backgroundColor,
         ),
         bottomSheetTheme: BottomSheetThemeData(

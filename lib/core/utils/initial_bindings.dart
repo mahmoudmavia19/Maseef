@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/data/apiClient/admin_api_client.dart';
 import 'package:maseef_app/data/apiClient/driver_api_client.dart';
@@ -20,8 +21,9 @@ class InitialBindings extends Bindings {
 
     FirebaseAuth auth = FirebaseAuth.instance;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
+    FirebaseStorage storage = FirebaseStorage.instance;
     Get.put(UserApiClient(auth, firestore));
-    Get.put(AdminApiClient(auth, firestore));
+    Get.put(AdminApiClient(auth, firestore, storage));
     Get.put(DriverApiClient(auth, firestore));
     Connectivity connectivity = Connectivity();
     Get.put(NetworkInfo(connectivity));

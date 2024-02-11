@@ -1,6 +1,7 @@
 // complaints_management_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/widgets/custom_drawer.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import '../../../core/utils/app_strings.dart';
@@ -25,28 +26,44 @@ class ComplaintsManagementScreen extends StatelessWidget {
         ],
       ),
       body: Obx(
-            () => ScaffoldBackground(
-              child: ListView.builder(
-                        itemCount: complaintController.complaints.length,
-                        itemBuilder: (context, index) {
-              Complaint complaint = complaintController.complaints[index];
-              return Card(
-                color: Colors.transparent,
-                child: ListTile(
-                  title:_subtitleItem('${AppStrings.customerNameLabel}:', complaint.customerName),
-                  subtitle: _subtitleItem('${AppStrings.descriptionLabel}:', complaint.description),
-                  trailing: ElevatedButton(
-                    onPressed: () => _showResolveDialog(context, index),
-                    child:Text(AppStrings.resolveButton),
-                  ),
-                ),
-              );},),
-            ),
+            () => complaintController.state.value.getScreenWidget(_widget(), (){
+              complaintController.getComplaint();
+            })
       ),
 
     );
   }
 
+  _widget() {
+    return  ScaffoldBackground(
+      child: RefreshIndicator(
+        onRefresh: (){
+          complaintController.getComplaint();
+          return Future.value(true);
+        },
+        child: ListView.builder(
+          itemCount: complaintController.complaints.length,
+          itemBuilder: (context, index) {
+            Complaint complaint = complaintController.complaints[index];
+            return Card(
+              color: Colors.transparent,
+              child: ListTile(
+                title:_subtitleItem('${AppStrings.customerNameLabel}:', complaint.customerName??''),
+                subtitle: _subtitleItem('${AppStrings.descriptionLabel}:', complaint.description??''),
+                trailing: Obx(
+                      ()=>Visibility(
+                    visible:complaint.response==null,
+                    child: ElevatedButton(
+                      onPressed: () => _showResolveDialog(context, index),
+                      child:Text(AppStrings.resolveButton),
+                    ),
+                  ),
+                ),
+              ),
+            );},),
+      ),
+    );
+  }
 
   _subtitleItem(String title, String subtitle) {
     return Wrap(
@@ -80,8 +97,7 @@ class ComplaintsManagementScreen extends StatelessWidget {
               onPressed: () {
                 String resolution = resolutionController.text;
                 complaintController.resolveComplaint(index, resolution);
-                Navigator.of(context).pop(); // Close the dialog
-              },
+               },
               child: Text('Resolve'),
             ),
           ],

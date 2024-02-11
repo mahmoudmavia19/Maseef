@@ -15,7 +15,7 @@ LatLng startMapLocation =  LatLng(24.774265, 46.738586);
        onPressed: () {
           action();
          Get.back(); // Close the dialog
-         Get.snackbar('Confirmed', 'Proceeding...');
+        // Get.snackbar('Confirmed', 'Proceeding...',);
        },
        child: Text('Confirm'),
      ),
@@ -34,7 +34,13 @@ LatLng startMapLocation =  LatLng(24.774265, 46.738586);
 
  void nullVoid (){}
 
-
+// isNumeric must start with 05 and have 10 digits
+ isNumeric(String value) {
+   if (value.startsWith('05') && value.length == 10) {
+     return true;
+   }
+   return false;
+ }
 
  bool isPasswordSecure(String password) {
    // Check the length of the password

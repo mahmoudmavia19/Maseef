@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer.dart';
+import 'package:maseef_app/data/remote_data_source/admin_remote_data_source.dart';
 
 import '../../../../core/utils/state_renderer/state_renderer_impl.dart';
 import '../model/post.dart';
@@ -7,15 +10,29 @@ import '../model/post.dart';
 class PostController extends GetxController {
   final posts = <Post>[].obs;
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-
-
+  AdminRemoteDataSource remoteDataSource = Get.find<AdminRemoteDataSourceImpl>();
   FlowState get getState => state.value;
 
   @override
   void onInit() {
-
     super.onInit();
-  _checkPosts();
+    getPosts();
+   }
+
+  getPosts()async{
+    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+    (await remoteDataSource.getPosts()).fold((failure) {
+      state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+    },(posts) {
+       this.posts.value = posts;
+       if(posts.isNotEmpty) {
+         state.value = ContentState();
+       } else
+         {
+           state.value = EmptyState('No Posts Found');
+         }
+       }
+    );
   }
 
   _checkPosts() {
@@ -26,23 +43,28 @@ class PostController extends GetxController {
     }
   }
 
-  void addPost(Post post) {
-     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-    posts.add(post);
-    state.value = ContentState();
-  }
 
 
-  void editPost(Post oldPost, Post newPost) {
-    final index = posts.indexWhere((element) => element.postId == oldPost.postId);
-    if (index != -1) {
-      posts[index] = newPost;
-    }
-  }
-
-  void deletePost(int index) {
+  void editPost(Post newPost,File? newFile) async{
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-    posts.removeAt(index);
-    _checkPosts();
+    (await remoteDataSource.editPost(newPost,newFile)).fold((failure) {
+      state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+    },(posts) {
+       getPosts();
+       state.value = SuccessState(StateRendererType.popupSuccessState, 'Post Edited Successfully');
+     });
+
+  }
+
+  void deletePost(int index) async{
+    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+    (await remoteDataSource.deletePost(posts[index])).fold((failure) {
+      state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+    },(posts) {
+       this.posts.removeAt(index);
+      getPosts();
+       Get.back();
+    });
+    print(posts[index].postId);
   }
 }

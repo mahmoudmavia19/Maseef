@@ -46,8 +46,11 @@ class StoreRequestCard extends StatelessWidget {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Image.asset(
-                store.photoUrl,
+              Image.network(
+                store.photoUrl??'',
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  ImageConstant.imageNotFound,
+                ),
                 height: 150,
                 fit: BoxFit.cover,
                 width: double.infinity,

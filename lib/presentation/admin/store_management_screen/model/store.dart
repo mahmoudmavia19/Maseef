@@ -1,22 +1,20 @@
-// store_model.dart
 import 'package:equatable/equatable.dart';
 
 class Store extends Equatable {
-  final String id;
+    String? id;
   final String name;
   final String link;
   final String discountCode;
-  final String photoUrl;
-  bool accepted;
-
+    String? photoUrl;
+  bool? accepted;
 
   Store({
-    required this.id,
+      this.id,
     required this.name,
     required this.link,
     required this.discountCode,
-    required this.photoUrl,
-    this.accepted = false,
+      this.photoUrl,
+    this.accepted,
   });
 
   Store copyWith({
@@ -37,8 +35,30 @@ class Store extends Equatable {
     );
   }
 
+  factory Store.fromJson(Map<String, dynamic> json) {
+    return Store(
+      id: json['id'],
+      name: json['name'],
+      link: json['link'],
+      discountCode: json['discountCode'],
+      photoUrl: json['photoUrl'],
+      accepted: json['accepted'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'link': link,
+      'discountCode': discountCode,
+      'photoUrl': photoUrl,
+      'accepted': accepted,
+    };
+  }
+
   @override
-   List<Object?> get props => [
+  List<Object?> get props => [
     id,
     name,
     link,

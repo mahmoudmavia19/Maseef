@@ -6,6 +6,7 @@ import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
+import 'package:maseef_app/data/remote_data_source/admin_remote_data_source.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/controller/post_controller.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
 
@@ -22,6 +23,8 @@ class AddPostController extends GetxController {
   late GoogleMapController mapController ;
   Rx<FlowState> state = Rx<FlowState>(ContentState());
  FlowState get getState => state.value;
+ GlobalKey<FormState> formKey = GlobalKey<FormState>();
+ AdminRemoteDataSource remoteDataSource = Get.find<AdminRemoteDataSourceImpl>();
 
   @override
   void onClose() {
@@ -76,16 +79,30 @@ class AddPostController extends GetxController {
   }
 
   Future<void> addPost() async {
-    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-  Get.find<PostController>().addPost(Post(
-      postId: DateTime.now().toString(),
-      adminId: '2232',
-      postDate: DateTime.now(),
-      addressLocation: postAddressController.text,
-      postContent: postContentController.text,
-      postLocation:LatLng(currentLocation_.value.latitude!, currentLocation_.value.longitude!),
-      postImage: selectedImage.value!.path,
-      postTitle: postTitleController.text));
-  Get.back();
+    if(formKey.currentState!.validate()) {
+      state.value = LoadingState(
+          stateRendererType: StateRendererType.fullScreenLoadingState);
+      if (selectedImage.value == null) {
+        state.value = ErrorState(
+            StateRendererType.popupErrorState, 'Please select an image');
+      } else {
+        (await
+        remoteDataSource.addPost(Post(
+            postDate: DateTime.now(),
+            addressLocation: postAddressController.text,
+            postContent: postContentController.text,
+            postLocation: LatLng(currentLocation_.value.latitude!,
+                currentLocation_.value.longitude!),
+            postImage: selectedImage.value!.path,
+            postTitle: postTitleController.text), selectedImage.value!)).fold((
+            l) {
+          state.value =
+              ErrorState(StateRendererType.popupErrorState, l.message);
+        }, (r) {
+          Get.back();
+        });
+      }
+      Get.back();
+    }
   }
 }

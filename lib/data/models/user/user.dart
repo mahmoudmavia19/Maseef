@@ -1,6 +1,6 @@
 // user_model.dart
 class User {
-   String id;
+   String? id;
    String name;
    int age;
    String gender;
@@ -8,7 +8,7 @@ class User {
    String email;
 
   User({
-    required this.id,
+      this.id,
     required this.name,
     required this.age,
     required this.gender,

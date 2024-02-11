@@ -16,9 +16,7 @@ class CategoryManagementScreen extends GetWidget<CategoryController> {
       drawer:MainDrawer(),
       appBar: customAppBar(AppStrings.categoryManagement),
       body: Obx(() => ScaffoldBackground(
-        child: controller.getState.getScreenWidget(_widget(), () {})
-      ),
-      ),
+        child: controller.getState.getScreenWidget(_widget(), () {})),),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddCategoryDialog(),
         tooltip: 'Add Category',
@@ -26,7 +24,6 @@ class CategoryManagementScreen extends GetWidget<CategoryController> {
       ),
     );
   }
-
 
   _widget() {
     return  ListView.builder(

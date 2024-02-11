@@ -43,7 +43,7 @@ class UserStoreRequestCard extends StatelessWidget {
           Stack(
             children: <Widget>[
               Image.asset(
-                store.photoUrl,
+                store.photoUrl!,
                 height: 150,
                 fit: BoxFit.cover,
                 width: double.infinity,

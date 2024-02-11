@@ -1,10 +1,9 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:intl/intl.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/presentation/admin/show_post_screen/controller/post_controller.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
-
 import '../../../core/utils/app_strings.dart';
 
 // ignore: must_be_immutable
@@ -90,9 +89,7 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                                       fit: BoxFit.fill,
                                       height: 40.0,
                                       width: 40.0,),
-                                    Text('12',
-                                        style:
-                                            TextStyle(fontWeight: FontWeight.bold)),
+                                    Text('12', style: TextStyle(fontWeight: FontWeight.bold)),
                                  ],
                                ),
                               ],
@@ -106,14 +103,18 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            child: Image.file(
-                              File( controller.postController.posts[controller.index].postImage),
+                            child: Image.network(
+                              controller.postController.posts[controller.index].postImage,
+                              errorBuilder: (context, error, stackTrace) => Image.asset(ImageConstant.imageNotFound,height: 200,),
                               height: 150.0,
                               fit: BoxFit.cover,
                               alignment: Alignment.topCenter,
                               width: double.infinity,
                             ),
                           ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                              child: Text(DateFormat.yMMMd().format(controller.postController.posts[controller.index].postDate),))
                         ])),
                   ),
                 ),
@@ -149,24 +150,7 @@ class ShowPostScreen extends GetWidget<PostManageController> {
           ),
         );
       }),
- /*     bottomSheet: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: Container(
-          padding: EdgeInsets.only(left: 10.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.0),
-              color: Colors.grey.withOpacity(0.5)),
-          child: TextFormField(
-              decoration: InputDecoration(
-                  hintText: 'Add a comment',
-                  border: InputBorder.none,
-                  suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.photo),
-                  ))),
-        ),
-      ),*/
-    );
+     );
   }
 _button(String text,Color color,Widget icon,void Function() action) =>  Container(
   width: 300.0,

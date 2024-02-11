@@ -29,12 +29,6 @@ class MainDrawer extends StatelessWidget {
             )
           ),
           _buildDrawerItem(
-            title: AppStrings.postManagement,
-            onTap: () {
-              Get.offAllNamed(AppRoutes.adminPostManagementScreen);
-            },
-          ),
-          _buildDrawerItem(
             title: AppStrings.categoryManagement,
             onTap: () {
               Get.offAllNamed(AppRoutes.adminCategoryManagementScreen);

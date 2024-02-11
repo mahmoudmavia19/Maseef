@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
@@ -8,18 +6,12 @@ import 'package:maseef_app/widgets/custom_drawer.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import 'package:maseef_app/widgets/store_card.dart';
 import 'package:maseef_app/widgets/store_request_card.dart';
-
-import '../../../core/utils/image_constant.dart';
-import '../../../widgets/custom_image_view.dart';
 import 'controller/store_controller.dart';
 import 'model/store.dart';
 
 class StoreManagementScreen extends StatelessWidget {
   final StoreController storeController = Get.put(StoreController());
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController linkController = TextEditingController();
-  final TextEditingController discountCodeController = TextEditingController();
-  final TextEditingController photoUrlController = TextEditingController();
+
 
 
   @override
@@ -99,67 +91,82 @@ class StoreManagementScreen extends StatelessWidget {
   }
 
   Widget _buildForm({int? index}) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextField(
-          controller: nameController,
-          decoration: InputDecoration(labelText: AppStrings.storeNameLabel),
-        ),
-        TextField(
-          controller: linkController,
-          decoration: InputDecoration(labelText: AppStrings.storeLinkLabel),
-        ),
-        TextField(
-          controller: discountCodeController,
-          decoration: InputDecoration(labelText: AppStrings.discountCodeLabel),
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            await _pickImage();
-          },
-          child: Text(AppStrings.pickImage),
-        ),
-       ],
+    return Form(
+      key: storeController.formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextFormField(
+            controller: storeController.nameController,
+            decoration: InputDecoration(labelText: AppStrings.storeNameLabel),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a name';
+              }
+              return null;
+            }
+          ),
+          TextFormField(
+            controller:  storeController.linkController,
+            decoration: InputDecoration(labelText: AppStrings.storeLinkLabel),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a link';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller:  storeController.discountCodeController,
+            decoration: InputDecoration(labelText: AppStrings.discountCodeLabel),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a discount code';
+              }
+              return null;
+            }
+          ),
+          ElevatedButton(
+            onPressed: ()   {
+               storeController.getImage();
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(AppStrings.pickImage),
+                SizedBox(width: 5.0,),
+                Obx(()=>Visibility(
+                  visible: storeController.imageFile.value != null,
+                    child: Icon(Icons.check_circle_outline,color: Colors.white,)))
+              ],
+            ),
+          ),
+         ],
+      ),
     );
-  }
-
-  Future<void> _pickImage() async {
-    final imagePicker = ImagePicker();
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      photoUrlController.text = pickedFile.path;
-    }
   }
 
   Future<void> _addStore() async {
-    Store newStore = Store(
-      id: DateTime.now().toString(),
-      name: nameController.text,
-      link: linkController.text,
-      discountCode: discountCodeController.text,
-      photoUrl: photoUrlController.text,
-    );
-    storeController.addStore(newStore);
-    _clearTextControllers();
+    storeController.addStore();
+   // _clearTextControllers();
   }
 
   Future<void> _editStore(int index) async {
-    Store editedStore = storeController.stores[index].copyWith(
+   /* Store editedStore = storeController.stores[index].copyWith(
       name: nameController.text,
       link: linkController.text,
       discountCode: discountCodeController.text,
       photoUrl: photoUrlController.text,
     );
     storeController.editStore(index, editedStore);
-    _clearTextControllers();
+    _clearTextControllers();*/
   }
 
   void _clearTextControllers() {
-    nameController.clear();
-    linkController.clear();
-    discountCodeController.clear();
-    photoUrlController.clear();
+    storeController.nameController.clear();
+    storeController.linkController.clear();
+    storeController.discountCodeController.clear();
+    storeController.photoUrlController.clear();
   }
 
   _widget(BuildContext context) =>DefaultTabController(
@@ -193,39 +200,56 @@ class StoreManagementScreen extends StatelessWidget {
         ],
       )
   );
-  tab1() => ListView.builder(
-    itemCount: storeController.storesRequests.length,
-    itemBuilder: (context, index) {
-      return InkWell(
-        onTap: () => _showEditStoreDialog(context, index),
-        child: StoreRequestCard(
-          store: storeController.storesRequests[index],
-          onAccept: () {
-            showConfirmationDialog((){
-
-            },'Are you want accept this store?', 'Alert');
+  tab1() => Obx(
+          () => storeController.state.value.getScreenWidget(
+        RefreshIndicator(
+          onRefresh: () {
+            storeController.getStores();
+            return Future.value(true);
           },
-          onReject: () {
-            showConfirmationDialog((){
-
-            },'Are you want reject this store ?', 'Alert');
-          },
-        ),
-      );
-    },
-  ) ;
-  tab2() =>Obx(
-        () => storeController.state.value.getScreenWidget(
-          ListView.builder(
-            itemCount: storeController.stores.length,
+          child:  ListView.builder(
+            itemCount: storeController.storesRequests.length,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () => _showEditStoreDialog(context, index),
-                child: StoreCard(
-                  store: storeController.stores[index],
+                child: StoreRequestCard(
+                  store: storeController.storesRequests[index],
+                  onAccept: () {
+                    showConfirmationDialog((){
+                      storeController.storesRequests[index].accepted = true;
+                      storeController.editStore(index,storeController.storesRequests[index]);
+                    },'Are you want accept this store?', 'Alert');
+                  },
+                  onReject: () {
+                    showConfirmationDialog((){
+                      storeController.storesRequests[index].accepted = false;
+                      storeController.editStore(index,storeController.storesRequests[index]);
+                    },'Are you want reject this store ?', 'Alert');
+                  },
                 ),
               );
             },
+          ),
+        ) ,
+            () {},));
+  tab2() =>Obx(
+        () => storeController.state.value.getScreenWidget(
+          RefreshIndicator(
+            onRefresh: () {
+              storeController.getStores();
+              return Future.value(true);
+            },
+            child: ListView.builder(
+              itemCount: storeController.stores.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () => _showEditStoreDialog(context, index),
+                  child: StoreCard(
+                    store: storeController.stores[index],
+                  ),
+                );
+              },
+            ),
           ) ,
       () {},));
 
