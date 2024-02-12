@@ -79,12 +79,11 @@ _widget()=> RefreshIndicator(
                           Row(
                             children: [
                               Image.asset(ImageConstant.love,
-                                color: Colors.red,
-                                fit: BoxFit.fill,
+                                 fit: BoxFit.fill,
                                 height: 40.0,
                                 width: 40.0,),
                               Text(
-                                '12',
+                                post.lovers.length.toString(),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
@@ -94,7 +93,7 @@ _widget()=> RefreshIndicator(
                                 fit: BoxFit.fill,
                                 height: 40.0,
                                 width: 40.0,),
-                              Text('12',
+                              Text( post.lovers.length.toString(),
                                   style:
                                   TextStyle(fontWeight: FontWeight.bold)),
                             ],

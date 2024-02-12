@@ -12,7 +12,8 @@ class Post extends Equatable {
     String postImage;
   final String postTitle;
   bool love;
-
+  List<String> lovers = [];
+ 
   Post({
      this.postId,
      this.adminId,
@@ -23,6 +24,7 @@ class Post extends Equatable {
     required this.postTitle,
     required this.addressLocation,
     this.love = false,
+    this.lovers = const [],
   });
 
   @override
@@ -36,6 +38,8 @@ class Post extends Equatable {
     postTitle,
     addressLocation,
     love,
+    lovers,
+
   ];
 
   Map<String, dynamic> toJson() {
@@ -52,6 +56,7 @@ class Post extends Equatable {
       'postImage': postImage,
       'postTitle': postTitle,
       'love': love,
+      'lovers': lovers,
     };
   }
 
@@ -69,6 +74,7 @@ class Post extends Equatable {
       postImage: json['postImage'],
       postTitle: json['postTitle'],
       love: json['love'],
+      lovers: List<String>.from(json['lovers']??[]),
     );
   }
 }
