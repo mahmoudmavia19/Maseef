@@ -12,6 +12,13 @@ class UserRegisterPage extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+        backgroundColor: ColorConstant.backgroundColor,
+        leading: IconButton(onPressed: () {
+          Get.back();
+        },
+            icon: Icon(Icons.arrow_back_ios)),
+      ) ,
       backgroundColor: ColorConstant.backgroundColor,
       body: Center(
         child: Obx(() {
