@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCMoWaRvw0IqWe7R-7ucDY8J6XzKUcYPUg',
-    appId: '1:192603435086:android:364d2b348c796648c8531f',
-    messagingSenderId: '192603435086',
-    projectId: 'maseef-a9f9e',
-    storageBucket: 'maseef-a9f9e.appspot.com',
+    apiKey: 'AIzaSyBWvIPUUzwlCAU31qh9qVdaBE_yod7eKD4',
+    appId: '1:325931895072:android:b29ef0580814a8e6922f45',
+    messagingSenderId: '325931895072',
+    projectId: 'maseef-3d772',
+    storageBucket: 'maseef-3d772.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAugfFUmXa_ge8ngjImaiKNdhan82X3N2E',
-    appId: '1:192603435086:ios:ceec76776c82aebfc8531f',
-    messagingSenderId: '192603435086',
-    projectId: 'maseef-a9f9e',
-    storageBucket: 'maseef-a9f9e.appspot.com',
+    apiKey: 'AIzaSyCjYvEu614k-IWhBNV9NS3sNAty91kpUVg',
+    appId: '1:325931895072:ios:d5ea28e0e34a2c0c922f45',
+    messagingSenderId: '325931895072',
+    projectId: 'maseef-3d772',
+    storageBucket: 'maseef-3d772.appspot.com',
     iosBundleId: 'com.maseefapp.app',
   );
 }

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "192603435086",
-    "project_id": "maseef-a9f9e",
-    "storage_bucket": "maseef-a9f9e.appspot.com"
+    "project_number": "325931895072",
+    "project_id": "maseef-3d772",
+    "storage_bucket": "maseef-3d772.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:192603435086:android:364d2b348c796648c8531f",
+        "mobilesdk_app_id": "1:325931895072:android:b29ef0580814a8e6922f45",
         "android_client_info": {
           "package_name": "com.maseefapp.app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCMoWaRvw0IqWe7R-7ucDY8J6XzKUcYPUg"
+          "current_key": "AIzaSyBWvIPUUzwlCAU31qh9qVdaBE_yod7eKD4"
         }
       ],
       "services": {
