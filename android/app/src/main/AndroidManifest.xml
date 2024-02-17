@@ -16,7 +16,7 @@
         android:label="maseef_app"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCCrfjPSLJjFYfuc-sCFtt5uz8ILXcVmLk"/>
+            android:value="AIzaSyCuTzC9ZY-FuhPi-Ogmva-a4gGjvXG82_s"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -27,7 +27,7 @@ class LoginController extends GetxController {
     )).fold((l) {
       state.value = ErrorState(StateRendererType.popupErrorState,l.message);
     },((r) {
-      Get.toNamed(AppRoutes.adminPostManagementScreen);
+      Get.toNamed(AppRoutes.adminCategoryManagementScreen);
       state.value = ContentState();
     }));
   }
