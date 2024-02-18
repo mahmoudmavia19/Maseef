@@ -64,7 +64,9 @@ class GuestMainScreen extends GetWidget<GuestMainController> {
         ImageConstant.logo,
         height: 100.0,
       ),
-      leading: Container(),
+      leading: IconButton(onPressed: (){
+        Get.back();
+      }, icon: Icon(Icons.arrow_back_ios)),
       actions: [
         IconButton(
             onPressed: (){

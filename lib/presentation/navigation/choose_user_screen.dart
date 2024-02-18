@@ -59,7 +59,7 @@ class _ChooseUserScreenState extends State<ChooseUserScreen> {
              SizedBox(
               width: 300.0,
               child: ElevatedButton(onPressed: (){
-                Get.offAndToNamed(AppRoutes.adminLoginScreen);
+                Get.toNamed(AppRoutes.adminLoginScreen);
               },
                   child: Text(AppStrings.admin)
               ),
@@ -68,7 +68,7 @@ class _ChooseUserScreenState extends State<ChooseUserScreen> {
             SizedBox(
               width: 300.0,
               child: ElevatedButton(onPressed: (){
-                Get.offAndToNamed(AppRoutes.guestMainScreen);
+                Get.toNamed(AppRoutes.guestMainScreen);
               }, child: Text(AppStrings.user),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(ColorConstant.primaryMaterialColor[400]!),
@@ -79,7 +79,7 @@ class _ChooseUserScreenState extends State<ChooseUserScreen> {
             SizedBox(
               width: 300.0,
               child: ElevatedButton(onPressed: (){
-                Get.offAndToNamed(AppRoutes.driverLoginScreen);
+                Get.toNamed(AppRoutes.driverLoginScreen);
               }, child: Text(AppStrings.driver),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(ColorConstant.primaryMaterialColor[300]!),

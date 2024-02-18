@@ -84,7 +84,7 @@ class MainScreen extends GetWidget<MainController> {
           }),
           _tab(AppStrings.logout,(){
             showConfirmationDialog((){
-              Get.toNamed(AppRoutes.userLoginOrRegisterScreen) ;
+              Get.offAndToNamed(AppRoutes.chooseUser) ;
             },AppStrings.surelogout, 'Alert');
           }),
           Expanded(
