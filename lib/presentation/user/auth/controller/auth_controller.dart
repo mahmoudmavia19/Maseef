@@ -47,7 +47,7 @@ class AuthController extends GetxController {
         age: 0 ,
         gender: '',
         imagePath: '',
-        username:  userNameController.text, id: '',
+        username:  usernameController.text, id: '',
       ) , password:passwordController.text)).fold((l) {
         state.value = ErrorState(StateRendererType.popupErrorState,l.message);
       }, (r) {

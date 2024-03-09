@@ -68,7 +68,7 @@ class MainDrawer extends StatelessWidget {
             title: AppStrings.logout,
             onTap: () {
               showConfirmationDialog((){
-                Get.offAllNamed(AppRoutes.adminLoginScreen);
+                Get.offAllNamed(AppRoutes.chooseUser);
               }, AppStrings.surelogout, 'Alert');
             },
           ),

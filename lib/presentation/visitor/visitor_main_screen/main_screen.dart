@@ -55,6 +55,7 @@ class GuestMainScreen extends GetWidget<GuestMainController> {
     ),
     onTap: action,
   );
+
   AppBar _appBar() {
     return AppBar(
       toolbarHeight: 70.0,
@@ -63,7 +64,7 @@ class GuestMainScreen extends GetWidget<GuestMainController> {
         ImageConstant.logo,
         height: 100.0,
       ),
-      leading:IconButton(onPressed: () {
+      leading: IconButton(onPressed: (){
         Get.back();
       }, icon: Icon(Icons.arrow_back_ios)),
       actions: [

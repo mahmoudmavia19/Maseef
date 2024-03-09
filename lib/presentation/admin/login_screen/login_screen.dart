@@ -17,7 +17,7 @@ class LoginPage extends GetWidget<LoginController> {
         leading: IconButton(onPressed: () {
           Get.back();
         },
-          icon: Icon(Icons.arrow_back_ios)),
+            icon: Icon(Icons.arrow_back_ios)),
       ) ,
       backgroundColor: ColorConstant.backgroundColor,
       body: Center(
