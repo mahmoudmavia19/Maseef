@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:maseef_app/core/utils/image_constant.dart';
 import 'package:maseef_app/data/remote_data_source/admin_remote_data_source.dart';
+import 'package:maseef_app/presentation/admin/drivers_management/model/driver.dart';
 
 import '../../../../core/utils/state_renderer/state_renderer.dart';
 import '../../../../core/utils/state_renderer/state_renderer_impl.dart';
@@ -49,6 +50,7 @@ class BusController extends GetxController {
   void onInit() {
     _geButIconLocation() ;
     _getCurrentLocation();
+    getDrivers();
     super.onInit();
     getBuses();
   }
@@ -135,5 +137,18 @@ class BusController extends GetxController {
       buses.removeAt(index);
       state.value = SuccessState(StateRendererType.popupSuccessState, 'Bus deleted successfully');
     }) ;
+  }
+
+  RxBool driversLoading = false.obs;
+  List<Driver> drivers = [];
+  void getDrivers() async{
+    driversLoading.value = true;
+    (await remoteDataSource.getDrivers()).fold((failure) {
+      driversLoading.value = false;
+    }, (r) {
+      drivers.addAll(r) ;
+      driversLoading.value = false;
+    });
+
   }
 }

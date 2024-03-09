@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
-
 import '../../../core/utils/app_strings.dart';
 import 'controller/profile_controller.dart';
 
@@ -62,7 +61,7 @@ class UserProfileScreen extends GetView<UserProfileController> {
                       controller.saveProfileInformation();
                     },
                     child: const Text(AppStrings.saveButtonLabel),
-                    style: ElevatedButton.styleFrom(primary: ColorConstant.primary),
+                    style: ElevatedButton.styleFrom(backgroundColor: ColorConstant.primary),
                   ),
                 ),
               ),

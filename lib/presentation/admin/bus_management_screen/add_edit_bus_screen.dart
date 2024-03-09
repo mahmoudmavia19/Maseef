@@ -119,25 +119,28 @@ class AddEditBusScreen extends StatelessWidget {
                       'Choose Driver',
                       style: TextStyle(fontSize: 16.0),
                     ),
-                    CustomDropDown(
-                        variant: DropDownVariant.None,
-                        hintText: busController.driverController.text.isEmpty
-                            ? AppStrings.driver
-                            : busController.driverController.text,
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select a driver';
-                          }
-                          return null;
-                        },
-                        onChanged: (p0) {
-                          busController.driverController.text = p0.title;
-                        },
-                        items: [
-                          SelectionPopupModel(title: 'Ahmed'),
-                          SelectionPopupModel(title: 'Ali'),
-                          SelectionPopupModel(title: 'Khalid'),
-                        ]),
+                    Obx(()=>Visibility(
+                      visible: !busController.driversLoading.value,
+                      replacement: Center(child: CircularProgressIndicator()),
+                      child: CustomDropDown(
+                            variant: DropDownVariant.None,
+                            hintText: busController.driverController.text.isEmpty
+                                ? AppStrings.driver
+                                : busController.driverController.text,
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Please select a driver';
+                              }
+                              return null;
+                            },
+                            onChanged: (p0) {
+                              busController.driverController.text = p0.title;
+                            },
+                            items: busController.drivers.map((e) => SelectionPopupModel(
+                              title: e.name,
+                            )).toList()),
+                    ),
+                    ),
                     Divider(
                       color: Colors.black54,
                     ),
