@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import '../../core/constants/constants.dart';
 import '../../core/errors/error_handler.dart';
@@ -9,6 +10,8 @@ import '../apiClient/driver_api_client.dart';
 abstract class DriverRemoteDataSource {
   Future<Either<Failure, Driver>>login({required String email, required String password});
   Future<Either<Failure, void>> signOut();
+  Future<Either<Failure, void>> shareLocation(GeoPoint location);
+
 }
 
 class DriverRemoteDataSourceImpl  implements DriverRemoteDataSource {
@@ -42,6 +45,20 @@ class DriverRemoteDataSourceImpl  implements DriverRemoteDataSource {
     } else{
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, void>> shareLocation(GeoPoint location) async{
+      if(await networkInfo.isConnected()){
+        try {
+          apiClient.shareLocation(location);
+          return Right(nullVoid);
+        } catch (e) {
+          return Left(ErrorHandler.handle(e).failure);
+        }
+      } else{
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
   }
 
 

@@ -32,7 +32,10 @@ class DriverApiClient {
     final userData = await firebaseFirestore.collection('drivers').doc(userId).get();
     return Driver.fromJson(userData.data()!);
   }
-
-
-
+ // share his location to firebase with his id
+ Future<void> shareLocation(GeoPoint location) async {
+    await firebaseFirestore.collection('drivers').doc(firebaseAuth.currentUser!.uid).update({
+      'location': location,
+    });
+  }
 }
