@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maseef_app/core/app_export.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/admin/store_management_screen/model/store.dart';
+import 'package:maseef_app/presentation/visitor/visitor_discount_screen/controller/discount_controller.dart';
 import 'package:maseef_app/widgets/store_card.dart';
 import 'package:maseef_app/widgets/store_request_card.dart';
 import 'package:maseef_app/widgets/user_store_card.dart';
@@ -8,7 +10,7 @@ import 'package:maseef_app/widgets/user_store_card.dart';
 import '../../../widgets/scaffold_background.dart';
 import '../../../widgets/search_form.dart';
 
-class DiscountScreen  extends StatelessWidget {
+class DiscountScreen  extends GetWidget<DiscountController>{
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +23,20 @@ class DiscountScreen  extends StatelessWidget {
                 children: [
                   SearchForm(),
                   SizedBox(height: 20.0,),
-                  ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder:(context, index) => UserStoreRequestCard(store: Store(id: 'id', name: 'Roman Cafe',
-                          link: 'link', discountCode: '20%', photoUrl:'assets/images/Group.png'),),
-                      separatorBuilder: (context, index) => SizedBox(height: 20.0,),
-                      itemCount: 3)
+                  Obx(() => controller.state.value.getScreenWidget(_body(), (){}))
                 ]
             ),
           )
       ),
     );
   }
+  _body()=>  ListView.separated(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder:(context, index) {
+          var store = controller.stores[index];
+        return UserStoreRequestCard(store:store,);
+      },
+      separatorBuilder: (context, index) => SizedBox(height: 20.0,),
+      itemCount: controller.stores.length,);
 }

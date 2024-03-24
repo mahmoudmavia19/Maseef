@@ -22,7 +22,7 @@ class InitialBindings extends Bindings {
     FirebaseAuth auth = FirebaseAuth.instance;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     FirebaseStorage storage = FirebaseStorage.instance;
-    Get.put(UserApiClient(auth, firestore));
+    Get.put(UserApiClient(auth, firestore,storage));
     Get.put(AdminApiClient(auth, firestore, storage));
     Get.put(DriverApiClient(auth, firestore));
     Connectivity connectivity = Connectivity();

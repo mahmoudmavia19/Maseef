@@ -1,17 +1,39 @@
 
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/data/apiClient/user_api_client.dart';
+import 'package:maseef_app/presentation/admin/post_management_screen/model/comment.dart';
+import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
+import 'package:maseef_app/presentation/admin/store_management_screen/model/store.dart';
+import 'package:maseef_app/presentation/user/notification_screen/model/notification_model.dart';
 import 'package:maseef_app/presentation/user/profile_screen/model/user_model.dart';
 
 import '../../core/errors/error_handler.dart';
 import '../../core/errors/failure.dart';
  import 'package:dartz/dartz.dart';
+
+import '../../presentation/admin/complaint_screen/model/complaint.dart';
 abstract class UserRemoteDataSource {
 
   Future<Either<Failure, UserModel>>login({required String email, required String password});
   Future<Either<Failure, void>> signOut();
   Future<Either<Failure, UserModel>> register({required UserModel user, required String password});
   Future<Either<Failure, void>> forgetPassword(String email);
+  Future<Either<Failure,List<Post>>> getAllPosts();
+  Future<Either<Failure,List<Post>>> getLovePosts();
+  Future<Either<Failure,void>> likeOrDislikePost(Post post);
+  Future<Either<Failure,List<Comment>>> getAllComments(String post);
+  Future<Either<Failure,void>> addComment(Comment comment);
+  Future<Either<Failure,List<Store>>> getAllStores();
+  Future<Either<Failure,void>> addStore(Store store,File file);
+  Future<Either<Failure,List<NotificationModel>>> getNotifications();
+  Future<Either<Failure,UserModel>> getProfile ();
+  Future<Either<Failure,void>> updateProfile (UserModel user,XFile? file);
+  Future<Either<Failure,void>> sendComplaint (Complaint complaint);
+  Future<Either<Failure,List<Complaint>>> getComplaints();
+  Future<Either<Failure,UserModel>>  getUser(String id);
 }
 
 
@@ -78,5 +100,187 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     }
   }
 
+  @override
+  Future<Either<Failure, List<Post>>> getAllPosts() async{
+    if(await networkInfo.isConnected()){
+      try {
+        final response = await apiClient.getAllPosts();
+        return Right(response);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
 
+  @override
+  Future<Either<Failure, void>> addComment(Comment comment) async{
+  if(await networkInfo.isConnected()){
+    try {
+      apiClient.addComment(comment);
+      return Right(nullVoid);
+    } catch (e) {
+      return Left(ErrorHandler.handle(e).failure);
+    }
+  } else{
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  }
+  }
+
+  @override
+  Future<Either<Failure, List<Comment>>> getAllComments(String post) async{
+     if(await networkInfo.isConnected()){
+       try {
+         final response = await apiClient.getComments(post);
+         return Right(response);
+       } catch (e) {
+         return Left(ErrorHandler.handle(e).failure);
+       }
+     }  else{
+       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+     }
+  }
+
+  @override
+  Future<Either<Failure, void>> likeOrDislikePost(Post post) async{
+     if(await networkInfo.isConnected()){
+       try {
+         apiClient.likeOrDislikePost(post);
+         return Right(nullVoid);
+       } catch (e) {
+         return Left(ErrorHandler.handle(e).failure);
+       }
+     } else{
+       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+     }
+  }
+
+  @override
+  Future<Either<Failure, List<Store>>> getAllStores() async{
+    if(await networkInfo.isConnected()){
+      try {
+        final response = await apiClient.getStores();
+        return Right(response);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addStore(Store store,File file) async{
+    if(await networkInfo.isConnected()){
+      try {
+        apiClient.addStore(store,file);
+        return Right(nullVoid);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Post>>> getLovePosts() async{
+    if(await networkInfo.isConnected()){
+      try {
+        final response = await apiClient.getLoversPosts();
+        return Right(response);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+
+  }
+
+  @override
+  Future<Either<Failure, List<NotificationModel>>> getNotifications() async{
+   if(await networkInfo.isConnected()){
+     try {
+       final response = await apiClient.getNotifications();
+       return Right(response);
+     } catch (e) {
+       return Left(ErrorHandler.handle(e).failure);
+     }
+   } else{
+     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+   }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getProfile() async{
+    if(await networkInfo.isConnected()){
+      try {
+        final response = await apiClient.getProfile();
+        return Right(response);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+
+  }
+
+  @override
+  Future<Either<Failure, void>> updateProfile(UserModel user,XFile? file) async{
+   if(await networkInfo.isConnected()){
+     try {
+       apiClient.updateProfile(user,file);
+       return Right(nullVoid);
+     } catch (e) {
+       return Left(ErrorHandler.handle(e).failure);
+     }
+   } else{
+     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+   }
+  }
+
+  @override
+  Future<Either<Failure, void>> sendComplaint(Complaint complaint) async{
+     if(await networkInfo.isConnected()){
+       try {
+         apiClient.sendComplaint(complaint);
+         return Right(nullVoid);
+       } catch (e) {
+         return Left(ErrorHandler.handle(e).failure);
+       }
+     } else{
+       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+     }
+  }
+
+  @override
+  Future<Either<Failure, List<Complaint>>> getComplaints() async{
+    if(await networkInfo.isConnected()){
+      try {
+        final response = await apiClient.getComplaints();
+        return Right(response);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getUser(String id) async{
+     if(await networkInfo.isConnected()){
+       try {
+         final response = await apiClient.getUser(id);
+         return Right(response);
+       } catch (e) {
+         return Left(ErrorHandler.handle(e).failure);
+       }
+     } else{
+       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+     }
+  }
 }

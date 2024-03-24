@@ -1,7 +1,11 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/user/main_screen/controller/main_controller.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -51,24 +55,10 @@ class MainScreen extends GetWidget<MainController> {
       width: 200.0,
       child:Column(
         children: [
-          DrawerHeader(child:
-          InkWell(
-            onTap: () {
-              Get.toNamed(AppRoutes.userProfileScreen) ;
-            },
-            child: Column(
-              children: [
-                CustomImageView(
-                  svgPath: ImageConstant.user_placeholder,
-                  width: 80,
-                ),
-                SizedBox(height: 5.0,),
-                Text("test",style: TextStyle(fontWeight: FontWeight.bold,),),
-                Text("@test12",style: TextStyle(fontSize: 10.0,),),
-              ],
-            ),
+          Obx(()=> controller.flowState.value.getScreenWidget(
+            _drawerHeader(),
+            (){},
           ),
-
           ),
           _tab(AppStrings.profile,(){
             Get.toNamed(AppRoutes.userProfileScreen) ;
@@ -122,6 +112,36 @@ class MainScreen extends GetWidget<MainController> {
       ],
     ),
     onTap: action,
+  );
+
+  _drawerHeader()=>DrawerHeader(child:
+  InkWell(
+    onTap: () {
+      Get.toNamed(AppRoutes.userProfileScreen) ;
+    },
+    child: Column(
+      children: [
+       Container(
+         clipBehavior: Clip.antiAlias,
+         decoration: BoxDecoration(
+           shape: BoxShape.circle
+         ),
+         child: Image.network(controller.userModel.imagePath,fit: BoxFit.cover,
+         height: 90.0,
+         errorBuilder: (context, error, stackTrace) {
+          return  CustomImageView(
+             imagePath: ImageConstant.user_placeholder,
+           );
+         }
+         ),
+       ),
+        SizedBox(height: 5.0,),
+        Text(controller.userModel.name,style: TextStyle(fontWeight: FontWeight.bold,),),
+        Text(controller.userModel.email,style: TextStyle(fontSize: 10.0,),),
+      ],
+    ),
+  ),
+
   );
 
   AppBar _appBar() {

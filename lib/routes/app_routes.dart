@@ -8,6 +8,9 @@ import 'package:maseef_app/presentation/splach_screen/splach_screen.dart';
 import 'package:maseef_app/presentation/user/auth/binding/auth_binding.dart';
 import 'package:maseef_app/presentation/user/auth/login.dart';
 import 'package:maseef_app/presentation/user/auth/register.dart';
+import 'package:maseef_app/presentation/user/home_screen/binding/home_binding.dart';
+import 'package:maseef_app/presentation/user/love_posts_screen/binding/love_posts_binding.dart';
+import 'package:maseef_app/presentation/user/notification_screen/binding/notification_binding.dart';
 import 'package:maseef_app/presentation/user/profile_screen/binding/profile_binding.dart';
 import 'package:maseef_app/presentation/user/profile_screen/profile_screen.dart';
 import 'package:maseef_app/presentation/user/support_screen/binding/support_binding.dart';
@@ -21,6 +24,8 @@ import 'package:maseef_app/presentation/user/profile_screen/binding/profile_bind
 import 'package:maseef_app/presentation/user/profile_screen/profile_screen.dart';
 import 'package:maseef_app/presentation/user/support_screen/binding/support_binding.dart';
 import 'package:maseef_app/presentation/user/support_screen/support_screen.dart';
+import 'package:maseef_app/presentation/visitor/visitor_discount_screen/binding/discount_binding.dart';
+import 'package:maseef_app/presentation/visitor/visitor_home_screen/binding/home_binding.dart';
 import '../presentation/admin/add_post_management_screen/binding/add_post_binding.dart';
 import '../presentation/admin/add_post_management_screen/add_post_screen.dart';
 import '../presentation/admin/bus_management_screen/add_edit_bus_screen.dart';
@@ -202,7 +207,11 @@ class AppRoutes {
       page: () =>  MainScreen(),
       bindings: [
         MainBinding() ,
-        LocationBinding()
+        LocationBinding() ,
+        HomeBinding() ,
+        LovePostBinding(),
+        NotificationBinding(),
+        UserProfileBinding(),
       ],
     ),
     GetPage(
@@ -224,7 +233,11 @@ class AppRoutes {
     GetPage(
       name: guestMainScreen,
       page: () =>  GuestMainScreen(),
-      binding: GuestMainBinding(),
+      bindings:[
+        GuestMainBinding(),
+        GuestHomeBinding(),
+        DiscountBinding()
+      ],
     ),
     GetPage(
       name: userPrivacyPolicyScreen,

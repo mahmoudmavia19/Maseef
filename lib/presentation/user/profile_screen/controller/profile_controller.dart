@@ -1,6 +1,10 @@
 // userProfile_controller.dart
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:maseef_app/core/app_export.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:maseef_app/data/remote_data_source/remote_data_source.dart';
 
 import '../model/user_model.dart';
 
@@ -13,43 +17,57 @@ class UserProfileController extends GetxController {
   final emailController = TextEditingController();
   final genderController = TextEditingController();
   final phoneController = TextEditingController();
+  late UserModel user;
+  var imagePicker = ImagePicker();
+  Rx<XFile?> image = Rx<XFile?>(null);
 
-  late final Rx<UserModel> user;
 
+   pickImage() async{
+    image.value =  await imagePicker.pickImage(source: ImageSource.gallery);
+    }
+
+  Rx<FlowState> flowState = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+  UserRemoteDataSource userRemoteDataSource = Get.find<UserRemoteDataSourceImpl>();
+
+  getProfile () async{
+    flowState.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+    (await userRemoteDataSource.getProfile()).fold((l) {
+      flowState.value = ErrorState(StateRendererType.fullScreenErrorState,l.message);
+    }, (r) {
+      user = r ;
+      _loadUserData();
+      flowState.value = ContentState();
+    });
+  }
+  updateProfile()async{
+    flowState.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+    (await userRemoteDataSource.updateProfile(user,image.value)).fold((l) {
+      flowState.value = ErrorState(StateRendererType.fullScreenErrorState,l.message);
+    }, (r) {
+      flowState.value = ContentState();
+    });
+  }
   toggleEditMode() {
     editMode.value = !editMode.value;
   }
 
   @override
   void onInit() {
+     getProfile() ;
     super.onInit();
-    user = UserModel(
-      id: '1', // Replace with the actual user ID
-      name: 'test', // Replace with the actual user name
-      username: 'test12', // Replace with the actual username
-      age: 25, // Replace with the actual age
-      email: 'test12@example.com', // Replace with the actual email
-      gender: 'Male', // Replace with the actual gender
-      phoneNumber: '1234567890', // Replace with the actual phone number
-      imagePath: ImageConstant.user_placeholder
-    ).obs;
-    _loadUserData();
-  }
 
+  }
   void _loadUserData() {
-
-    // Load user data from API or database and update the user object
-    // For now, we use the initial values set in onInit
-    nameController.text = user.value.name;
-    usernameController.text = user.value.username;
-    ageController.text = user.value.age.toString();
-    emailController.text = user.value.email;
-    genderController.text = user.value.gender;
-    phoneController.text = user.value.phoneNumber;
+    nameController.text = user.name;
+    usernameController.text = user.username;
+    ageController.text = user.age.toString();
+    emailController.text = user.email;
+    genderController.text = user.gender;
+    phoneController.text = user.phoneNumber;
 
   }
 
-  void saveProfileInformation() {
+/*  void saveProfileInformation() {
     if (formKey.currentState!.validate()) {
       // Save the profile information
       user.update((val) {
@@ -61,5 +79,5 @@ class UserProfileController extends GetxController {
         val.phoneNumber = phoneController.text;
       });
     }
-  }
+  }*/
 }

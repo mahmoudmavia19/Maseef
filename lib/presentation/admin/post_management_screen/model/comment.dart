@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
 
 class Comment {
-  final String id;
-  final String userId;
-  final String postId;
-   final String comment;
-  final DateTime date;
-  final List<String> lovers;
-  final List<Comment> replies;
+   String? id;
+   String? userId;
+   String? postId;
+   String? comment;
+   DateTime? date;
+   List<String> lovers;
+   List<Comment> replies;
 
   Comment({
-     required this.id,
-     required this.userId,
+       this.id,
+       this.userId,
      required this.postId,
       required this.comment,
      required this.date,
@@ -38,7 +38,7 @@ class Comment {
     'userId': userId,
     'postId': postId,
      'comment': comment,
-    'date': date.toIso8601String(),
+    'date': date?.toIso8601String(),
     'lovers': lovers,
     'replies': replies.map((reply) => reply.toJson()).toList(),
   };

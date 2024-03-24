@@ -55,8 +55,7 @@ class Post extends Equatable {
       'addressLocation': addressLocation,
       'postImage': postImage,
       'postTitle': postTitle,
-      'love': love,
-      'lovers': lovers,
+       'lovers': lovers,
     };
   }
 
@@ -73,8 +72,7 @@ class Post extends Equatable {
       addressLocation: json['addressLocation'],
       postImage: json['postImage'],
       postTitle: json['postTitle'],
-      love: json['love'],
-      lovers: List<String>.from(json['lovers']??[]),
+       lovers: List<String>.from(json['lovers']??[]),
     );
   }
 }

@@ -26,7 +26,7 @@ class Complaint {
       customerName: json['customerName'],
       description: json['description'],
       response: json['response'],
-      responseDate: DateTime.parse(json['responseDate']),
+      responseDate: json['responseDate'] == null? null :DateTime.parse(json['responseDate']),
       createTime: DateTime.parse(json['createTime']),
     );
   }

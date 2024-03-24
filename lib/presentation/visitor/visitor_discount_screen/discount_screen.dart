@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:maseef_app/core/app_export.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/admin/store_management_screen/model/store.dart';
+import 'package:maseef_app/presentation/visitor/visitor_discount_screen/controller/discount_controller.dart';
 import 'package:maseef_app/widgets/user_store_card.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../widgets/scaffold_background.dart';
 import '../../../widgets/search_form.dart';
 
-class GuestDiscountScreen  extends StatelessWidget {
+class GuestDiscountScreen  extends GetWidget<DiscountController>{
 
    final TextEditingController nameController = TextEditingController();
   final TextEditingController linkController = TextEditingController();
@@ -24,13 +26,7 @@ class GuestDiscountScreen  extends StatelessWidget {
                 children: [
                   SearchForm(),
                   SizedBox(height: 20.0,),
-                  ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder:(context, index) => UserStoreRequestCard(store: Store(id: 'id', name: 'Roman Cafe',
-                          link: 'link', discountCode: '20%', photoUrl:'assets/images/Group.png'),),
-                      separatorBuilder: (context, index) => SizedBox(height: 20.0,),
-                      itemCount: 3)
+                Obx(() => controller.state.value.getScreenWidget(_body(), (){}))
                 ]
             ),
           )
@@ -41,30 +37,43 @@ class GuestDiscountScreen  extends StatelessWidget {
       ) ,
     );
   }
-
+_body()=>  ListView.separated(
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    itemBuilder:(context, index) {
+      var store = controller.stores[index];
+      return UserStoreRequestCard(store: store,);
+    },
+    separatorBuilder: (context, index) => SizedBox(height: 20.0,),
+    itemCount: controller.stores.length,);
   Widget _buildForm({int? index}) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextField(
-          controller: nameController,
-          decoration: InputDecoration(labelText: AppStrings.storeNameLabel),
-        ),
-        TextField(
-          controller: linkController,
-          decoration: InputDecoration(labelText: AppStrings.storeLinkLabel),
-        ),
-        TextField(
-          controller: discountCodeController,
-          decoration: InputDecoration(labelText: AppStrings.discountCodeLabel),
-        ),
-        ElevatedButton(
-          onPressed: () async {
-
-          },
-          child: Text(AppStrings.pickImage),
-        ),
-      ],
+    return Form(
+      key: controller.formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextFormField(
+            controller: nameController,
+            decoration: InputDecoration(labelText: AppStrings.storeNameLabel),
+          ),
+          TextFormField(
+            controller: linkController,
+            decoration: InputDecoration(labelText: AppStrings.storeLinkLabel),
+          ),
+          TextFormField(
+            controller: discountCodeController,
+            decoration: InputDecoration(labelText: AppStrings.discountCodeLabel),
+          ),
+          SizedBox(height: 20.0,),
+          Obx(() => controller.image.value != null ? Image.file(controller.image.value!,height: 150,) : SizedBox()),
+          ElevatedButton(
+            onPressed: () async {
+              await controller.pickImage();
+            },
+            child: Text(AppStrings.pickImage),
+          ),
+        ],
+      ),
     );
   }
   Future<void> _showAddStoreDialog() async {
@@ -80,7 +89,12 @@ class GuestDiscountScreen  extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                Get.back();
+              controller.addStore(Store(
+                name: nameController.text,
+                link: linkController.text,
+                discountCode: discountCodeController.text,
+                photoUrl: photoUrlController.text
+              ));
               },
               child: Text(AppStrings.add),
             ),

@@ -42,11 +42,19 @@ class UserStoreRequestCard extends StatelessWidget {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Image.asset(
+              Image.network(
                 store.photoUrl!,
                 height: 150,
                 fit: BoxFit.cover,
                 width: double.infinity,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    ImageConstant.imageNotFound,
+                    height: 150.0,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  );
+                }
               ),
               buildDiscountContainer(),
             ],

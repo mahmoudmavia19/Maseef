@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:maseef_app/presentation/user/love_posts_screen/controller/love_posts_controller.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
-
 import '../../../core/app_export.dart';
-import '../../../core/constants/constants.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../widgets/post_card.dart';
 import '../../../widgets/search_form.dart';
 import '../../admin/post_management_screen/model/post.dart';
 
-class LovePostsScreen extends StatelessWidget {
-
+class LovePostsScreen extends  GetWidget<LovePostController> {
 
   @override
   Widget build(BuildContext context) {
@@ -47,19 +45,22 @@ class LovePostsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20.0,),
-                  ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder:(context, index) => PostCard(Post(postId: '6', adminId: 'adminId', postDate: DateTime.now(), postContent: 'Hello', postLocation:startMapLocation , postImage: 'assets/images/Group.png' , postTitle: 'Read kit park', addressLocation: 'Damaris',love: true), index),
-                      separatorBuilder: (context, index) => SizedBox(height: 20.0,),
-                      itemCount: 3)
+                  Obx(() => controller.state.value.getScreenWidget(_body(), (){}))
                 ]
             ),
           )
       ),
     );
   }
-
+_body()=>   ListView.separated(
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    itemBuilder:(context, index) {
+      var post = controller.posts[index];
+      return PostCard(post, index);
+    },
+    separatorBuilder: (context, index) => SizedBox(height: 20.0,),
+    itemCount: controller.posts.length) ;
   String getTabTitle(int index) {
     switch (index) {
       case 0:

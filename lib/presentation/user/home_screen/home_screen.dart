@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
  import 'package:maseef_app/core/app_export.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
+import 'package:maseef_app/presentation/user/home_screen/controller/home_controller.dart';
 import 'package:maseef_app/widgets/post_card.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import 'package:maseef_app/widgets/search_form.dart';
 
 import '../../../core/utils/app_strings.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetWidget<HomeController> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,19 +46,22 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.0,),
-                ListView.separated(
-                  shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder:(context, index) => PostCard(Post(postId: '6', adminId: 'adminId', postDate: DateTime.now(), postContent: 'Hello', postLocation:startMapLocation , postImage: 'assets/images/Group.png' , postTitle: 'Read kit park', addressLocation: 'Damaris'), index),
-                    separatorBuilder: (context, index) => SizedBox(height: 20.0,),
-                    itemCount: 3)
+                Obx(() => controller.state.value.getScreenWidget(_body(), (){}))
               ]
             ),
           )
       ),
     );
   }
-
+_body()=>ListView.separated(
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    itemBuilder:(context, index) {
+      var post = controller.posts[index];
+      return PostCard(post, index);
+    },
+    separatorBuilder: (context, index) => SizedBox(height: 20.0,),
+    itemCount: controller.posts.length,);
 
   String getTabTitle(int index) {
     switch (index) {
