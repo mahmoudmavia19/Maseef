@@ -154,7 +154,7 @@ class UserShowPostScreen extends StatelessWidget{
                       )),
                 ),
                 if(comments.length > 0)
-                ExpandedTileList.separated(
+                ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   separatorBuilder: (context, index) => Divider(
@@ -164,8 +164,9 @@ class UserShowPostScreen extends StatelessWidget{
                     indent: 0,
                   ),
                   itemCount: comments.length,
-                  itemBuilder: (context, index, controller) => _commentWidget(index),
+                  itemBuilder: (context, index) => _commentWidget(index),
                 ),
+                SizedBox(height: 50.0,)
               ],
             ),
           ),
@@ -188,10 +189,15 @@ class UserShowPostScreen extends StatelessWidget{
                   border: InputBorder.none,
                   suffixIcon: IconButton(
                     onPressed: () {
+                      if(commentController.text.isNotEmpty){
+                      var comment = Comment(postId: post.value.postId,
+                          comment:commentController.text , date: DateTime.now());
+                      comments.add(comment);
                       controller
-                          .addComment(Comment(postId: post.value.postId,
-                          comment:commentController.text , date: DateTime.now()));
+                          .addComment(comment);
                       commentController.clear();
+
+                      }
                     },
                     icon: Icon(Icons.send),
                   ))),
@@ -199,7 +205,8 @@ class UserShowPostScreen extends StatelessWidget{
       ),
     );
   }
-  _commentWidget(index) => ExpandedTile(
+  _commentWidget(index) =>CommentWidget(comments[index]);
+  /*ExpandedTile(
         onLongTap: () {
           replayComment();
         },
@@ -211,83 +218,10 @@ class UserShowPostScreen extends StatelessWidget{
         ),
         trailing: Container(),
         controller: ExpandedTileController(),
-        content:CommentWidget(comments[index]),
-        title:CommentWidget(comments[index]),
-      );
+      //  content:CommentWidget(comments[index]),
+        title:,
+      )*/
 
-/*
-  _commentContent(Comment comment) {
-    RxBool love = false.obs;
-    Rx<UserModel?> userModel = Rx<UserModel?>(null);
-      controller.getUser(comment.userId!).then((value){
-      userModel.value = value;
-      print('object') ;
-      print(value?.toJson()) ;
-    }); ;
-    return Obx(()=>Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              radius: 25.0,
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            Expanded(
-              child:
-                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(
-                  userModel.value?.name??'',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Text(
-                    comment.comment??'',
-                  ),
-                ),
-              ]),
-            ),
-            Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    love.value = !love.value;
-                  },
-                  child: Obx(
-                    () => Image.asset(
-                      ImageConstant.love,
-                      fit: BoxFit.fill,
-                      color: love.value ? Colors.red : Colors.black,
-                      height: 40.0,
-                      width: 40.0,
-                    ),
-                  ),
-                ),
-                Text(
-                  comment.lovers.length.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Image.asset(
-                  ImageConstant.comments,
-                  fit: BoxFit.fill,
-                  height: 40.0,
-                  width: 40.0,
-                ),
-                Text(comment.replies.length.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-*/
 
   void replayComment() {
     Get.dialog(Dialog(

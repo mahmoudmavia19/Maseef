@@ -31,7 +31,7 @@ class AuthController extends GetxController {
     state.value = ErrorState(StateRendererType.popupErrorState,l.message);
     }, (r) {
     state.value = ContentState();
-    Get.toNamed(AppRoutes.userMainScreen,arguments: [r]);
+    Get.offAllNamed(AppRoutes.userMainScreen,arguments: [r]);
     });
     }
   void register() async{

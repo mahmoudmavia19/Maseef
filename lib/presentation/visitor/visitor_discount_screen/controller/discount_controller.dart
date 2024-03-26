@@ -11,8 +11,10 @@ import 'package:maseef_app/presentation/admin/store_management_screen/model/stor
 
 class DiscountController extends GetxController {
    Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-    List<Store> stores = [];
+    RxList<Store> stores = <Store>[].obs;
+    RxList<Store> storesSearch = <Store>[].obs;
    UserRemoteDataSource  remoteDataSource = Get.find<UserRemoteDataSourceImpl>();
+   TextEditingController searchStoreController = TextEditingController();
    var  formKey = GlobalKey<FormState>();
 
    var imagePicker = ImagePicker();
@@ -29,7 +31,7 @@ class DiscountController extends GetxController {
       (await remoteDataSource.getAllStores()).fold((failure) {
         state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
       },(List<Store> stores) {
-        this.stores = stores;
+        this.stores.value = stores;
         if(stores.isNotEmpty) {
           state.value = ContentState();
         } else
@@ -52,9 +54,16 @@ class DiscountController extends GetxController {
      }
     }
 
+    search(){
+        storesSearch.value = stores.where((element) => element.name.toLowerCase().contains(searchStoreController.text.toLowerCase())).toList();
+        if(searchStoreController.text=='')
+          storesSearch.value = [] ;
+    }
+
     @override
   void onInit() {
     getAllStores();
+
     super.onInit();
   }
 }

@@ -4,7 +4,7 @@ import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
  import 'package:maseef_app/widgets/post_card.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
-import 'package:maseef_app/widgets/search_form.dart';
+import 'package:maseef_app/widgets/search_post_form.dart';
 
 import '../../../core/utils/app_strings.dart';
 import '../../../widgets/v_post_card.dart';
@@ -16,38 +16,39 @@ class GuestHomeScreen extends GetWidget<GuestHomeController> {
     return Scaffold(
       body: ScaffoldBackground(
         opacity: 0.9,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                SearchForm(),
-                SizedBox(height: 10.0,),
-                SizedBox(
-                  height: 45.0,
-                  child: Row(
-                    children: [
-                      Icon(Icons.filter_list_alt),
-                      Expanded(
-                        child: Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 8, // Adjust this based on the number of tabs you have
-                            itemBuilder: (BuildContext context, int index) {
-                              return _tab(getTabTitle(index), (){});
-                            },
+          child: Obx(()=> SingleChildScrollView(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  SearchPostForm(controller:controller.searchPostsController ,items: controller.posts,loggedIn: false,),
+                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 45.0,
+                    child: Row(
+                      children: [
+                        Icon(Icons.filter_list_alt),
+                        Expanded(
+                          child: Container(
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 8, // Adjust this based on the number of tabs you have
+                              itemBuilder: (BuildContext context, int index) {
+                                return _tab(getTabTitle(index), (){});
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 20.0,),
-          Obx(() =>controller.getState.getScreenWidget(_body(), (){})),
-              ]
+                  SizedBox(height: 20.0,),
+            controller.getState.getScreenWidget(_body(), (){}),
+                ]
+              ),
             ),
           )
       ),

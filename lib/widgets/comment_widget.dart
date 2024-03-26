@@ -17,8 +17,9 @@ class CommentWidget extends StatefulWidget {
   State<CommentWidget> createState() => _CommentWidgetState();
 }
 
-class _CommentWidgetState extends State<CommentWidget> {
+class  _CommentWidgetState extends State<CommentWidget> {
   RxBool love = false.obs;
+  RxInt lovers = 0.obs;
 
   Rx<UserModel?> userModel = Rx<UserModel?>(null);
   HomeController controller = Get.find<HomeController>();
@@ -28,6 +29,8 @@ class _CommentWidgetState extends State<CommentWidget> {
    value.fold((l) => null, (r){
      userModel.value = r;
    });
+   love.value = widget.comment.love;
+   lovers.value = widget.comment.lovers.length ;
  });
   super.initState();
   }
@@ -77,7 +80,12 @@ class _CommentWidgetState extends State<CommentWidget> {
               InkWell(
                 onTap: () {
                   love.value = !love.value;
-                },
+                  controller.loveComment(widget.comment);
+                  if(love.value)
+                    lovers.value++;
+                  else
+                    lovers.value--;
+                 },
                 child: Obx(
                       () => Image.asset(
                     ImageConstant.love,
@@ -89,8 +97,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                 ),
               ),
               Text(
-                widget
-                    .comment.lovers.length.toString(),
+                lovers.toString(),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(

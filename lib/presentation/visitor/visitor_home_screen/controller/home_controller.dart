@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
@@ -8,6 +9,7 @@ class GuestHomeController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
   UserRemoteDataSource remoteDataSource = Get.find<UserRemoteDataSourceImpl>();
   FlowState get getState => state.value;
+  TextEditingController searchPostsController = TextEditingController();
   RxList<Post> posts = <Post>[].obs;
 
   onInit() {

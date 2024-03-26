@@ -236,7 +236,8 @@ class AppRoutes {
       bindings:[
         GuestMainBinding(),
         GuestHomeBinding(),
-        DiscountBinding()
+        DiscountBinding(),
+        LocationBinding()
       ],
     ),
     GetPage(

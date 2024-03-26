@@ -6,7 +6,8 @@ import 'package:maseef_app/presentation/visitor/visitor_discount_screen/controll
 import 'package:maseef_app/widgets/user_store_card.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../widgets/scaffold_background.dart';
-import '../../../widgets/search_form.dart';
+import '../../../widgets/search_post_form.dart';
+import '../../../widgets/search_store_form.dart';
 
 class GuestDiscountScreen  extends GetWidget<DiscountController>{
 
@@ -24,9 +25,17 @@ class GuestDiscountScreen  extends GetWidget<DiscountController>{
             padding: EdgeInsets.all(20.0),
             child: Column(
                 children: [
-                  SearchForm(),
+                  SearchStoreForm(controller:controller.searchStoreController ,items:controller.stores,
+                  onSearchTextChanged: (p0) {
+                    controller.search();
+                  },),
                   SizedBox(height: 20.0,),
-                Obx(() => controller.state.value.getScreenWidget(_body(), (){}))
+                Obx(() => Visibility(
+                    visible:controller.storesSearch.length == 0,
+                    child: controller.state.value.getScreenWidget(_body(controller.stores), (){}))),
+                  Obx(() => Visibility(
+                      visible:controller.storesSearch.length != 0,
+                      child: controller.state.value.getScreenWidget(_body(controller.storesSearch), (){})))
                 ]
             ),
           )
@@ -37,15 +46,15 @@ class GuestDiscountScreen  extends GetWidget<DiscountController>{
       ) ,
     );
   }
-_body()=>  ListView.separated(
+_body(stores)=>  ListView.separated(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
     itemBuilder:(context, index) {
-      var store = controller.stores[index];
+      var store = stores[index];
       return UserStoreRequestCard(store: store,);
     },
     separatorBuilder: (context, index) => SizedBox(height: 20.0,),
-    itemCount: controller.stores.length,);
+    itemCount: stores.length,);
   Widget _buildForm({int? index}) {
     return Form(
       key: controller.formKey,

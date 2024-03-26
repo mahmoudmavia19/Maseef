@@ -81,7 +81,12 @@ class UserApiClient {
 
   Future<List<Comment>> getComments(String postId) async {
     var result = await firebaseFirestore.collection('posts').doc(postId).collection('comments').get();
-    return result.docs.map((e) => Comment.fromJson(e.data())).toList();
+    return result.docs.map((e) {
+      var comment = Comment.fromJson(e.data());
+      comment.id = e.id;
+      comment.love = comment.lovers.contains(firebaseAuth.currentUser!.uid);
+      return comment;
+    }).toList();
   }
 
   Future<void> addComment(Comment comment) async {
@@ -150,10 +155,20 @@ class UserApiClient {
        comments = result.docs.map((e) {
          var comment = Comment.fromJson(e.data());
          comment.id = posts.id;
+         comment.love = comment.lovers.contains(firebaseAuth.currentUser!.uid);
          return Comment.fromJson(e.data());
        }).toList();
      }
      return comments;
+   }
+
+   Future<void> likeOrDislikeComment (Comment comment) async {
+    if(comment.lovers.contains(firebaseAuth.currentUser!.uid)) {
+      comment.lovers.remove(firebaseAuth.currentUser!.uid);
+    } else {
+      comment.lovers.add(firebaseAuth.currentUser!.uid);
+    }
+    await firebaseFirestore.collection('posts').doc(comment.postId).collection('comments').doc(comment.id).update(comment.toJson());
    }
 
 }

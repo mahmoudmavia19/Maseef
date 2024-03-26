@@ -1,13 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+ import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:maseef_app/presentation/visitor/visitor_home_screen/controller/home_controller.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
-import 'package:maseef_app/widgets/search_form.dart';
+import 'package:maseef_app/widgets/search_map_form.dart';
+
+import '../../../core/app_export.dart';
+
 
 class GuestLocationsScreen extends StatelessWidget {
-
-  @override
+  GuestHomeController homeController = Get.find<GuestHomeController>();
+   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       body: ScaffoldBackground(
@@ -29,7 +33,9 @@ class GuestLocationsScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: SearchForm(),
+                child: SearchMapForm(controller:TextEditingController() ,items: homeController.posts,onSuggestionTap: (p0) {
+                  Get.toNamed(AppRoutes.userLoginScreen);
+                },),
               )
             ],
           )

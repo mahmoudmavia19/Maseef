@@ -49,16 +49,12 @@ class ComplaintsManagementScreen extends StatelessWidget {
               color: Colors.transparent,
               child: ListTile(
                 title:_subtitleItem('${AppStrings.customerNameLabel}:', complaint.customerName??''),
-                subtitle: _subtitleItem('${AppStrings.descriptionLabel}:', complaint.description??''),
-                trailing: Obx(
-                      ()=>Visibility(
-                    visible:complaint.response==null,
-                    child: ElevatedButton(
-                      onPressed: () => _showResolveDialog(context, index),
-                      child:Text(AppStrings.resolveButton),
-                    ),
-                  ),
-                ),
+                    subtitle: _subtitleItem('${AppStrings.descriptionLabel}:', complaint.description??''),
+                trailing: IconButton(
+                  onPressed: () {
+                    _showResolveDialog(context, index);
+                  },
+                    icon: Icon(Icons.arrow_forward_ios)),
               ),
             );},),
       ),

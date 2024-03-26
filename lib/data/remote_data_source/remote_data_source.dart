@@ -34,6 +34,7 @@ abstract class UserRemoteDataSource {
   Future<Either<Failure,void>> sendComplaint (Complaint complaint);
   Future<Either<Failure,List<Complaint>>> getComplaints();
   Future<Either<Failure,UserModel>>  getUser(String id);
+  Future<Either<Failure,void>>  likeOrDislikeComment (Comment comment);
 }
 
 
@@ -282,5 +283,19 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
      } else{
        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
      }
+  }
+
+  @override
+  Future<Either<Failure, void>> likeOrDislikeComment(Comment comment) async{
+    if(await networkInfo.isConnected()){
+      try {
+        await apiClient.likeOrDislikeComment(comment);
+        return Right(nullVoid);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else{
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
   }
 }

@@ -8,6 +8,7 @@ class Comment {
    DateTime? date;
    List<String> lovers;
    List<Comment> replies;
+   bool love = false;
 
   Comment({
        this.id,
