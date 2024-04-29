@@ -9,6 +9,7 @@ class Post extends Equatable {
   final String postContent;
   final LatLng postLocation;
   final String addressLocation;
+  final String? category;
     String postImage;
   final String postTitle;
   bool love;
@@ -23,6 +24,7 @@ class Post extends Equatable {
     required this.postImage,
     required this.postTitle,
     required this.addressLocation,
+    required this.category,
     this.love = false,
     this.lovers = const [],
   });
@@ -48,6 +50,7 @@ class Post extends Equatable {
       'adminId': adminId,
       'postDate': postDate.toIso8601String(),
       'postContent': postContent,
+      'category': category,
       'postLocation': {
         'latitude': postLocation.latitude,
         'longitude': postLocation.longitude,
@@ -63,6 +66,7 @@ class Post extends Equatable {
     return Post(
       postId: json['postId'],
       adminId: json['adminId'],
+      category: json['category'],
       postDate: DateTime.parse(json['postDate']),
       postContent: json['postContent'],
       postLocation: LatLng(

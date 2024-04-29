@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
-import 'package:maseef_app/presentation/user/profile_screen/model/user_model.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import '../../../core/utils/app_strings.dart';
 import 'controller/profile_controller.dart';

@@ -30,6 +30,7 @@ class AppStrings {
     static String postManagement = 'Post Management'.tr;
     static String postTitle = 'Post Title'.tr;
     static String postContent = 'Post Content'.tr;
+    static String category  = 'Category'.tr;
     static String addPost = 'Add Post'.tr;
     static String editPost = 'Edit Post'.tr;
      static const String busManagement = "Bus Management";

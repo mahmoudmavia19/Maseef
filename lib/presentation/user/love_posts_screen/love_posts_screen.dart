@@ -8,7 +8,6 @@ import '../../../widgets/post_card.dart';
 import '../../../widgets/search_post_form.dart';
 
 class LovePostsScreen extends  GetWidget<HomeController> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +30,25 @@ class LovePostsScreen extends  GetWidget<HomeController> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 8, // Adjust this based on the number of tabs you have
-                                itemBuilder: (BuildContext context, int index) {
-                                  return _tab(getTabTitle(index), (){});
-                                },
+                              child: Row(
+                                children: [
+                                  _tab('all', (){
+                                    controller.getAllPosts();
+                                  }),
+                                  Expanded(
+                                    child: Obx(
+                                      () =>ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount:controller.categories.length, // Adjust this based on the number of tabs you have
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return _tab(controller.categories[index].name, (){
+                                            controller.getFilterLovePost(controller.categories[index].id);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

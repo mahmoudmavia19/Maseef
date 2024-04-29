@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/widgets/custom_text_form_field.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
+import '../../../widgets/custom_drop_down.dart';
 import 'controller/edit_post_controller.dart';
 
 class EditPostScreen extends StatelessWidget {
@@ -41,7 +43,37 @@ class EditPostScreen extends StatelessWidget {
                 SizedBox(height: 16.0),
                 TextFieldWidget(labelText: AppStrings.postContent,
                     controller:  addPostController.postContentController),
-
+                SizedBox(height: 16.0),
+                Text(
+                  AppStrings.category,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                SizedBox(height: 16.0),
+                Obx(
+                  () =>Container(
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25.0),
+                      color: ColorConstant.primaryMaterialColor.withOpacity(0.5),
+                    ),
+                    child: CustomDropDown(
+                      hintText:  AppStrings.category,
+                      validator: (value) {
+                        if(value == null){
+                          return 'Please select category';
+                        }
+                        return null;
+                      },
+                      onChanged: (p0) {
+                        addPostController.category = p0.value;
+                      },
+                      variant: DropDownVariant.None,
+                      items: addPostController.categories.map((e) => SelectionPopupModel(
+                        isSelected: addPostController.category?.id == e.id ,
+                          title: e.name,value: e)).toList(),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: addPostController.pickImage,

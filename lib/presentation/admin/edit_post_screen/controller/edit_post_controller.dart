@@ -10,6 +10,8 @@ import 'package:maseef_app/presentation/admin/post_management_screen/controller/
 import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
 
 import '../../../../core/app_export.dart';
+import '../../../../data/remote_data_source/admin_remote_data_source.dart';
+import '../../category_management_screen/model/category.dart';
 
 class EditPostController extends GetxController {
   final postTitleController = TextEditingController();
@@ -20,20 +22,33 @@ class EditPostController extends GetxController {
   late GoogleMapController mapController ;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int index = Get.arguments;
+  Category?  category ;
+  AdminRemoteDataSource remoteDataSource = Get.find<AdminRemoteDataSourceImpl>();
+
   Post post =   Get.find<PostController>().posts[Get.arguments];
   @override
   void onClose() {
     mapController.dispose();
     super.onClose();
   }
-  @override
-  void onInit() {
-    _getCurrentLocation();
 
+
+  RxList<Category> categories = <Category>[].obs;
+  getCategories ()async{
+    (await remoteDataSource.getCategories()).fold((failure) {},(r) {
+      categories.value =r;
+
+    },);
+  }
+
+  @override
+  void onInit() async{
+    _getCurrentLocation();
+   await  getCategories ();
     postContentController.text = post.postContent;
     postTitleController.text = post.postTitle;
     postAddressController.text = post.addressLocation;
-
+    category = categories.firstWhere((element) => element.id == post.category);
 
     super.onInit();
     currentLocation_.value =LocationData.fromMap({
@@ -86,6 +101,7 @@ class EditPostController extends GetxController {
   var newPost = Post(
         postId:post.postId,
         adminId:post.adminId,
+        category: category?.id,
         postDate: DateTime.now(),
         love: post.love,
         postContent: postContentController.text,

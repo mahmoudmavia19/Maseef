@@ -66,7 +66,7 @@ class CustomDropDown extends StatelessWidget {
       child: DropdownButtonFormField<SelectionPopupModel>(
         focusNode: focusNode,
         icon: icon,
-        style: _setFontStyle(),
+        style: (_setFontStyle()as TextStyle).copyWith(color: Colors.black),
         decoration: _buildDecoration(),
         items: items?.map((SelectionPopupModel item) {
           return DropdownMenuItem<SelectionPopupModel>(
@@ -105,7 +105,7 @@ class CustomDropDown extends StatelessWidget {
     switch (fontStyle) {
       default:
         return TextStyle(
-          color: ColorConstant.black900,
+          color: Colors.white60,
           fontSize: getFontSize(
             16,
           ),

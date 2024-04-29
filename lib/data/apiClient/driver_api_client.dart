@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/presentation/admin/drivers_management/model/driver.dart';
 
 class DriverApiClient {

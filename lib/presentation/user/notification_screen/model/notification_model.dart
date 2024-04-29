@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NotificationModel {
   String? uid ;
   String? userId ;
+  String? postId;
   String? leadingImage;
+  DateTime? date;
     String? title;
     String? subtitle;
     String? trailingImage;
@@ -14,8 +18,9 @@ class NotificationModel {
       this.trailingImage,
     required this.isSystemComment,
      this.userId,
-    this.uid
-
+    this.uid,
+    this.date,
+    this.postId,
   });
 
   NotificationModel.fromJson(Map<String, dynamic> json){
@@ -26,6 +31,9 @@ class NotificationModel {
      isSystemComment = json['isSystemComment'];
      userId = json['userId'];
      uid = json['uid'];
+     // convert date from timestamp to DateTime
+     date =(json['date']as Timestamp).toDate();
+       postId = json['postId'];
   }
 
   toJson() {
@@ -36,7 +44,9 @@ class NotificationModel {
       'trailingImage': trailingImage,
       'isSystemComment': isSystemComment,
       'userId': userId,
-      'uid': uid
+      'uid': uid ,
+      'date': date ,
+      'postId': postId,
     };
   }
 }

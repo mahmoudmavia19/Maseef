@@ -13,11 +13,13 @@ import 'package:maseef_app/presentation/admin/post_management_screen/model/post.
 import '../../../../core/app_export.dart';
 import '../../../../core/utils/state_renderer/state_renderer.dart';
 import '../../../../core/utils/state_renderer/state_renderer_impl.dart';
+import '../../category_management_screen/model/category.dart';
 
 class AddPostController extends GetxController {
   final postTitleController = TextEditingController();
   final postContentController = TextEditingController();
   final postAddressController = TextEditingController();
+  Category?  category ;
   final Rx<File?> selectedImage = Rx<File?>(null);
    final Rx<LocationData> currentLocation_ = Rx(LocationData.fromMap({}));
   late GoogleMapController mapController ;
@@ -26,14 +28,23 @@ class AddPostController extends GetxController {
  GlobalKey<FormState> formKey = GlobalKey<FormState>();
  AdminRemoteDataSource remoteDataSource = Get.find<AdminRemoteDataSourceImpl>();
 
+ RxList<Category> categories = <Category>[].obs;
+ getCategories ()async{
+   (await remoteDataSource.getCategories()).fold((failure) {},(r) {
+     categories.value =r;
+
+   },);
+ }
+
   @override
   void onClose() {
     mapController.dispose();
     super.onClose();
   }
   @override
-  void onInit() {
+  void onInit()async {
     _getCurrentLocation();
+   await getCategories();
     super.onInit();
   }
   chooseLocation(LatLng target ) {
@@ -89,6 +100,7 @@ class AddPostController extends GetxController {
         (await
         remoteDataSource.addPost(Post(
             postDate: DateTime.now(),
+            category: category?.id,
             addressLocation: postAddressController.text,
             postContent: postContentController.text,
             postLocation: LatLng(currentLocation_.value.latitude!,

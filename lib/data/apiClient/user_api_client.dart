@@ -1,7 +1,4 @@
-
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,7 +8,7 @@ import 'package:maseef_app/presentation/admin/post_management_screen/model/post.
 import 'package:maseef_app/presentation/admin/store_management_screen/model/store.dart';
 import 'package:maseef_app/presentation/user/notification_screen/model/notification_model.dart';
 import 'package:maseef_app/presentation/user/profile_screen/model/user_model.dart';
-
+import '../../presentation/admin/category_management_screen/model/category.dart';
 import '../../presentation/admin/post_management_screen/model/comment.dart';
 
 class UserApiClient {
@@ -25,6 +22,16 @@ class UserApiClient {
 
   Future<void> signOut() async {
     await firebaseAuth.signOut();
+  }
+
+
+  Future<List<Category>> getCategories() async {
+    var response = await firebaseFirestore.collection('categories').get();
+    return response.docs.map((doc) {
+      var category = Category.fromJson(doc.data());
+      category.id = doc.id;
+      return category;
+    }).toList();
   }
 
   Future<User?> getCurrentUser() async {
@@ -119,9 +126,26 @@ class UserApiClient {
   }
 
   Future<List<NotificationModel>> getNotifications() async {
-    var result = await firebaseFirestore.collection('notifications').where('userId',isEqualTo:firebaseAuth.currentUser?.uid).get();
+    var result = await firebaseFirestore.collection('users').doc(firebaseAuth.currentUser!.uid).collection('notifications')
+        .orderBy('date',descending: true).get();
     return result.docs.map((e) => NotificationModel.fromJson(e.data())).toList();
   }
+
+  Future<void> sendForAllLoversNotification(Post post,NotificationModel notification) async {
+    for(var user in post.lovers){
+      if(user!=firebaseAuth.currentUser!.uid){
+        await firebaseFirestore.collection('users').doc(user)
+            .collection('notifications').add(notification.toJson());
+      }
+    }
+  }
+
+  Future<void> sendForYouNotification(userId,NotificationModel notification) async {
+    await firebaseFirestore.collection('users').doc(userId)
+        .collection('notifications').add(notification.toJson());
+  }
+
+
 
   Future<UserModel> getProfile() async {
     var result = await firebaseFirestore.collection('users').doc(firebaseAuth.currentUser!.uid).get();

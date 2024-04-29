@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/user/notification_screen/controller/notification_controller.dart';
@@ -14,11 +16,16 @@ class NotificationScreen extends GetWidget<NotificationController> {
     return Scaffold(
       body: ScaffoldBackground(
         opacity: 0.9,
-        child: Obx(()=>controller.flowState.value.getScreenWidget(ListView.builder(
-          itemCount: controller.notifications.length,
-          itemBuilder: (context,index) {
-            return NotificationItem(notification:controller.notifications[index]);
+        child: Obx(()=>controller.flowState.value.getScreenWidget(RefreshIndicator(
+          onRefresh: () async{
+            await controller.getNotifications();
           },
+          child: ListView.builder(
+            itemCount: controller.notifications.length,
+            itemBuilder: (context,index) {
+              return NotificationItem(notification:controller.notifications[index]);
+            },
+          ),
         ), (){}),
         ),
       ),
@@ -78,6 +85,10 @@ class NotificationItem extends StatelessWidget {
                 Text(
                   notification.subtitle!,
                   style: TextStyle(color: Colors.grey[600]),
+                ),
+                Text(
+                    DateFormat.yMMMd().format(notification.date!)+" "+DateFormat.jm().format(notification.date!),
+                  style: TextStyle(color: Colors.grey[600],fontSize: 12.0),
                 ),
               ],
             ),

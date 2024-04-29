@@ -10,8 +10,7 @@ import 'package:maseef_app/widgets/scaffold_background.dart';
 import 'package:maseef_app/widgets/search_map_form.dart';
 
 class LocationsScreen extends GetWidget<LocationController> {
-  final Completer<GoogleMapController> _controller = Completer();
-  late GoogleMapController googleMapController ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,9 @@ class LocationsScreen extends GetWidget<LocationController> {
                   target: startMapLocation,
                   zoom: 14.4746,
                 ),
-                onMapCreated: (controller) async {
-                  _controller.complete(controller);
-                  googleMapController =await  _controller.future;
+                onMapCreated: (controllers) async {
+                  controller.controllerMap.complete(controllers);
+                  controller.googleMapController =await    controller.controllerMap.future;
                 },
                 myLocationButtonEnabled: true,
                 myLocationEnabled: true,
@@ -50,7 +49,7 @@ class LocationsScreen extends GetWidget<LocationController> {
                 onSuggestionTap: (p0) async {
                   print(p0);
                   await controller.addMarker(p0.item!.postLocation,p0.item!.postId);
-                  (await _controller.future).animateCamera(
+                  (await   controller.controllerMap.future).animateCamera(
                     CameraUpdate.newCameraPosition(
                       CameraPosition(
                         target: p0.item!.postLocation,

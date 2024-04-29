@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
@@ -31,12 +32,25 @@ class HomeScreen extends GetWidget<HomeController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25.0),
                             ),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 8, // Adjust this based on the number of tabs you have
-                              itemBuilder: (BuildContext context, int index) {
-                                return _tab(getTabTitle(index), (){});
-                              },
+                            child: Obx(
+                              ()=> Row(
+                                children: [
+                                  _tab('all', (){
+                                    controller.getAllPosts();
+                                  }),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: controller.categories.length, // Adjust this based on the number of tabs you have
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return _tab(controller.categories[index].name, (){
+                                          controller.getFilterPost(controller.categories[index].id);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -62,28 +76,7 @@ _body()=>ListView.separated(
     separatorBuilder: (context, index) => SizedBox(height: 20.0,),
     itemCount: controller.posts.length,);
 
-  String getTabTitle(int index) {
-    switch (index) {
-      case 0:
-        return AppStrings.All;
-      case 1:
-        return AppStrings.parks;
-      case 2:
-        return AppStrings.historical_places;
-      case 3:
-        return AppStrings.Malls;
-      case 4:
-        return AppStrings.Hotels;
-      case 5:
-        return AppStrings.Cafes;
-      case 6:
-        return AppStrings.Restaurants;
-      case 7:
-        return AppStrings.Projects;
-      default:
-        return '';
-    }
-  }
+
 
   _tab(String title, VoidCallback onTap) {
     RxBool selected = false.obs;
@@ -112,5 +105,27 @@ _body()=>ListView.separated(
         ),
       ),
     );
+  }
+}
+String getTabTitle(int index) {
+  switch (index) {
+    case 0:
+      return AppStrings.All;
+    case 1:
+      return AppStrings.parks;
+    case 2:
+      return AppStrings.historical_places;
+    case 3:
+      return AppStrings.Malls;
+    case 4:
+      return AppStrings.Hotels;
+    case 5:
+      return AppStrings.Cafes;
+    case 6:
+      return AppStrings.Restaurants;
+    case 7:
+      return AppStrings.Projects;
+    default:
+      return '';
   }
 }
