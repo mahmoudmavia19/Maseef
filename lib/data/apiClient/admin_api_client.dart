@@ -10,8 +10,10 @@ import 'package:maseef_app/presentation/admin/complaint_screen/model/complaint.d
 
 import '../../presentation/admin/category_management_screen/model/category.dart';
 import '../../presentation/admin/drivers_management/model/driver.dart';
+import '../../presentation/admin/post_management_screen/model/comment.dart';
 import '../../presentation/admin/post_management_screen/model/post.dart';
 import '../../presentation/admin/store_management_screen/model/store.dart';
+import '../../presentation/user/profile_screen/model/user_model.dart';
 
 class AdminApiClient {
   FirebaseAuth firebaseAuth;
@@ -166,4 +168,37 @@ class AdminApiClient {
   Future<void> responseComplaint(Complaint complaint) async{
     await firebaseFirestore.collection('complaints').doc(complaint.id).update(complaint.toJson());
   }
+  Future<List<Comment>> getPostComments()async {
+    List<Comment> comments = [];
+    var postResult = await firebaseFirestore.collection('posts').get() ;
+    for(var posts in postResult.docs){
+      var result = await firebaseFirestore.collection('posts').doc(posts.id).collection('comments').get();
+      comments = result.docs.map((e) {
+        var comment = Comment.fromJson(e.data());
+        comment.id = posts.id;
+        comment.love = comment.lovers.contains(firebaseAuth.currentUser!.uid);
+        return Comment.fromJson(e.data());
+      }).toList();
+    }
+    return comments;
+  }
+
+  Future<List<Comment>> getComments(String postId) async {
+    var result = await firebaseFirestore.collection('posts').doc(postId).collection('comments').get();
+    return result.docs.map((e) {
+      var comment = Comment.fromJson(e.data());
+      comment.id = e.id;
+     // comment.love = comment.lovers.contains(firebaseAuth.currentUser!.uid);
+      return comment;
+    }).toList();
+
+  }
+
+  Future<UserModel> getUser(String userID) async {
+    var result = await firebaseFirestore.collection('users').doc(userID).get();
+    var user = UserModel.fromJson(result.data()!);
+    user.id = userID;
+    return user;
+  }
+
 }

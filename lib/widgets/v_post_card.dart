@@ -39,7 +39,7 @@ class VPostCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: Image.asset(
+      child: Image.network(
         post?.postImage ?? '',
         height: 170.0,
         fit: BoxFit.fitHeight,

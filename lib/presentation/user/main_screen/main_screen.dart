@@ -22,33 +22,6 @@ class MainScreen extends GetWidget<MainController> {
     );
   }
 
-  _drawer(){
-    return Drawer(
-      backgroundColor: ColorConstant.backgroundColor,
-      width: 200.0,
-      child:ListView(
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: ColorConstant.backgroundColor ,
-            ),
-              child:
-           CustomImageView(
-             imagePath: ImageConstant.logo,
-           )
-          ),
-          _tab(AppStrings.All,(){}),
-          _tab(AppStrings.parks,(){}),
-          _tab(AppStrings.historical_places,(){}),
-          _tab(AppStrings.Malls,(){}),
-          _tab(AppStrings.Hotels,(){}),
-          _tab(AppStrings.Cafes,(){}),
-          _tab(AppStrings.Restaurants,(){}),
-          _tab(AppStrings.Projects,(){}),
-        ],
-      ),
-    );
-  }
   _endDrawer(){
     return Drawer(
       backgroundColor: ColorConstant.backgroundColor,
@@ -73,9 +46,7 @@ class MainScreen extends GetWidget<MainController> {
             Get.toNamed(AppRoutes.userComplaintScreen) ;
           }),
           _tab(AppStrings.logout,(){
-            showConfirmationDialog((){
-              Get.offAndToNamed(AppRoutes.chooseUser) ;
-            },AppStrings.surelogout, 'Alert');
+            Get.offAllNamed(AppRoutes.chooseUser);
           }),
           Expanded(
             child: Container(

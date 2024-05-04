@@ -5,6 +5,7 @@ import 'package:maseef_app/core/utils/state_renderer/state_renderer.dart';
 import 'package:maseef_app/data/remote_data_source/admin_remote_data_source.dart';
 
 import '../../../../core/utils/state_renderer/state_renderer_impl.dart';
+import '../model/comment.dart';
 import '../model/post.dart';
 
 class PostController extends GetxController {
@@ -12,6 +13,19 @@ class PostController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
   AdminRemoteDataSource remoteDataSource = Get.find<AdminRemoteDataSourceImpl>();
   FlowState get getState => state.value;
+
+
+
+  Future<List<Comment>> getAllComments(String post)async{
+    List<Comment> comments = [];
+    (await remoteDataSource.getAllComments(post)).fold((failure) {
+      state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+    }, (r) {
+      comments = r;
+      state.value = ContentState();
+    });
+    return comments;
+  }
 
   @override
   void onInit() {

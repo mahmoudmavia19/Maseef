@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:intl/intl.dart';
 import 'package:maseef_app/core/app_export.dart';
+import 'package:maseef_app/presentation/admin/post_management_screen/model/comment.dart';
+import 'package:maseef_app/presentation/admin/show_post_screen/comment_item.dart';
 import 'package:maseef_app/presentation/admin/show_post_screen/controller/post_controller.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import '../../../core/utils/app_strings.dart';
@@ -79,7 +82,7 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                                       height: 40.0,
                                       width: 40.0,),
                                     Text(
-                                      '12',
+                                      controller.post.lovers.length.toString(),
                                       style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(
@@ -89,7 +92,7 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                                       fit: BoxFit.fill,
                                       height: 40.0,
                                       width: 40.0,),
-                                    Text('12', style: TextStyle(fontWeight: FontWeight.bold)),
+                                    Text(controller.comments.length.toString(), style: TextStyle(fontWeight: FontWeight.bold)),
                                  ],
                                ),
                               ],
@@ -133,7 +136,8 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                         textAlign: TextAlign.center,
                       )),
                 ),
-                ExpandedTileList.separated(
+                if(controller.comments.isNotEmpty)
+                ListView.separated(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   separatorBuilder: (context, index) => Divider(
@@ -142,8 +146,8 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                     endIndent: 0,
                     indent: 0,
                   ),
-                  itemCount: 5,
-                  itemBuilder: (context, index, controller) => _commentWidget(),
+                  itemCount: controller.comments.length,
+                  itemBuilder: (context, index) => AdminCommentWidget(controller.comments[index]),
                 ),
               ],
             ),
@@ -172,7 +176,7 @@ _button(String text,Color color,Widget icon,void Function() action) =>  Containe
         ],
       )),
 );
-  _commentWidget() => ExpandedTile(
+  _commentWidget(Comment comment) => ExpandedTile(
         theme: ExpandedTileThemeData(
           headerPadding: EdgeInsets.zero,
           headerColor: ColorConstant.gray100.withOpacity(0.5),
@@ -181,11 +185,11 @@ _button(String text,Color color,Widget icon,void Function() action) =>  Containe
         ),
         trailing: Container(),
         controller: ExpandedTileController(),
-        content: _commentContent(),
-        title: _commentContent(),
+        content:Container(),
+        title: _commentContent(comment),
       );
 
-  _commentContent() => InkWell(
+  _commentContent(Comment comment) => InkWell(
     onLongPress: () {
       Get.dialog(
           Dialog(
@@ -224,7 +228,7 @@ _button(String text,Color color,Widget icon,void Function() action) =>  Containe
             child:
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                'Sahar',
+                'Maseef',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               Padding(

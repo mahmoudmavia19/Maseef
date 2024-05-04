@@ -11,8 +11,10 @@ import '../../core/errors/failure.dart';
 import '../../core/network/network_info.dart';
 import '../../presentation/admin/bus_management_screen/model/bus.dart';
 import '../../presentation/admin/category_management_screen/model/category.dart';
+import '../../presentation/admin/post_management_screen/model/comment.dart';
 import '../../presentation/admin/post_management_screen/model/post.dart';
 import '../../presentation/admin/store_management_screen/model/store.dart';
+import '../../presentation/user/profile_screen/model/user_model.dart';
 
 abstract class AdminRemoteDataSource {
   Future<Either<Failure, void>>login({required String email, required String password});
@@ -38,6 +40,9 @@ abstract class AdminRemoteDataSource {
   Future<Either<Failure,List<Store>>> getStores();
   Future<Either<Failure,List<Complaint>>> getComplaint();
   Future<Either<Failure,void>> responseComplaint(Complaint complaint);
+  Future<Either<Failure, List<Comment>>> getAllComments(String post);
+
+  Future<Either<Failure, UserModel>> getUser(String id);
 
 }
 
@@ -386,5 +391,33 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
      }
   }
+  @override
+  Future<Either<Failure, List<Comment>>> getAllComments(String post) async {
+    if (await networkInfo.isConnected()) {
+      try {
+        final response = await apiClient.getComments(post);
+        return Right(response);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+  @override
+  Future<Either<Failure, UserModel>> getUser(String id) async {
+    if (await networkInfo.isConnected()) {
+      try {
+        final response = await apiClient.getUser(id);
+        return Right(response);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+
 }
 

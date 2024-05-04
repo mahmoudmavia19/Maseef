@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:maseef_app/presentation/admin/post_management_screen/admin_post_item.dart';
 import 'package:maseef_app/widgets/custom_app_bar.dart';
 import 'package:maseef_app/widgets/custom_drawer.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
@@ -37,75 +38,7 @@ _widget()=> RefreshIndicator(
     itemCount: controller.posts.length,
     itemBuilder: (context, index) {
       Post post = controller.posts[index];
-      return InkWell(
-        onTap: () {
-          Get.toNamed(AppRoutes.adminShowPostScreen,arguments: [index,post]);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-              padding: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                  color: Colors.grey[200]!.withOpacity(0.7)
-              ),
-              child: Column(
-                  children: [
-                    Container(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Image.network(post.postImage,
-                        height: 200.0,
-                        fit: BoxFit.fitHeight,
-                        alignment: Alignment.topCenter,
-                        errorBuilder:(context, error, stackTrace) => Image.asset(ImageConstant.imageNotFound,height: 200,),
-                        width: double.infinity,),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              post.postTitle,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(ImageConstant.love,
-                                 fit: BoxFit.fill,
-                                height: 40.0,
-                                width: 40.0,),
-                              Text(
-                                post.lovers.length.toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Image.asset(ImageConstant.comments,
-                                fit: BoxFit.fill,
-                                height: 40.0,
-                                width: 40.0,),
-                              Text( post.lovers.length.toString(),
-                                  style:
-                                  TextStyle(fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]
-              )
-          ),
-        ),
-      );
+      return AdminPostItem(index: index, post: post);
     },
   ),
 );

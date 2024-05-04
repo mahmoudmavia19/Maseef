@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -23,7 +22,7 @@ class LocationController extends GetxController {
   bool flag = false ;
   _getCurrentLocation() async {
     try {
-      var currentLocation = await location.onLocationChanged.listen((event)async {
+       await location.onLocationChanged.listen((event)async {
         _currentLocation = event;
         print(_currentLocation!.latitude);
 

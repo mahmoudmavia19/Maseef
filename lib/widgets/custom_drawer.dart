@@ -24,7 +24,7 @@ class MainDrawer extends StatelessWidget {
                 CustomImageView(
                   imagePath: ImageConstant.logo,
                 ),
-                Text('Hallo Admin',style: TextStyle(color: ColorConstant.primary,fontWeight: FontWeight.bold),)
+                Text('Hello Admin',style: TextStyle(color: ColorConstant.primary,fontWeight: FontWeight.bold),)
               ],
             )
           ),

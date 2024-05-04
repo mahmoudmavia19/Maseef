@@ -29,13 +29,15 @@ class HomeController extends GetxController {
    }
 
 
-   getFilterPost(String category){
+   getFilterPost(String category)async{
+    await getAllPosts();
      state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
     posts = posts.where((element) => element.category == category).toList();
     state.value = ContentState();
    }
 
-  getFilterLovePost(String category){
+  getFilterLovePost(String category)async{
+    await getAllPosts();
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
     postsLove = postsLove.where((element) => element.category == category).toList();
     state.value = ContentState();

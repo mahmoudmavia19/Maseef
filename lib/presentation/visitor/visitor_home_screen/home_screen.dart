@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
  import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
- import 'package:maseef_app/widgets/post_card.dart';
 import 'package:maseef_app/widgets/scaffold_background.dart';
 import 'package:maseef_app/widgets/search_post_form.dart';
 
@@ -33,12 +32,25 @@ class GuestHomeScreen extends GetWidget<GuestHomeController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25.0),
                             ),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 8, // Adjust this based on the number of tabs you have
-                              itemBuilder: (BuildContext context, int index) {
-                                return _tab(getTabTitle(index), (){});
-                              },
+                            child: Obx(
+                                  ()=> Row(
+                                children: [
+                                  _tab('all', (){
+                                    controller.getAllPosts();
+                                  }),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: controller.categories.length, // Adjust this based on the number of tabs you have
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return _tab(controller.categories[index].name, (){
+                                          controller.getFilterPost(controller.categories[index].id);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
