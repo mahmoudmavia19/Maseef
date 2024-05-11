@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:intl/intl.dart';
 import 'package:maseef_app/core/app_export.dart';
+import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/model/comment.dart';
 import 'package:maseef_app/presentation/admin/show_post_screen/comment_item.dart';
 import 'package:maseef_app/presentation/admin/show_post_screen/controller/post_controller.dart';
@@ -43,9 +44,8 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                   Get.toNamed(AppRoutes.adminEditPostManagementScreen,arguments:controller.index);
                 }),
                 SizedBox(height: 10.0,),
-                _button('Block user',ColorConstant.userColor,CustomImageView(imagePath: ImageConstant.person),(){
-                  showConfirmationDialog((){
-                   }, AppStrings.sureblock, 'Alert');
+                _button('Block users',ColorConstant.userColor,CustomImageView(imagePath: ImageConstant.person),(){
+                  Get.toNamed(AppRoutes.adminBlockUsers,arguments: controller.comments);
                 }),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -137,18 +137,9 @@ class ShowPostScreen extends GetWidget<PostManageController> {
                       )),
                 ),
                 if(controller.comments.isNotEmpty)
-                ListView.separated(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) => Divider(
-                    color: Colors.white,
-                    height: 0,
-                    endIndent: 0,
-                    indent: 0,
-                  ),
-                  itemCount: controller.comments.length,
-                  itemBuilder: (context, index) => AdminCommentWidget(controller.comments[index]),
-                ),
+                 Obx(
+                   () => controller.stateComment.value.getScreenWidget(_bodyComments(), (){}),
+                 )
               ],
             ),
           ),
@@ -156,6 +147,62 @@ class ShowPostScreen extends GetWidget<PostManageController> {
       }),
      );
   }
+
+  _bodyComments()=>ExpandedTileList.separated(
+    physics: NeverScrollableScrollPhysics(),
+    shrinkWrap: true,
+    separatorBuilder: (context, index) => Divider(
+      color: Colors.white,
+      height: 0,
+      endIndent: 0,
+      indent: 0,
+    ),
+    itemCount: controller.comments.length,
+    itemBuilder: (context, index,ami) => ExpandedTile(
+        title: AdminCommentWidget(controller.comments[index],(){
+          Get.defaultDialog(
+              title: 'Delete comment',
+              content:  Text('Are you sure you want to delete this comment?',textAlign: TextAlign.center,),
+              actions:  [
+                TextButton(onPressed: (){
+                  Get.back();
+                }, child: Text('Cancel')),
+                TextButton(onPressed: (){
+                  controller.deleteComment(controller.comments[index]);
+                  controller.getAllPostComments();
+                  Get.back();
+                }, child: Text('Delete')),
+              ]
+          );
+        }) ,
+        content: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              border: Border.all(color: ColorConstant.primary),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for(var reply in controller.comments[index].replies)
+                  AdminReplayCommentWidget(reply)
+
+              ],
+            ),
+          ),
+        ),
+        trailing: Container(),
+        theme: ExpandedTileThemeData(
+          headerPadding: EdgeInsets.zero,
+          headerColor: ColorConstant.gray100.withOpacity(0.5),
+          contentPadding: EdgeInsets.zero,
+          contentBackgroundColor: ColorConstant.gray100.withOpacity(0.5),
+        ),
+        controller: ExpandedTileController()
+
+    ),
+  );
 _button(String text,Color color,Widget icon,void Function() action) =>  Container(
   width: 300.0,
   height: 50.0,

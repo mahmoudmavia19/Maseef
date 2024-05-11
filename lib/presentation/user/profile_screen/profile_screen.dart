@@ -87,16 +87,18 @@ _body()=>Form(
          'Male',
          'Female',
         ].map((e) => DropdownMenuItem<String>(child: Text(e),value:e)).toList(),
-          value: 'Male',
+          value: controller.user.gender,
           decoration: InputDecoration(
             labelText: AppStrings.genderLabel,
             border: InputBorder.none,
             enabledBorder: InputBorder.none
           ),
-          onChanged: (p0) {
+          onChanged:controller.editMode.value? null : (p0) {
           controller.user.gender = p0??'';
         },
+
         ),
+
       ),
        const SizedBox(height: 16),
       _buildTextFormField(controller.phoneController,

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:maseef_app/core/utils/app_strings.dart';
+import 'package:maseef_app/presentation/admin/block_users/binding/block_user_binding.dart';
+import 'package:maseef_app/presentation/admin/block_users/block_user_screen.dart';
 import 'package:maseef_app/presentation/driver/driver_tracking/binding/driver_tracking_binding.dart';
 import 'package:maseef_app/presentation/driver/driver_tracking/driver_tracking_screen.dart';
 import 'package:maseef_app/presentation/driver/login/binding/driver_login_binding.dart';
@@ -77,6 +79,7 @@ class AppRoutes {
   static const String adminComplaintScreen = '/Admin/complaintScreen';
   static const String adminDriverManagementScreen = '/Admin/driverManagementScreen';
   static const String adminStoreManagement = '/Admin/storeManagement';
+  static const String adminBlockUsers = '/Admin/blockUsers';
   // User Routes
   static const String userLoginScreen = '/user/login_screen';
   static const String userRegisterScreen = '/user/register_screen';
@@ -133,6 +136,11 @@ class AppRoutes {
       page: () => ShowPostScreen(),
       arguments: [],
       binding: PostManageBinding(),
+    ),
+    GetPage(
+      name: adminBlockUsers,
+      page: () => BlockUsersScreen(),
+      binding: BlockUserBinding(),
     ),
     GetPage(
       name: initialRoute,

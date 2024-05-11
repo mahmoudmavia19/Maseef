@@ -28,6 +28,7 @@ abstract class UserRemoteDataSource {
   Future<Either<Failure, void>> likeOrDislikePost(Post post);
   Future<Either<Failure, List<Comment>>> getAllComments(String post);
   Future<Either<Failure, void>> addComment(Comment comment);
+  Future<Either<Failure, void>> replayComment(String mainCommentId,Comment comment);
   Future<Either<Failure, List<Store>>> getAllStores();
   Future<Either<Failure, void>> addStore(Store store, File file);
   Future<Either<Failure, List<NotificationModel>>> getNotifications();
@@ -41,6 +42,7 @@ abstract class UserRemoteDataSource {
   Future<Either<Failure, void>> sendForYouNotification(
       String userId, NotificationModel notification);
   Future<Either<Failure, void>> likeOrDislikeComment(Comment comment);
+  Future<Either<Failure, void>> likeOrDislikeReplay(Comment mainComment);
   Future<Either<Failure,List<Category>>> getCategories();
 
 }
@@ -307,6 +309,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     }
   }
 
+
+
   @override
   Future<Either<Failure, void>> sendForAllLoversNotification(
       Post post, NotificationModel notification) async {
@@ -347,6 +351,34 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         return Left(ErrorHandler.handle(e).failure);
       }
     }  else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> replayComment(String mainCommentId,Comment comment)async {
+    if (await networkInfo.isConnected()) {
+    try {
+    apiClient.replayComment(mainCommentId,comment);
+    return Right(nullVoid);
+    } catch (e) {
+    return Left(ErrorHandler.handle(e).failure);
+    }
+    } else {
+    return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> likeOrDislikeReplay(Comment mainComment)async {
+    if(await networkInfo.isConnected()) {
+      try {
+        apiClient.likeOrDislikeReplay(mainComment);
+        return Right(nullVoid);
+      } catch (e) {
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }

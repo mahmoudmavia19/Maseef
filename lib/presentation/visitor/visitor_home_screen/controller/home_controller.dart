@@ -6,6 +6,7 @@ import 'package:maseef_app/data/remote_data_source/remote_data_source.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
 
 import '../../../admin/category_management_screen/model/category.dart';
+import '../../../admin/post_management_screen/model/comment.dart';
 
 class GuestHomeController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
@@ -23,8 +24,19 @@ class GuestHomeController extends GetxController {
     },) ;
   }
 
+  Future<List<Comment>> getAllComments(String post)async{
+    List<Comment> comments = [];
+    (await remoteDataSource.getAllComments(post)).fold((failure) {
+      state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+    }, (r) {
+      comments = r;
 
-  getFilterPost(String category){
+      state.value = ContentState();
+    });
+    return comments;
+  }
+  getFilterPost(String category)async{
+    await getAllPosts();
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
     posts.value = posts.where((element) => element.category == category).toList();
     state.value = ContentState();

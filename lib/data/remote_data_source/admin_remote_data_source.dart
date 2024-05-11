@@ -41,15 +41,16 @@ abstract class AdminRemoteDataSource {
   Future<Either<Failure,List<Complaint>>> getComplaint();
   Future<Either<Failure,void>> responseComplaint(Complaint complaint);
   Future<Either<Failure, List<Comment>>> getAllComments(String post);
+  Future<Either<Failure, void>> deleteComment(Comment comment);
 
   Future<Either<Failure, UserModel>> getUser(String id);
-
+  Future<Either<Failure, void>> updateUser(UserModel user);
 }
 
 class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
   AdminApiClient apiClient ;
   NetworkInfo networkInfo ;
-  AdminRemoteDataSourceImpl(this.apiClient , this.networkInfo);
+  AdminRemoteDataSourceImpl(this.apiClient , this.networkInfo); 
 
   @override
   Future<Either<Failure, void>> login({required String email, required String password}) async {
@@ -61,7 +62,6 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
         } else {
           return Left(Failure(ApiInternalStatus.FAILURE.toString(),'you are not an admin'));
         }
-        return Right(nullVoid);
       } catch (error) {
         return Left(ErrorHandler.handle(error).failure);
       }
@@ -416,6 +416,34 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
     } else {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteComment(Comment comment)async {
+     if(await networkInfo.isConnected()){
+        try {
+          var response = apiClient.deleteComment(comment);
+          return Right(nullVoid);
+        } catch (e) {
+          return Left(ErrorHandler.handle(e).failure);
+        }
+     } else {
+       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+     }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateUser(UserModel user) async{
+     if(await networkInfo.isConnected()){
+        try {
+          var response = apiClient.updateUser(user);
+          return Right(nullVoid);
+        } catch (e) {
+          return Left(ErrorHandler.handle(e).failure);
+        }
+     } else {
+       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+     }
   }
 
 

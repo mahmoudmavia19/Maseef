@@ -29,7 +29,6 @@ class _ChooseUserScreenState extends State<ChooseUserScreen> {
     return Scaffold(
       backgroundColor: ColorConstant.backgroundColor,
       appBar: AppBar(
-        title: Text('Choose User'),
       ) ,
       body: Center(
         child:Column(

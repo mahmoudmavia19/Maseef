@@ -1,5 +1,6 @@
 
-import 'package:flutter/cupertino.dart';
+ import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
  import 'package:maseef_app/core/app_export.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
@@ -12,6 +13,7 @@ import '../../../admin/post_management_screen/model/comment.dart';
 
 class HomeController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
+  Rx<FlowState> stateComment = Rx<FlowState>(ContentState());
   List<Post> posts = [];
   List<Post> postsLove = [];
   UserRemoteDataSource  remoteDataSource = Get.find<UserRemoteDataSourceImpl>();
@@ -66,6 +68,7 @@ class HomeController extends GetxController {
     },(r) async{
       if(posts[index].love) {
       var post = posts[index];
+/*
       await remoteDataSource.sendForAllLoversNotification(post, NotificationModel(
           leadingImage: profileController.user.imagePath,
           title: post.postTitle,
@@ -74,6 +77,7 @@ class HomeController extends GetxController {
           trailingImage: post.postImage,
           subtitle: '${profileController.user.name} love the post',
           isSystemComment: false));
+*/
 
       }
       getAllPosts();
@@ -88,7 +92,8 @@ class HomeController extends GetxController {
       if(comment.love) {
         var post = posts.firstWhere((element) =>
         element.postId == comment.postId);
-        await remoteDataSource.sendForYouNotification(comment.userId!, NotificationModel(
+        if(profileController.user.id != comment.userId) {
+          await remoteDataSource.sendForYouNotification(comment.userId!, NotificationModel(
             leadingImage: profileController.user.imagePath,
             title: post.postTitle,
             date: DateTime.now(),
@@ -96,18 +101,49 @@ class HomeController extends GetxController {
             trailingImage: post.postImage,
             subtitle: '${profileController.user.name} love your comment',
             isSystemComment: false));
+        }
       }
       ContentState();
      }) ;
 
   }
 
+
+  loveReplay(Comment mainComment,bool status,Comment comment) async{
+    //comment.love = !comment.love ;
+    (await remoteDataSource.likeOrDislikeReplay(mainComment)).fold((failure) {
+      state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+    },(r)async {
+      if(status) {
+        var post = posts.firstWhere((element) =>
+        element.postId == mainComment.postId);
+        if(profileController.user.id != comment.userId) {
+          await remoteDataSource.sendForYouNotification(mainComment.userId!, NotificationModel(
+            leadingImage: profileController.user.imagePath,
+            title: post.postTitle,
+            date: DateTime.now(),
+            postId: mainComment.postId,
+            trailingImage: post.postImage,
+            subtitle: '${profileController.user.name} love your reply',
+            isSystemComment: false));
+        }
+      }
+      ContentState();
+    }) ;
+
+  }
+
+
+
+
   addComment(Comment comment) async{
+     stateComment.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
     (await remoteDataSource.addComment(comment)).fold((failure) {
       state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
     }, (r) async{
       var post = posts.firstWhere((element) =>
       element.postId == comment.postId);
+/*
       await remoteDataSource.sendForAllLoversNotification(post, NotificationModel(
           leadingImage: profileController.user.imagePath,
           title: post.postTitle,
@@ -116,17 +152,26 @@ class HomeController extends GetxController {
           trailingImage: post.postImage,
           subtitle: '${profileController.user.name} add comment ',
           isSystemComment: false));
-      getAllComments(comment.postId!);
+*/
+      await getAllComments(comment.postId!);
     });
   }
 
  Future<List<Comment>> getAllComments(String post)async{
+
    List<Comment> comments = [];
-    (await remoteDataSource.getAllComments(post)).fold((failure) {
+   (await remoteDataSource.getAllComments(post)).fold((failure) {
       state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
     }, (r) {
       comments = r;
-       state.value = ContentState();
+      for(var i = 0 ; i < comments.length ; i++){
+        for(var j = 0 ; j < comments[i].replies.length ; j++){
+           comments[i].replies[j].id = j.toString();
+           comments[i].replies[j].love = comments[i].replies[j].lovers.contains(profileController.user.id);
+        }
+
+      }
+       stateComment.value = ContentState();
     });
     return comments;
   }
@@ -136,5 +181,45 @@ class HomeController extends GetxController {
     await getAllCategories();
     super.onInit();
   }
+TextEditingController replayController = TextEditingController();
+  Future<void> replayComment(String mainCommentID) async{
+   await  Get.defaultDialog(
+       title: 'Replay Comment',
+       content: TextFormField(controller:replayController,),
+       actions: [
+         TextButton(onPressed: (){
+           Get.back();
+         }, child: Text('Cancel')),
+         TextButton(onPressed: ()async{
+           var comment = Comment(postId: posts.first.postId,
+               comment:replayController.text , date: DateTime.now());
+           Get.back();
+           replayController.clear();
+          await replay(mainCommentID, comment);
+
+         }, child: Text('Replay')),
+       ]
+     );
+  }
+
+  Future<void> replay(String mainCommentId,Comment comment)async {
+    (await remoteDataSource.replayComment(mainCommentId,comment)).fold((failure) {
+      state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+    }, (r) async{
+      var post = posts.firstWhere((element) =>
+      element.postId == comment.postId);
+      if(profileController.user.id != comment.userId){
+      await remoteDataSource.sendForYouNotification(comment.userId!, NotificationModel(
+          leadingImage: profileController.user.imagePath,
+          title: post.postTitle,
+          date: DateTime.now(),
+          postId: comment.postId,
+          trailingImage: post.postImage,
+          subtitle: '${profileController.user.name} replay comment',
+          isSystemComment: false));
+      }
+    });
+
+    }
 
 }

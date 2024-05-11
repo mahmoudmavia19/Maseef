@@ -27,6 +27,14 @@ class PostController extends GetxController {
     return comments;
   }
 
+  Future<void> deleteComment(Comment comment) async{
+      (await remoteDataSource.deleteComment(comment)).fold((failure) {
+        state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+      }, (r) {
+        state.value = ContentState();
+      });
+  }
+
   @override
   void onInit() {
     super.onInit();

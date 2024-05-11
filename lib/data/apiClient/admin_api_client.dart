@@ -194,11 +194,18 @@ class AdminApiClient {
 
   }
 
+  Future<void> deleteComment(Comment comment) async {
+    await firebaseFirestore.collection('posts').doc(comment.postId).collection('comments').doc(comment.id).delete();
+  }
   Future<UserModel> getUser(String userID) async {
     var result = await firebaseFirestore.collection('users').doc(userID).get();
     var user = UserModel.fromJson(result.data()!);
     user.id = userID;
     return user;
+  }
+  
+  Future<void> updateUser(UserModel user) async{
+    await firebaseFirestore.collection('users').doc(user.id).update(user.toJson());
   }
 
 }

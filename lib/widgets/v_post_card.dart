@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:maseef_app/presentation/admin/post_management_screen/model/post.dart';
-import 'package:maseef_app/presentation/user/home_screen/controller/home_controller.dart';
+import 'package:maseef_app/presentation/visitor/visitor_home_screen/controller/home_controller.dart';
 import '../core/app_export.dart';
 import '../presentation/admin/post_management_screen/model/comment.dart';
 
-class VPostCard extends StatelessWidget {
+class VPostCard extends StatefulWidget {
   final Post post;
-  final RxBool love = false.obs;
   final int index;
-   RxList<Comment> comments = RxList<Comment>([]);
+
   VPostCard(this.post, this.index){
 
+  }
+
+  @override
+  State<VPostCard> createState() => _VPostCardState();
+}
+
+class _VPostCardState extends State<VPostCard> {
+
+   RxList<Comment> comments = RxList<Comment>([]);
+
+  GuestHomeController controller = Get.find<GuestHomeController>();
+
+   @override
+  void initState() {
+    controller.getAllComments(widget.post.postId!).then((value) {
+      comments.value = value ;
+    });
+    super.initState();
   }
 
   @override
@@ -40,7 +57,7 @@ class VPostCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Image.network(
-        post?.postImage ?? '',
+        widget.post.postImage,
         height: 170.0,
         fit: BoxFit.fitHeight,
         alignment: Alignment.topCenter,
@@ -63,7 +80,7 @@ class VPostCard extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              post?.postTitle ?? '',
+              widget.post.postTitle,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22.0,
@@ -82,12 +99,12 @@ class VPostCard extends StatelessWidget {
         children: [
           Image.asset(
             ImageConstant.love,
-            color: love.value ? Colors.red : Colors.black,
+            color:Colors.black,
             fit: BoxFit.fill,
             height: 40.0,
             width: 40.0,
           ),
-          _buildActionText(post.lovers.length.toString()),
+          _buildActionText(widget.post.lovers.length.toString()),
           SizedBox(width: 5.0),
           Image.asset(
             ImageConstant.comments,
@@ -108,8 +125,4 @@ class VPostCard extends StatelessWidget {
     );
   }
 
-  void loveToggle({bool? isLove}) {
-    love.value = isLove ?? !love.value;
-    post?.love = !love.value;
-  }
 }

@@ -195,4 +195,25 @@ class UserApiClient {
     await firebaseFirestore.collection('posts').doc(comment.postId).collection('comments').doc(comment.id).update(comment.toJson());
    }
 
+  Future<void> likeOrDislikeReplay (Comment mainComment) async {
+  /*  if(comment.lovers.contains(firebaseAuth.currentUser!.uid)) {
+      comment.lovers.remove(firebaseAuth.currentUser!.uid);
+    } else {
+      comment.lovers.add(firebaseAuth.currentUser!.uid);
+    }*/
+    // update the replay using replay index (id)
+    await firebaseFirestore.collection('posts').doc(mainComment.postId).collection('comments').doc(mainComment.id).update(
+        {'replies': mainComment.replies.map((e) => e.toJson()).toList()}
+    );
+  }
+
+  Future<void> replayComment(String mainCommentId,Comment comment) async{
+    comment.userId = firebaseAuth.currentUser!.uid;
+    await firebaseFirestore.collection('posts').doc(comment.postId).collection('comments').doc(mainCommentId).update({'replies': FieldValue.arrayUnion([comment.toJson()])});
+  }
+  Future<List<Comment>> getReplies(Comment mainComment) async{
+    var result = await firebaseFirestore.collection('posts').doc(mainComment.postId).collection('comments').doc(mainComment.id).collection('replies').get();
+    return result.docs.map((e) => Comment.fromJson(e.data())).toList();
+  }
+
 }

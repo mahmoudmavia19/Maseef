@@ -30,8 +30,12 @@ class AuthController extends GetxController {
           password:passwordController.text)).fold((l) {
     state.value = ErrorState(StateRendererType.popupErrorState,l.message);
     }, (r) {
-    state.value = ContentState();
-    Get.offAllNamed(AppRoutes.userMainScreen,arguments: [r]);
+            if(r.blocked){
+              state.value = ErrorState(StateRendererType.popupErrorState,'You are blocked');
+            }else{
+                state.value = ContentState();
+                Get.offAllNamed(AppRoutes.userMainScreen,arguments: [r]);
+            }
     });
     }
   void register() async{

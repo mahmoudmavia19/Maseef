@@ -8,6 +8,7 @@ class UserModel {
     String gender;
     String phoneNumber;
     String imagePath; // Add this field
+    bool blocked ;
 
   UserModel({
     required this.id,
@@ -18,6 +19,7 @@ class UserModel {
     required this.gender,
     required this.phoneNumber,
     required this.imagePath, // Update the constructor
+    this.blocked = false
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +32,7 @@ class UserModel {
       gender: json['gender'] ?? '',
       phoneNumber: json['phoneNumber'] ?? '',
       imagePath: json['imagePath'] ?? 'assets/images/user_placeholder.png', // Provide a default placeholder path
+      blocked: json['blocked'] ?? false
     );
   }
 
@@ -43,6 +46,7 @@ class UserModel {
       'gender': gender,
       'phoneNumber': phoneNumber,
       'imagePath': imagePath,
+      'blocked': blocked
     };
   }
 }
