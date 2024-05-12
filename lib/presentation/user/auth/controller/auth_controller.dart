@@ -19,7 +19,7 @@ class AuthController extends GetxController {
 
   FlowState get getState => state.value;
   RxBool obscurePassword = true.obs;
-
+ 
   void togglePasswordVisibility() {
     obscurePassword.value = !obscurePassword.value;
   }

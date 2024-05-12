@@ -48,7 +48,7 @@ class LocationsScreen extends GetWidget<LocationController> {
                 items: controller.homeController.posts,
                 onSuggestionTap: (p0) async {
                   print(p0);
-                  await controller.addMarker(p0.item!.postLocation,p0.item!.postId);
+                  await controller.addMarker(p0.item!.postLocation,p0.item!.postId.toString());
                   (await   controller.controllerMap.future).animateCamera(
                     CameraUpdate.newCameraPosition(
                       CameraPosition(

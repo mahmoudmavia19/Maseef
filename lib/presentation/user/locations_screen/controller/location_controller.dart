@@ -52,7 +52,7 @@ class LocationController extends GetxController {
   }
 
 
-  Future<void> addMarker(LatLng location,id) async {
+  Future<void> addMarker(LatLng location,String id) async {
     final BitmapDescriptor icon = await BitmapDescriptor.fromAssetImage(
       imageConfiguration,
       ImageConstant.bus_location,
@@ -69,9 +69,9 @@ class LocationController extends GetxController {
 
   @override
   void onInit() async{
-    addMarker(startMapLocation,0);
+    addMarker(startMapLocation,0.toString());
     homeController.posts.forEach((element) async{
-      await addMarker(element.postLocation,element.postLocation);
+      await addMarker(element.postLocation,element.postLocation.toString());
     });
     await _getCurrentLocation();
     super.onInit();

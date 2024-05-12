@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:maseef_app/core/utils/state_renderer/state_renderer_impl.dart';
-
 import '../../../core/app_export.dart';
-import '../../../core/utils/app_strings.dart';
- import '../../../widgets/scaffold_background.dart';
+import '../../../widgets/scaffold_background.dart';
 import 'controller/block_users_controller.dart';
 
 class BlockUsersScreen extends GetWidget<BlockUsersController> {
@@ -13,7 +10,7 @@ class BlockUsersScreen extends GetWidget<BlockUsersController> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        title: Text(AppStrings.busManagement),
+        title: Text('Block Users'),
         actions: [
           CustomImageView(
             imagePath: ImageConstant.logo,
